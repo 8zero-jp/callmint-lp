@@ -407,10 +407,7 @@ nav {
 .pricing { padding: 112px 56px; background: var(--surface); border-top: 1px solid var(--border); }
 .pricing-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 52px; }
 .pricing-note { font-size: 13px; color: var(--muted); text-align: right; line-height: 1.8; }
-.pricing-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
-@media (max-width: 1200px) {
-  .pricing-grid { grid-template-columns: repeat(2,1fr); }
-}
+.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
 .plan { background: var(--bg); border: 1px solid var(--border); border-radius: 24px; padding: 40px 36px; transition: all .3s; }
 .plan:hover { transform: translateY(-6px); box-shadow: 0 24px 56px rgba(0,0,0,.09); }
 .plan.rec { background: var(--green); border-color: var(--green); }
@@ -448,6 +445,8 @@ nav {
 .plan.rec .plan-btn { background: #fff; color: var(--green); border-color: #fff; }
 .plan.rec .plan-btn:hover { background: rgba(255,255,255,.9); }
 .pricing-footnote { text-align: center; font-size: 12px; color: var(--muted); margin-top: 20px; font-family: 'Outfit', sans-serif; }
+.plan-concept { font-size: 12px; color: var(--muted); font-family: 'Zen Kaku Gothic New', sans-serif; margin-bottom: 8px; line-height: 1.5; }
+.plan.rec .plan-concept { color: rgba(255,255,255,.6); }
 
 /* ── FAQ ── */
 .faq { padding: 112px 56px; background: var(--bg); border-top: 1px solid var(--border); }
@@ -635,9 +634,9 @@ footer {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <div class="hero-tag">美容室特化型・AI電話予約代行サービス</div>
+    <div class="hero-tag">電話応対を、まるごと代行</div>
     <h1 class="hero-title">その手は、<em>お客様のために。</em></h1>
-    <p class="hero-sub">美容室の電話応対を、AIがすべて担います。あなたのサロンに、24時間365日——完璧に応対する「専属レセプション」を。</p>
+    <p class="hero-sub">電話が鳴るたびに施術を止めていませんか？Callmintは24時間365日、あなたのサロンの代わりに電話に出ます。</p>
     <div class="hero-quote">施術に集中できる環境が、最高のデザインを生み出します。</div>
     <div class="hero-actions">
       <a href="#contact" class="btn-primary">14日間 無料で試す</a>
@@ -653,7 +652,7 @@ footer {
         <div class="metric-label">工事不要<br>最短1日で開始</div>
       </div>
       <div class="metric-card">
-        <div class="metric-num">¥4,980</div>
+        <div class="metric-num">¥5,480</div>
         <div class="metric-label">月額〜（税抜）<br>初期費用なし</div>
       </div>
     </div>
@@ -675,20 +674,20 @@ footer {
     <div class="value-card">
       <div class="value-num">01</div>
       <span class="value-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg></span>
-      <div class="value-title">クリエイティビティの解放</div>
-      <div class="value-desc">施術中の中断をなくし、技術と感性を100%お客様へ。電話が鳴るたびに途切れていた集中を、取り戻します。</div>
+      <div class="value-title">施術中断ゼロ</div>
+      <div class="value-desc">電話が鳴るたびに「少々お待ちを」が消えます。お客様の時間も、あなたの集中も守ります。</div>
     </div>
     <div class="value-card">
       <div class="value-num">02</div>
       <span class="value-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg></span>
-      <div class="value-title">スタッフの心理的安全性</div>
-      <div class="value-desc">「また電話が鳴った」というプレッシャーから、スタッフを解放します。チームのストレスが減ると、サービスの質が上がります。</div>
+      <div class="value-title">スタッフの負担を減らす</div>
+      <div class="value-desc">「また電話…」というプレッシャーをなくします。チームが余裕を持てると、接客の質が上がります。</div>
     </div>
     <div class="value-card">
       <div class="value-num">03</div>
       <span class="value-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg></span>
-      <div class="value-title">サロンの品格を保つ応対</div>
-      <div class="value-desc">繁忙時でも変わらない、丁寧で一貫したブランド体験を実現します。AIが、あなたのサロンの「顔」として応対します。</div>
+      <div class="value-title">予約を取り逃がさない</div>
+      <div class="value-desc">定休日・深夜・繁忙タイムも電話を受け続けます。空いた時間の予約が積み重なります。</div>
     </div>
   </div>
 </section>
@@ -714,27 +713,27 @@ footer {
   <div class="features-inner">
     <div>
       <div class="section-tag">機能</div>
-      <h2 class="section-title">AIが、電話の向こうの<br>熱量を逃さない。</h2>
+      <h2 class="section-title">電話に縛られない、<br>新しいサロンの1日。</h2>
       <div class="feature-list">
         <div class="feature-item">
           <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
           <div>
-            <div class="feature-title">24/7 インテリジェント・レスポンス</div>
-            <div class="feature-desc">深夜・早朝・施術中——いつでも、AIが自然な日本語で即応。予約受付・変更・キャンセルまで一貫して対応します。</div>
+            <div class="feature-title">24時間・年中無休で受付</div>
+            <div class="feature-desc">深夜・早朝・施術中——いつかかってきても、丁寧な日本語で即応。予約受付・変更・キャンセルまで対応します。</div>
           </div>
         </div>
         <div class="feature-item">
           <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div>
           <div>
-            <div class="feature-title">シームレス・コネクト</div>
-            <div class="feature-desc">通話内容をリアルタイムでテキスト化し、スタッフのスマートフォンへ即時通知。終了後も内容を確認できます。</div>
+            <div class="feature-title">内容はすぐスマホで確認</div>
+            <div class="feature-desc">通話終了後、内容をテキスト化してスタッフに即通知。後から見返すことも可能です。</div>
           </div>
         </div>
         <div class="feature-item">
           <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
           <div>
-            <div class="feature-title">スマート・フィルタリング</div>
-            <div class="feature-desc">営業電話などのノイズを自動遮断。本当に大切なお客様の声だけを届けます。</div>
+            <div class="feature-title">営業電話はカットする</div>
+            <div class="feature-desc">勧誘・セールス電話を自動で遮断。お客様の声だけが手元に届きます。</div>
           </div>
         </div>
       </div>
@@ -781,8 +780,8 @@ footer {
   </div>
   <div class="gs-content">
     <div class="section-tag">競合との違い</div>
-    <h2 class="section-title">Callmintだけが持つ、<br>自己進化する知性。</h2>
-    <p style="font-size:14px;color:var(--muted);line-height:1.85">他のAIサービスは、設定したままで止まります。Callmintは毎日、通話データを自動分析し、AIが自らプロンプトを改善し続けます。</p>
+    <h2 class="section-title">Callmintの品質が<br>落ちない理由。</h2>
+    <p style="font-size:14px;color:var(--muted);line-height:1.85">一般的な電話代行は、設定したまま変わりません。Callmintは実際の通話を毎日自動分析し、応答品質を継続的に改善します。導入後も、あなたのサロンに合った応対へと育ち続けます。</p>
     <div class="gs-points">
       <div class="gs-point">
         <div class="gs-point-title">導入翌日から学習開始</div>
@@ -892,64 +891,49 @@ footer {
   </div>
   <div class="pricing-grid">
     <div class="plan">
+      <div class="plan-concept">受付だけ自動化したい</div>
       <div class="plan-name">Starter</div>
-      <div class="plan-price">¥4,980<span>/月（税抜）</span></div>
-      <div class="plan-overage">超過：¥150/件（税抜）</div>
+      <div class="plan-price">¥5,480<span>/月（税抜）</span></div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li><span class="plan-check">✓</span>月50件まで対応</li>
-        <li><span class="plan-check">✓</span>基本的な予約受付</li>
-        <li><span class="plan-check">✓</span>通話ログ管理</li>
-        <li><span class="plan-check">✓</span>メール通知</li>
+        <li><span class="plan-check">✓</span>新規予約受付</li>
+        <li><span class="plan-check">✓</span>SMS・LINE通知</li>
+        <li><span class="plan-check">✓</span>営業時間・定休日設定</li>
         <li><span class="plan-check">✓</span>初期設定サポート</li>
       </ul>
       <a href="#contact" class="plan-btn">始める</a>
     </div>
     <div class="plan rec">
       <div class="plan-badge">★ おすすめ</div>
+      <div class="plan-concept">電話業務を丸ごと任せたい</div>
       <div class="plan-name">Growth</div>
-      <div class="plan-price">¥14,800<span>/月（税抜）</span></div>
-      <div class="plan-overage">超過：¥100/件（税抜）</div>
+      <div class="plan-price">¥19,800<span>/月（税抜）</span></div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li><span class="plan-check">✓</span>月200件まで対応</li>
-        <li><span class="plan-check">✓</span>予約受付 + FAQ対応</li>
-        <li><span class="plan-check">✓</span>通話ログ + 分析レポート</li>
-        <li><span class="plan-check">✓</span>AIによる毎朝の改善提案</li>
-        <li><span class="plan-check">✓</span>LINE / メール通知</li>
+        <li><span class="plan-check">✓</span>Starterの全機能</li>
+        <li><span class="plan-check">✓</span>予約変更・キャンセル対応</li>
+        <li><span class="plan-check">✓</span>スタッフ指名対応</li>
+        <li><span class="plan-check">✓</span>月次通話レポート（件数・成約率）</li>
+        <li><span class="plan-check">✓</span>チャットサポート優先対応</li>
       </ul>
       <a href="#contact" class="plan-btn">始める</a>
     </div>
     <div class="plan">
+      <div class="plan-concept">自分のサロンに育てたい</div>
       <div class="plan-name">Pro</div>
-      <div class="plan-price">¥29,800<span>/月（税抜）</span></div>
-      <div class="plan-overage">超過：¥80/件（税抜）</div>
+      <div class="plan-price">¥39,800<span>/月（税抜）</span></div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li><span class="plan-check">✓</span>月500件まで対応</li>
-        <li><span class="plan-check">✓</span>予約システム連携</li>
-        <li><span class="plan-check">✓</span>カスタム応答設定</li>
-        <li><span class="plan-check">✓</span>専任サポート</li>
-        <li><span class="plan-check">✓</span>複数店舗対応</li>
+        <li><span class="plan-check">✓</span>Growthの全機能</li>
+        <li><span class="plan-check">✓</span>複数店舗管理</li>
+        <li><span class="plan-check">✓</span>カスタム応答設定（独自トーク・FAQ追加）</li>
+        <li><span class="plan-check">✓</span>専任サポート担当</li>
+        <li><span class="plan-check">✓</span>月次改善レビュー（通話品質チェック）</li>
       </ul>
       <a href="#contact" class="plan-btn">始める</a>
-    </div>
-    <div class="plan">
-      <div class="plan-name">MAX</div>
-      <div class="plan-price">別途お見積り<span style="display:block;margin-top:4px">初期費用 ¥100,000〜（税抜）</span></div>
-      <div class="plan-overage">通話従量課金</div>
-      <div class="plan-divider"></div>
-      <ul class="plan-features">
-        <li><span class="plan-check">✓</span>最上位 AI 自然対話モデル</li>
-        <li><span class="plan-check">✓</span>大規模・多店舗チェーン向け</li>
-        <li><span class="plan-check">✓</span>カスタム要件への個別対応</li>
-        <li><span class="plan-check">✓</span>専任エンジニアサポート</li>
-        <li><span class="plan-check">✓</span>SLA・優先障害対応</li>
-      </ul>
-      <a href="#contact" class="plan-btn">お問い合わせ</a>
     </div>
   </div>
-  <p class="pricing-footnote">※ 表示価格はすべて消費税抜きです。別途、消費税が加算されます。<br>※ すべてのプランに番号維持費 ¥500/月（税抜）が別途発生します。<br>※ MAX プランは初期費用と通話従量課金の組み合わせとなります。詳細はお問い合わせください。</p>
+  <p class="pricing-footnote">※ 表示価格はすべて消費税抜きです。別途、消費税が加算されます。</p>
 </section>
 
 <!-- FAQ -->
