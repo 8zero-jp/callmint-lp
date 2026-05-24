@@ -447,6 +447,12 @@ nav {
 .pricing-footnote { text-align: center; font-size: 12px; color: var(--muted); margin-top: 20px; font-family: 'Outfit', sans-serif; }
 .plan-concept { font-size: 12px; color: var(--muted); font-family: 'Zen Kaku Gothic New', sans-serif; margin-bottom: 8px; line-height: 1.5; }
 .plan.rec .plan-concept { color: rgba(255,255,255,.6); }
+.plan-limit { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 600; color: var(--green); margin-bottom: 2px; }
+.plan.rec .plan-limit { color: rgba(255,255,255,.8); }
+.plan-add-note { font-size: 11px; color: var(--muted); margin-top: 6px; font-family: 'Outfit', sans-serif; text-align: center; }
+.plan-option { border-color: var(--mint); border-style: dashed; }
+.plan-option:hover { border-color: var(--mint); }
+.plan-badge-option { color: #0a6647; background: rgba(62,207,160,.18); }
 
 /* ── FAQ ── */
 .faq { padding: 112px 56px; background: var(--bg); border-top: 1px solid var(--border); }
@@ -894,6 +900,7 @@ footer {
       <div class="plan-concept">受付だけ自動化したい</div>
       <div class="plan-name">Starter</div>
       <div class="plan-price">¥5,480<span>/月（税抜）</span></div>
+      <div class="plan-limit">月50件 / 超過 ¥150/件</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
         <li><span class="plan-check">✓</span>新規予約受付</li>
@@ -908,29 +915,33 @@ footer {
       <div class="plan-concept">電話業務を丸ごと任せたい</div>
       <div class="plan-name">Growth</div>
       <div class="plan-price">¥19,800<span>/月（税抜）</span></div>
+      <div class="plan-limit">月200件 / 超過 ¥100/件</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
         <li><span class="plan-check">✓</span>Starterの全機能</li>
         <li><span class="plan-check">✓</span>予約変更・キャンセル対応</li>
         <li><span class="plan-check">✓</span>スタッフ指名対応</li>
+        <li><span class="plan-check">✓</span>複数店舗管理</li>
         <li><span class="plan-check">✓</span>月次通話レポート（件数・成約率）</li>
         <li><span class="plan-check">✓</span>チャットサポート優先対応</li>
       </ul>
       <a href="#contact" class="plan-btn">始める</a>
     </div>
-    <div class="plan">
-      <div class="plan-concept">自分のサロンに育てたい</div>
-      <div class="plan-name">Pro</div>
-      <div class="plan-price">¥39,800<span>/月（税抜）</span></div>
+    <div class="plan plan-option">
+      <div class="plan-badge plan-badge-option">＋ LINE OPTION</div>
+      <div class="plan-concept">リピーター育成まで自動化</div>
+      <div class="plan-name">LINE連携</div>
+      <div class="plan-price">+¥4,980<span>/月（税抜）</span></div>
+      <div class="plan-add-note">Starter / Growth に追加できます</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li><span class="plan-check">✓</span>Growthの全機能</li>
-        <li><span class="plan-check">✓</span>複数店舗管理</li>
-        <li><span class="plan-check">✓</span>カスタム応答設定（独自トーク・FAQ追加）</li>
-        <li><span class="plan-check">✓</span>専任サポート担当</li>
-        <li><span class="plan-check">✓</span>月次改善レビュー（通話品質チェック）</li>
+        <li><span class="plan-check">✓</span>メンバーズカード</li>
+        <li><span class="plan-check">✓</span>メッセージ配信</li>
+        <li><span class="plan-check">✓</span>予約・予約確認</li>
+        <li><span class="plan-check">✓</span>予約履歴</li>
+        <li><span class="plan-check">✓</span>クーポン配布</li>
       </ul>
-      <a href="#contact" class="plan-btn">始める</a>
+      <a href="#contact" class="plan-btn">追加する</a>
     </div>
   </div>
   <p class="pricing-footnote">※ 表示価格はすべて消費税抜きです。別途、消費税が加算されます。</p>
