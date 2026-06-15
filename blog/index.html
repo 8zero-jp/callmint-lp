@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ブログ | Callmint — サロン向けAI電話自動化</title>
+<meta name="description" content="Callmintブログ。ヘアサロン・ネイルサロン・エステ・リラクゼーションサロンの電話対応自動化・AI活用・経営改善に関する実践情報を発信しています。">
+<link rel="canonical" href="https://callmintai.com/blog/">
+<meta property="og:title" content="ブログ | Callmint">
+<meta property="og:description" content="サロン向けAI電話自動化の実践情報。一人サロン・ネイル・エステ・ヘアサロンの経営者に向けた記事を発信。">
+<meta property="og:url" content="https://callmintai.com/blog/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://callmintai.com/blog/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://callmintai.com/blog/hero.jpg">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Callmint ブログ",
+  "url": "https://callmintai.com/blog/",
+  "description": "サロン向けAI電話自動化の実践情報ブログ",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Callmint",
+    "url": "https://callmintai.com"
+  }
+}
+</script>
+<style>
+:root {
+  --bg: #f5f7f4;
+  --surface: #ffffff;
+  --surface2: #eef4ec;
+  --green: #2a8a5e;
+  --green-light: #e6f3ed;
+  --green-dark: #1a5c3e;
+  --text: #1a2a1e;
+  --muted: #55685e;
+  --border: #d4e6da;
+  --mint: #3ecfa0;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; min-width: 0; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-weight: 400;
+  overflow-x: clip;
+  line-height: 1.85;
+  width: 100%;
+  max-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img { max-width: 100%; height: auto; display: block; }
+nav img { display: inline-block; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 56px; height: 72px;
+  background: rgba(245,247,244,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-links { display: flex; gap: 32px; }
+.nav-link {
+  font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500;
+  color: var(--muted); text-decoration: none; transition: color .2s;
+}
+.nav-link:hover, .nav-link.active { color: var(--green); }
+.nav-cta {
+  font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 13px;
+  color: #fff; background: var(--green);
+  padding: 10px 26px; border-radius: 100px;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(42,138,94,.3);
+  transition: all .25s;
+}
+.nav-cta:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+/* BLOG HERO */
+.blog-hero {
+  position: relative; min-height: 420px;
+  display: flex; align-items: flex-end;
+  padding: 0; overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.blog-hero-bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.62) saturate(1.05);
+}
+.blog-hero::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, rgba(13,26,18,0.72) 0%, rgba(13,26,18,0.1) 60%);
+}
+.blog-hero-inner {
+  position: relative; z-index: 2;
+  padding: 56px 56px 64px; width: 100%;
+}
+.blog-hero-tag {
+  display: inline-block;
+  font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--mint); border: 1px solid rgba(62,207,160,.4);
+  padding: 5px 14px; border-radius: 100px; margin-bottom: 20px;
+}
+.blog-hero h1 {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-weight: 700; font-size: clamp(28px, 3vw, 42px);
+  color: #fff; line-height: 1.3; margin-bottom: 12px;
+  text-shadow: 0 2px 16px rgba(0,0,0,.2);
+}
+.blog-hero-sub { font-size: 15px; color: rgba(255,255,255,.65); line-height: 1.8; max-width: 520px; }
+
+/* ARTICLES GRID */
+.blog-body { padding: 72px 56px; max-width: 1200px; margin: 0 auto; }
+.articles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+.article-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; overflow: hidden;
+  text-decoration: none; color: var(--text);
+  transition: all .3s; display: flex; flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0,0,0,.04);
+}
+.article-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(42,138,94,.1); border-color: rgba(42,138,94,.25); }
+.article-card-thumb {
+  height: 200px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.article-card-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+.article-card:hover .article-card-thumb img { transform: scale(1.04); }
+.article-card-body { padding: 28px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.article-card-tag {
+  font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--green); background: var(--green-light);
+  padding: 4px 12px; border-radius: 100px;
+  display: inline-block; width: fit-content;
+}
+.article-card-title {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-weight: 700; font-size: 18px; line-height: 1.45;
+  color: var(--text);
+}
+.article-card-desc { font-size: 13px; color: var(--muted); line-height: 1.8; flex: 1; }
+.article-card-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: 'Outfit', sans-serif; font-size: 11px; color: var(--muted);
+  padding-top: 16px; border-top: 1px solid var(--border);
+}
+.article-card-arrow { color: var(--green); font-size: 16px; }
+
+/* CTA */
+.blog-cta {
+  background: var(--green-dark); padding: 72px 56px;
+  text-align: center;
+}
+.blog-cta-title {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-weight: 700; font-size: clamp(22px, 2.5vw, 32px);
+  color: #fff; margin-bottom: 16px;
+}
+.blog-cta-sub { font-size: 14px; color: rgba(255,255,255,.6); margin-bottom: 32px; line-height: 1.8; }
+.blog-cta-btn {
+  display: inline-block;
+  font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 15px;
+  color: var(--green-dark); background: #fff;
+  padding: 16px 40px; border-radius: 100px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+  transition: all .25s;
+}
+.blog-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,.3); }
+
+/* FOOTER */
+footer {
+  padding: 32px 56px; background: var(--green-dark);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-copy { font-size: 12px; color: rgba(255,255,255,.3); font-family: 'Outfit', sans-serif; }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-links a { font-family: 'Outfit', sans-serif; font-size: 12px; color: rgba(255,255,255,.5); text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: #fff; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .blog-hero { padding: 120px 24px 60px; }
+  .blog-body { padding: 48px 24px; }
+  .articles-grid { grid-template-columns: 1fr; gap: 20px; }
+  .blog-cta { padding: 56px 24px; }
+  footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/"><img src="/images/logo-horizotal2.png" alt="Callmint" style="height:40px;"></a>
+  <div class="nav-links">
+    <a href="/#features" class="nav-link">機能</a>
+    <a href="/#case" class="nav-link">導入事例</a>
+    <a href="/#pricing" class="nav-link">料金</a>
+    <a href="/#faq" class="nav-link">よくある質問</a>
+    <a href="/blog/" class="nav-link active">ブログ</a>
+  </div>
+  <a href="/#contact" class="nav-cta">14日間無料で試す</a>
+</nav>
+
+<div class="blog-hero">
+  <img class="blog-hero-bg" src="hero.jpg" alt="モダンな日本のヘアサロン内観">
+  <div class="blog-hero-inner">
+    <div class="blog-hero-tag">BLOG</div>
+    <h1>サロン経営の知識を、<br>もっと実践的に。</h1>
+    <p class="blog-hero-sub">ヘアサロン・ネイルサロン・エステ・リラクゼーションを経営するオーナーに向けた、AI電話自動化と経営改善の実践情報をお届けします。</p>
+  </div>
+</div>
+
+<div class="blog-body">
+  <div class="articles-grid">
+
+    <a href="/blog/ai-phone-salon-comparison/" class="article-card">
+      <div class="article-card-thumb"><img src="/blog/ai-phone-salon-comparison/hero.jpg" alt="サロン向けAI電話比較"></div>
+      <div class="article-card-body">
+        <span class="article-card-tag">比較・選び方</span>
+        <h2 class="article-card-title">サロン向けAI電話サービス比較5選【2026年版】</h2>
+        <p class="article-card-desc">Callmint・電話代行・汎用AIを実データで比較。一人サロン〜多店舗展開まで、規模別おすすめを解説します。</p>
+        <div class="article-card-meta">
+          <span>2026年6月8日</span>
+          <span class="article-card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="/blog/solo-salon-phone-automation/" class="article-card">
+      <div class="article-card-thumb"><img src="/blog/solo-salon-phone-automation/hero.jpg" alt="一人サロンの電話問題"></div>
+      <div class="article-card-body">
+        <span class="article-card-tag">導入事例</span>
+        <h2 class="article-card-title">一人サロンの電話問題を解決した話——月3件の予約取り逃がしがゼロになるまで</h2>
+        <p class="article-card-desc">施術中に電話が取れず、月3件以上の新規予約を逃していた一人ヘアサロン。AI電話導入後のリアルな変化を追いました。</p>
+        <div class="article-card-meta">
+          <span>2026年6月8日</span>
+          <span class="article-card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="/blog/phone-during-treatment/" class="article-card">
+      <div class="article-card-thumb"><img src="/blog/phone-during-treatment/hero.jpg" alt="施術中の機会損失"></div>
+      <div class="article-card-body">
+        <span class="article-card-tag">経営・数字</span>
+        <h2 class="article-card-title">施術中に電話が鳴るたびに損してる話——機会損失の正体</h2>
+        <p class="article-card-desc">「どうせ折り返せばいい」は本当？電話応対の機会損失を月額換算で算出。驚きの数字が明らかに。</p>
+        <div class="article-card-meta">
+          <span>2026年6月8日</span>
+          <span class="article-card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="/blog/nail-salon-phone-automation/" class="article-card">
+      <div class="article-card-thumb"><img src="/blog/nail-salon-phone-automation/hero.jpg" alt="ネイル・エステの電話自動化"></div>
+      <div class="article-card-body">
+        <span class="article-card-tag">ネイル・エステ</span>
+        <h2 class="article-card-title">ネイルサロン・エステの電話自動化ガイド——施術中に電話を取らなくていい環境の作り方</h2>
+        <p class="article-card-desc">ネイル・エステ・アロマ・まつ毛エクステ。4業種別の電話自動化ポイントと導入ステップを徹底解説。</p>
+        <div class="article-card-meta">
+          <span>2026年6月8日</span>
+          <span class="article-card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<div class="blog-cta">
+  <div class="blog-cta-title">まずはデモで体験してみませんか？</div>
+  <p class="blog-cta-sub">050-1793-6450 に電話するだけ。Callmintが実際にどう応対するか、すぐに確かめられます。</p>
+  <a href="tel:05017936450" class="blog-cta-btn">📞 050-1793-6450 デモに電話する</a>
+</div>
+
+<footer>
+  <img src="/images/logo-horizotal2.png" alt="Callmint" style="height:26px;opacity:.55;">
+  <div class="footer-links">
+    <a href="/privacy.html">プライバシーポリシー</a>
+    <a href="/terms.html">利用規約</a>
+    <a href="/tokushoho.html">特定商取引法に基づく表記</a>
+    <a href="https://8zero.co.jp" target="_blank" rel="noopener">運営会社</a>
+  </div>
+  <div class="footer-copy">© 2026 合同会社8ZERO. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
