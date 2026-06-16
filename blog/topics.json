@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "theme": "美容室のリピーター率を上げる5つの仕組み——予約管理から始める顧客定着戦略",
+    "slug": "salon-repeat-customer-strategy",
+    "category": "経営・集客",
+    "targetKeyword": "美容室 リピーター 増やす",
+    "factCheck": false,
+    "status": "pending"
+  },
+  {
+    "id": 2,
+    "theme": "ヘアサロンの口コミを増やす方法——Googleマップ評価を自然に集める仕掛け",
+    "slug": "salon-google-review-strategy",
+    "category": "集客・マーケティング",
+    "targetKeyword": "美容室 口コミ 増やす",
+    "factCheck": false,
+    "status": "pending"
+  },
+  {
+    "id": 3,
+    "theme": "一人サロン開業にかかるコストと回収期間——失敗しない資金計画の立て方",
+    "slug": "solo-salon-startup-cost",
+    "category": "開業・経営",
+    "targetKeyword": "一人サロン 開業 費用",
+    "factCheck": true,
+    "status": "pending"
+  },
+  {
+    "id": 4,
+    "theme": "美容室の予約キャンセル問題を解決する——ノーショウ率を下げる実践テクニック",
+    "slug": "salon-no-show-reduction",
+    "category": "予約管理",
+    "targetKeyword": "美容室 キャンセル 対策",
+    "factCheck": false,
+    "status": "pending"
+  },
+  {
+    "id": 5,
+    "theme": "ネイルサロンの集客をSNSで加速する——Instagram×LINE×AI電話の連携術",
+    "slug": "nail-salon-sns-marketing",
+    "category": "ネイル・エステ",
+    "targetKeyword": "ネイルサロン 集客 SNS",
+    "factCheck": false,
+    "status": "pending"
+  },
+  {
+    "id": 6,
+    "theme": "美容室スタッフの離職を防ぐ環境づくり——「電話当番」をなくすと何が変わるか",
+    "slug": "salon-staff-retention",
+    "category": "スタッフ管理",
+    "targetKeyword": "美容室 スタッフ 離職 防ぐ",
+    "factCheck": false,
+    "status": "pending"
+  },
+  {
+    "id": 7,
+    "theme": "エステサロンの顧客単価を上げるカウンセリング術——電話対応から始まる体験設計",
+    "slug": "esthe-salon-upsell-counseling",
+    "category": "ネイル・エステ",
+    "targetKeyword": "エステ 顧客単価 アップ",
+    "factCheck": false,
+    "status": "pending"
+  },
+  {
+    "id": 8,
+    "theme": "美容室の定休日に予約が入る仕組み——AI電話が休日集客を変える理由",
+    "slug": "salon-holiday-booking-automation",
+    "category": "電話・AI活用",
+    "targetKeyword": "美容室 定休日 予約",
+    "factCheck": false,
+    "status": "pending"
+  },
+  {
+    "id": 9,
+    "theme": "サロン経営の数字を把握する——月次レポートで見えてくる改善ポイント",
+    "slug": "salon-monthly-report-kpi",
+    "category": "経営・数字",
+    "targetKeyword": "サロン 経営 数字 管理",
+    "factCheck": false,
+    "status": "pending"
+  },
+  {
+    "id": 10,
+    "theme": "まつ毛エクステサロンの電話自動化ガイド——施術集中と予約管理を両立する方法",
+    "slug": "eyelash-salon-phone-automation",
+    "category": "ネイル・エステ",
+    "targetKeyword": "まつ毛エクステ サロン 電話",
+    "factCheck": false,
+    "status": "pending"
+  }
+]
