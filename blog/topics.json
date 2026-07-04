@@ -88,5 +88,41 @@
     "targetKeyword": "まつ毛エクステ サロン 電話",
     "factCheck": false,
     "status": "pending"
+  },
+  {
+    "id": 11,
+    "theme": "美容室の留守番電話、正しい設定とメッセージ例文——それでも取りこぼしが減らない理由",
+    "slug": "salon-answering-machine-message",
+    "category": "電話対応",
+    "targetKeyword": "美容室 留守番電話 メッセージ",
+    "factCheck": false,
+    "status": "pending"
+  },
+  {
+    "id": 12,
+    "theme": "サロンボード×電話予約の一元管理術——ホットペッパー併用サロンのダブルブッキング対策",
+    "slug": "salonboard-phone-reservation",
+    "category": "予約管理",
+    "targetKeyword": "サロンボード 電話予約 管理",
+    "factCheck": false,
+    "status": "pending"
+  },
+  {
+    "id": 13,
+    "theme": "美容室の営業時間外にかかってくる予約電話、どう受ける？——夜と朝の予約ニーズを逃さない方法",
+    "slug": "salon-after-hours-booking",
+    "category": "電話対応",
+    "targetKeyword": "美容室 営業時間外 電話",
+    "factCheck": false,
+    "status": "pending"
+  },
+  {
+    "id": 14,
+    "theme": "折り返し電話が繋がらない問題——美容室の「不在着信リスト」を売上に変える方法",
+    "slug": "salon-callback-management",
+    "category": "電話対応",
+    "targetKeyword": "美容室 折り返し 電話 繋がらない",
+    "factCheck": false,
+    "status": "pending"
   }
 ]
