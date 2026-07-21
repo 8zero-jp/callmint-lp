@@ -335,6 +335,20 @@ nav {
 .value-title { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 10px; color: var(--text); }
 .value-desc { font-size: 13px; color: var(--muted); line-height: 1.9; }
 
+/* ── GUIDE ── */
+.guide { padding: 112px 56px; background: var(--bg); border-top: 1px solid var(--border); }
+.guide-feature { display: block; margin-bottom: 20px; padding: 36px 40px; background: var(--green-dark); color: #fff; border-radius: 20px; text-decoration: none; transition: all .3s; }
+.guide-feature:hover { transform: translateY(-4px); box-shadow: 0 24px 56px rgba(26,92,62,.25); }
+.guide-feature-tag { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; opacity: .7; }
+.guide-feature-title { font-family: 'Zen Kaku Gothic New', sans-serif; font-weight: 700; font-size: clamp(20px, 2.2vw, 28px); margin: 8px 0 6px; line-height: 1.35; }
+.guide-feature-desc { font-size: 13px; opacity: .85; line-height: 1.8; }
+.guide-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.guide-card { display: block; padding: 24px 26px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; text-decoration: none; transition: all .3s; }
+.guide-card:hover { border-color: rgba(42,138,94,.35); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(42,138,94,.1); }
+.guide-card-title { font-weight: 700; font-size: 15px; color: var(--text); line-height: 1.55; margin-bottom: 8px; }
+.guide-card-arrow { font-family: 'Outfit', sans-serif; font-size: 12px; color: var(--green); font-weight: 700; }
+@media (max-width: 768px) { .guide { padding: 72px 20px; } .guide-grid { grid-template-columns: 1fr; } .guide-feature { padding: 28px 24px; } }
+
 /* ── STATS ── */
 .stats {
   display: grid; grid-template-columns: repeat(3,1fr);
@@ -772,8 +786,8 @@ footer {
 <section class="hero">
   <div class="hero-left">
     <div class="hero-tag">電話応対を、まるごと代行</div>
-    <h1 class="hero-title">その手は、<em>お客様のために。</em></h1>
-    <p class="hero-sub">電話が鳴るたびに施術を止めていませんか？Callmintは24時間365日、あなたのサロンの代わりに電話に出ます。</p>
+    <h1 class="hero-title">施術の手を、<em>止めるな。</em></h1>
+    <p class="hero-sub">電話が鳴るたびに施術を中断していませんか。Callmintは24時間365日、あなたのサロンの電話を代わりに受けます。</p>
     <div class="hero-quote">施術に集中できる環境が、最高のデザインを生み出します。</div>
     <div class="hero-actions">
       <a href="#contact" class="btn-primary">14日間 無料で試す</a>
@@ -1114,6 +1128,68 @@ footer {
         <div class="faq-a">はい、14日間の無料トライアルをご用意しています。クレジットカード不要でお試しいただけます。</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- GUIDE / お役立ちガイド -->
+<section class="guide" id="guide">
+  <div class="section-tag">お役立ちガイド</div>
+  <h2 class="section-title">サロンの電話対応、この1本から。</h2>
+  <p class="section-sub">料金・比較・事例から、業種別の使いこなしまで。導入前の疑問をまとめました。</p>
+  <a class="guide-feature" href="/blog/salon-phone-complete-guide/">
+    <div class="guide-feature-tag">完全ガイド</div>
+    <div class="guide-feature-title">美容室の電話対応 完全ガイド【2026】</div>
+    <div class="guide-feature-desc">施術中の取りこぼし、留守電・電話代行・AI電話の比較、業種別の最適解まで。電話対応の悩みをこの1本で。</div>
+  </a>
+  <div class="guide-grid">
+    <a class="guide-card" href="/blog/salon-ai-phone-cost/">
+      <div class="guide-card-title">AI電話の料金・費用相場｜元が取れる件数</div>
+      <span class="guide-card-arrow">記事を読む →</span>
+    </a>
+    <a class="guide-card" href="/blog/ai-phone-salon-comparison/">
+      <div class="guide-card-title">サロン向けAI電話サービス比較5選</div>
+      <span class="guide-card-arrow">記事を読む →</span>
+    </a>
+    <a class="guide-card" href="/cases/">
+      <div class="guide-card-title">導入事例｜BONHEUR HAIRの現場から</div>
+      <span class="guide-card-arrow">事例を見る →</span>
+    </a>
+    <a class="guide-card" href="/blog/salon-answering-machine-message/">
+      <div class="guide-card-title">留守番電話メッセージ例文集【そのまま使える】</div>
+      <span class="guide-card-arrow">記事を読む →</span>
+    </a>
+    <a class="guide-card" href="/blog/salon-cancellation-noshow-prevention/">
+      <div class="guide-card-title">キャンセル・ノーショウを減らす実践テク7選</div>
+      <span class="guide-card-arrow">記事を読む →</span>
+    </a>
+    <a class="guide-card" href="/blog/phone-during-treatment/">
+      <div class="guide-card-title">施術中に電話が鳴るたび損してる話</div>
+      <span class="guide-card-arrow">記事を読む →</span>
+    </a>
+    <a class="guide-card" href="/blog/solo-salon-phone-automation/">
+      <div class="guide-card-title">一人サロンの電話問題を解決した話</div>
+      <span class="guide-card-arrow">記事を読む →</span>
+    </a>
+    <a class="guide-card" href="/blog/nail-salon-phone-automation/">
+      <div class="guide-card-title">ネイル・エステの電話自動化ガイド</div>
+      <span class="guide-card-arrow">記事を読む →</span>
+    </a>
+    <a class="guide-card" href="/blog/solo-salon-startup-cost-payback/">
+      <div class="guide-card-title">一人サロン開業費用の相場と回収期間</div>
+      <span class="guide-card-arrow">記事を読む →</span>
+    </a>
+    <a class="guide-card" href="/blog/salon-repeater-customer-retention/">
+      <div class="guide-card-title">リピーター率を上げる5つの仕組み</div>
+      <span class="guide-card-arrow">記事を読む →</span>
+    </a>
+    <a class="guide-card" href="/blog/hair-salon-reviews-increase/">
+      <div class="guide-card-title">美容室の口コミを自然に増やす方法</div>
+      <span class="guide-card-arrow">記事を読む →</span>
+    </a>
+    <a class="guide-card" href="/blog/">
+      <div class="guide-card-title">ブログ記事の一覧をすべて見る</div>
+      <span class="guide-card-arrow">一覧へ →</span>
+    </a>
   </div>
 </section>
 
