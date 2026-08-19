@@ -24,7 +24,7 @@
     "category": "開業・経営",
     "targetKeyword": "一人サロン 開業 費用",
     "factCheck": true,
-    "status": "pending"
+    "status": "published"
   },
   {
     "id": 4,
@@ -33,7 +33,7 @@
     "category": "予約管理",
     "targetKeyword": "美容室 キャンセル 対策",
     "factCheck": false,
-    "status": "pending"
+    "status": "published"
   },
   {
     "id": 5,
@@ -96,7 +96,7 @@
     "category": "電話対応",
     "targetKeyword": "美容室 留守番電話 メッセージ",
     "factCheck": false,
-    "status": "pending"
+    "status": "published"
   },
   {
     "id": 12,
