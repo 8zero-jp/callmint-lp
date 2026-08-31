@@ -59,3 +59,17 @@ python3 tools/seo_fix.py --migrate-domain --yes    # 実行
 移行先は `seo/keywords.json` の `plannedSite`。実行すると `site` がそこへ切り替わり、
 canonical・OG・構造化データ・sitemap・robots・llms.txt がすべて追従する。
 メールアドレス（`support@...`）は URL ではないので自動では変えない。
+
+## 触ってはいけないファイル
+
+`tools/seo_fix.py` と `tools/seo_audit.py` は、ルート直下の `*.html` を
+「ページ」とみなして meta を足したり sitemap に載せたりする。次のものは実ページでは
+ないので `is_page()` で除外している。**新しく同種のファイルを置くときはここに足す。**
+
+| ファイル | 何か |
+|---|---|
+| `og-image.html` | OG画像を書き出すための内部テンプレート |
+| `google<英数字>.html` | Search Console の所有権確認ファイル。**1バイトでも変わると確認に失敗する** |
+
+確認ファイルは sitemap に載せず、robots.txt でもブロックしない
+（Google が取得できないと確認できなくなる）。

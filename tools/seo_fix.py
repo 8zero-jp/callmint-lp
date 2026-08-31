@@ -53,11 +53,23 @@ def url_of(p: str) -> str:
     return "/" + (r[: -len("index.html")] if r.endswith("index.html") else r)
 
 
+
+# 実ページではない HTML。監査も自動修正もしない。
+#   og-image.html            … OG 画像を書き出すための内部テンプレート
+#   google*.html             … Search Console の所有権確認ファイル。
+#                              **1バイトでも変えると確認に失敗する**ので絶対に触らない
+def is_page(rel_path: str) -> bool:
+    if rel_path == "og-image.html":
+        return False
+    if re.fullmatch(r"google[0-9a-f]+\.html", rel_path):
+        return False
+    return True
+
 def all_pages() -> list[str]:
     out: list[str] = []
     for pat in ("*.html", "*/index.html", "*/*/index.html"):
         out += glob.glob(os.path.join(ROOT, pat))
-    return sorted(p for p in out if rel(p) != "og-image.html")
+    return sorted(p for p in out if is_page(rel(p)))
 
 
 

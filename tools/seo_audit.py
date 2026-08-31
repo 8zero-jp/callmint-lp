@@ -87,6 +87,18 @@ def types_in(obj) -> set:
     return found
 
 
+
+# 実ページではない HTML。監査も自動修正もしない。
+#   og-image.html            … OG 画像を書き出すための内部テンプレート
+#   google*.html             … Search Console の所有権確認ファイル。
+#                              **1バイトでも変えると確認に失敗する**ので絶対に触らない
+def is_page(rel_path: str) -> bool:
+    if rel_path == "og-image.html":
+        return False
+    if re.fullmatch(r"google[0-9a-f]+\.html", rel_path):
+        return False
+    return True
+
 def pages() -> list[str]:
     out = []
     for pat in ("*.html", "*/index.html", "*/*/index.html"):
@@ -98,7 +110,7 @@ def main() -> int:
     as_json = "--json" in sys.argv
     strict = "--strict" in sys.argv
 
-    all_pages = [p for p in pages() if rel(p) != "og-image.html"]
+    all_pages = [p for p in pages() if is_page(rel(p))]
     linked_to: set[str] = set()
     page_meta: dict[str, dict] = {}
 
