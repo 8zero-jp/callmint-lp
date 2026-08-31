@@ -199,6 +199,18 @@ def main() -> int:
             if src.endswith((".png", ".jpg", ".jpeg")) and "lockup" not in src and "favicon" not in src:
                 add("warn", u, "img-not-webp", f"WebP 化されていない画像: {src}")
 
+        # --- HTML の壊れ ---
+        # 生成で実際に起きた2件（2026-08-31）: 見出し id の重複と </p> の閉じ忘れ。
+        # id が重複するとアンカーが誤爆し、目次も二重になる。
+        ids = re.findall(r'<[^>]+\sid="([^"]+)"', body)
+        for dup in sorted({i for i in ids if ids.count(i) > 1}):
+            add("error", u, "duplicate-id", f'id="{dup}" が {ids.count(dup)}回ある（アンカーが誤爆する）')
+
+        opened = len(re.findall(r"<p[\s>]", body))
+        closed = len(re.findall(r"</p>", body))
+        if opened != closed:
+            add("error", u, "unbalanced-p", f"<p> {opened}個 / </p> {closed}個 で対応していない")
+
         # --- 捏造されやすい表現 ---
         # 実在しない成果・出典のない統計は、過去に実際に載っていた。
         # 機械では真偽を判定できないので「人間が確認する対象」として挙げるだけにする。
