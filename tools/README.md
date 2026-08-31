@@ -38,3 +38,9 @@ ANTHROPIC_API_KEY=... node tools/seo_daily.mjs   # 実際に書かせる
 - **1日1件だけ**。まとめて生成すると質が落ち、レビューできない差分になる
 - 生成後に `seo_audit.py --strict` を通す。**通らなければ差分を捨てる**
 - 2週間以内に触った URL は選び直す（`seo/log.json`）
+
+## リポジトリ側で1回だけやる設定
+
+`gh pr create` を `GITHUB_TOKEN` で行うため、**Settings → Actions → General →
+Workflow permissions** で「Allow GitHub Actions to create and approve pull requests」を
+有効にしておく。無効のままだと日次ワークフローは PR 作成のところで失敗する。

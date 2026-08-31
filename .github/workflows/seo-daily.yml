@@ -39,7 +39,7 @@ jobs:
       - run: pip install --quiet pillow
 
       - name: 監査（現状）
-        run: python3 tools/seo_audit.py | tee audit-before.txt
+        run: python3 tools/seo_audit.py | tee /tmp/audit-before.txt
 
       - name: 日次エージェント
         env:
@@ -110,7 +110,7 @@ jobs:
             echo
             echo "## 監査 — 適用前"
             echo '```'
-            head -40 audit-before.txt
+            head -40 /tmp/audit-before.txt
             echo '```'
             echo
             echo "## 監査 — 適用後"
