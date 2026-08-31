@@ -48,7 +48,7 @@
 
 ## ドメインの方針（2026-08-31 決定）
 
-**MOYO Call も moyo.tokyo 配下へ集約する。** ブランドは MOYO で確定しており、
+**MOYO Call は `call.moyo.tokyo` へ集約する（2026-08-31 確定）。** ブランドは MOYO で確定しており、
 `moyo.tokyo` は既に稼働している（`survey.moyo.tokyo` = MOYO Condition／サーベイ）。
 `callmintai.com` は主要KWで圏外＝積み上がったドメイン評価が事実上ゼロなので、
 **移行コストが最も安いのが今**で、記事が増えるほど高くなる。
@@ -59,7 +59,8 @@
 
 ```sh
 # 1. ページ内の絶対URL・構造化データ・llms.txt・keywords.json を一括書き換え
-python3 tools/seo_fix.py --migrate-domain https://call.moyo.tokyo
+python3 tools/seo_fix.py --migrate-domain          # 下ごしらえの確認だけ
+python3 tools/seo_fix.py --migrate-domain --yes    # 実行
 python3 tools/seo_fix.py            # sitemap / robots を新ドメインで再生成
 python3 tools/seo_audit.py --strict  # canonical の不整合が 0 件になることを確認
 ```
@@ -73,13 +74,27 @@ python3 tools/seo_audit.py --strict  # canonical の不整合が 0 件になる�
 6. cms（`app.callmintai.com`）・メール・Twilio・Stripe の参照は別途。
    手順書は `callmint-cms/docs/2026-08-18-moyo-domain-migration-plan.md`
 
-### 移行前に決めること
+### 決まったこと・残っていること
 
-- **サブドメインかパスか**。`call.moyo.tokyo` と `moyo.tokyo/call` では、後者のほうが
-  moyo.tokyo 本体の評価を共有できる。サーベイが `survey.moyo.tokyo` でサブドメイン運用に
-  なっているため揃えるなら前者だが、**SEO 上有利なのはパス**
-- 移行のタイミング。**記事の拡充が一巡してからのほうがよい**（移行直後は順位が
-  一時的に揺れるため、揺れと施策の効果が混ざると判断できなくなる）
+- ~~サブドメインかパスか~~ → **`call.moyo.tokyo`（サブドメイン）で確定**。
+  survey が `survey.moyo.tokyo` なので運用を揃える。SEO 上はパスのほうが
+  moyo.tokyo 本体の評価を共有できるぶん有利だが、その差より運用の一貫性を取った。
+  サブドメインは別サイト扱いになりうるので、**moyo.tokyo 側から call.moyo.tokyo へ
+  相互にリンクを張る**ことで補う
+- **移行のタイミング**。記事の拡充が一巡してからにする（移行直後は順位が
+  一時的に揺れるため、揺れと施策の効果が混ざると何が効いたか判断できなくなる）
+
+### 順番を間違えるとインデックスから落ちる
+
+DNS も 301 も無いうちに canonical を新ドメインへ向けると、Google は
+「存在しない正規URL」を見ることになる。復旧に数ヶ月かかるので、
+`--migrate-domain` は **`--yes` を付けないと書き換えない**ようにしてある。
+`--yes` 無しで実行すると、先に済ませるべき3点（DNS・1対1の301・
+Search Console のプロパティ登録）だけが出る。
+
+なお `support@callmintai.com` のようなメールアドレスは URL ではないので
+自動では書き換えない。新ドメインのメールボックスを用意してから手で直す
+（移行スクリプトが残っているファイルを名指しする）。
 
 ### 単独の「MOYO」は追わない
 

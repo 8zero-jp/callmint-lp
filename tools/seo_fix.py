@@ -418,6 +418,17 @@ def migrate_domain(old: str, new: str) -> None:
                 json.dump(data, f, ensure_ascii=False, indent=2)
                 f.write("\n")
             log(f"seo/keywords.json: site を {new} に")
+    # メールアドレスは URL ではないので触らない。実際に新ドメインで
+    # メールボックスを用意するかどうかは事業側の判断で、勝手に変えると
+    # 問い合わせが宛先不明になる。
+    # 探すのは https:// 付きの URL ではなくホスト名。メールアドレスは
+    # スキームを持たないので、URL で探すと取りこぼす。
+    old_host = old.split("//", 1)[-1]
+    left = [rel(f) for f in all_pages() if old_host in open(f, encoding="utf-8").read()]
+    if left:
+        print(f"\n※ 次のファイルには {old_host} が残っている（メールアドレスなど URL でない参照）: "
+              + ", ".join(left) + "\n  新ドメインのメールボックスを用意してから手で直すこと。")
+
     print(f"\n{n}ファイルを書き換えた。次にやること:\n"
           f"  1. 旧ドメインで {old}/<path> → {new}/<path> の**1対1** 301 を設定する\n"
           f"     （トップにまとめてリダイレクトすると評価が渡らない）\n"
@@ -426,14 +437,64 @@ def migrate_domain(old: str, new: str) -> None:
           f"  4. python3 tools/seo_audit.py --strict が通ることを確認する")
 
 
+def planned_site() -> str:
+    """移行先として決まっているドメイン（seo/keywords.json の plannedSite）。"""
+    try:
+        with open(os.path.join(ROOT, "seo", "keywords.json"), encoding="utf-8") as f:
+            return json.load(f).get("plannedSite", "").rstrip("/")
+    except Exception:
+        return ""
+
+
+def preflight(old: str, new: str) -> None:
+    """--yes が無いときは書き換えずに、先にやることだけを出す。
+
+    DNS も 301 も無いうちに canonical を新ドメインへ向けると、Google は
+    「存在しない正規URL」を見ることになり、インデックスから落ちる。
+    順番を間違えると復旧に数ヶ月かかるので、意図的に1段止めている。
+    """
+    print(f"""ドメイン移行の下ごしらえ: {old} → {new}
+
+まだ何も書き換えていない。**先に** 次の3つが動いていることを確認すること。
+
+  1. {new} が実際にサイトを配信している（DNS とホスティングが済んでいる）
+  2. {old}/<path> → {new}/<path> の **1対1** の 301 が設定済み
+     （トップにまとめてリダイレクトすると評価が渡らない）
+  3. Search Console に {new} のプロパティを登録済み
+
+3つとも済んでいるなら、書き換えを実行する:
+
+  python3 tools/seo_fix.py --migrate-domain --yes
+  python3 tools/seo_fix.py
+  python3 tools/seo_audit.py --strict
+
+そのあと人間がやること:
+
+  - Search Console の **アドレス変更ツール** を使う（省くと別サイト扱いが数ヶ月続く）
+  - GitHub secret の GSC_SITE_URL を新プロパティへ差し替える
+  - {old} は最低2年維持する（切ると 301 が消えて評価が落ちる）
+
+いま {new} へ向けたらどれだけ直すことになるかは、これで確認できる:
+
+  MOYO_SITE_URL={new} python3 tools/seo_audit.py""")
+
+
 def main() -> int:
     if "--migrate-domain" in sys.argv:
         i = sys.argv.index("--migrate-domain")
-        try:
-            new = sys.argv[i + 1]
-        except IndexError:
-            print("使い方: python3 tools/seo_fix.py --migrate-domain https://call.moyo.tokyo")
+        arg = sys.argv[i + 1] if len(sys.argv) > i + 1 else ""
+        new = arg if arg.startswith("http") else planned_site()
+        if not new:
+            print("移行先が決まっていない。seo/keywords.json の plannedSite を設定するか、"
+                  "URL を直接渡す:\n"
+                  "  python3 tools/seo_fix.py --migrate-domain https://call.moyo.tokyo --yes")
             return 2
+        if new.rstrip("/") == SITE:
+            print(f"すでに {SITE} で配信している。移行は不要。")
+            return 0
+        if "--yes" not in sys.argv:
+            preflight(SITE, new)
+            return 0
         migrate_domain(SITE, new)
         return 0
 

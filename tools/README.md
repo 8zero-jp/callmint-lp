@@ -44,3 +44,18 @@ ANTHROPIC_API_KEY=... node tools/seo_daily.mjs   # 実際に書かせる
 `gh pr create` を `GITHUB_TOKEN` で行うため、**Settings → Actions → General →
 Workflow permissions** で「Allow GitHub Actions to create and approve pull requests」を
 有効にしておく。無効のままだと日次ワークフローは PR 作成のところで失敗する。
+
+## ドメイン移行（callmintai.com → call.moyo.tokyo）
+
+```sh
+python3 tools/seo_fix.py --migrate-domain          # 何が要るかを出すだけ（書き換えない）
+python3 tools/seo_fix.py --migrate-domain --yes    # 実行
+```
+
+**DNS・1対1の301・Search Console のプロパティ登録が済んでから**実行すること。
+先に canonical を向けると、存在しない正規URLを指すことになりインデックスから落ちる。
+そのため `--yes` を付けないと書き換えないようにしてある。
+
+移行先は `seo/keywords.json` の `plannedSite`。実行すると `site` がそこへ切り替わり、
+canonical・OG・構造化データ・sitemap・robots・llms.txt がすべて追従する。
+メールアドレス（`support@...`）は URL ではないので自動では変えない。
