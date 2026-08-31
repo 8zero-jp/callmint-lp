@@ -17,7 +17,24 @@ import glob
 from datetime import date
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = "https://callmintai.com"
+def site_url() -> str:
+    """公開ドメインの正本は seo/keywords.json の "site"。
+
+    MOYO Call を moyo.tokyo 配下へ移すときは、そこ1箇所を書き換えれば
+    sitemap・canonical・構造化データの生成がすべて追従する。
+    環境変数 MOYO_SITE_URL があればそれを優先する（移行の検証用）。
+    """
+    env = os.environ.get("MOYO_SITE_URL")
+    if env:
+        return env.rstrip("/")
+    try:
+        with open(os.path.join(ROOT, "seo", "keywords.json"), encoding="utf-8") as f:
+            return json.load(f)["site"].rstrip("/")
+    except Exception:
+        return "https://callmintai.com"
+
+
+SITE = site_url()
 
 # 検索結果で切れない範囲。日本語は全角基準で数える。
 TITLE_MAX = 35

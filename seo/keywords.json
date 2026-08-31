@@ -214,7 +214,7 @@
       "id": "brand",
       "name": "指名検索「MOYO」（ブランド確立）",
       "priority": 3,
-      "rationale": "ドメインが callmintai.com のままだと「MOYO」でブランドが立たない。seo/STRATEGY.md のドメイン判断が前提。",
+      "rationale": "ブランドは MOYO で確定し、moyo.tokyo へ集約する方針（seo/STRATEGY.md）。単独の「MOYO」は既存の衣料・文具ブランドが EC で面を取っているため追わない。狙うのは複合語。移行後は site を書き換えれば全ツールが追従する。",
       "pillar": "/",
       "keywords": [
         {
@@ -235,8 +235,15 @@
           "kw": "MOYO 料金",
           "intent": "navigational",
           "priority": 3,
-          "url": "/pricing/",
-          "status": "planned"
+          "url": "/",
+          "status": "live"
+        },
+        {
+          "kw": "MOYO サロン",
+          "intent": "navigational",
+          "priority": 3,
+          "url": "/",
+          "status": "live"
         }
       ]
     }

@@ -23,7 +23,10 @@ import { fileURLToPath } from "node:url";
 import { fetchSearchPerformance } from "./gsc.mjs";
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const SITE = "https://callmintai.com";
+// 公開ドメインの正本は seo/keywords.json の "site"（tools/seo_fix.py と同じ）
+const SITE = (process.env.MOYO_SITE_URL
+  || JSON.parse(fs.readFileSync(path.join(ROOT, "seo", "keywords.json"), "utf-8")).site
+).replace(/\/$/, "");
 const LOG_PATH = path.join(ROOT, "seo", "log.json");
 const DRY = process.argv.includes("--dry-run");
 
@@ -98,7 +101,11 @@ const BRAND = `
   「美容室の電話を自動化する」）。ただし不自然な詰め込みはしない。
 
 MOYO Call の事実（これ以外の仕様を勝手に作らない）:
-- 月額 ¥5,480（Starter・月50件まで）／ ¥19,800（Growth・月200件まで）
+- 料金は「プラン」ではなく **使う機能の数** で決まる（電話 / 集客 / LINE会員 / サーベイ の4種）。
+  基本料は月額・税抜で 1つ ¥5,000 / 2つ ¥9,000 / 3つ ¥13,000 / 4つ ¥15,000。
+  **電話を選んだときだけ**通話量を加算: 月50件まで +¥0 / 月200件まで +¥10,000 / 超過 ¥100 per 件。
+  例: 電話のみ月50件まで ¥5,000、電話のみ月200件まで ¥15,000、電話＋LINE会員で月200件まで ¥19,000。
+  **Starter / Growth という呼び方はもう使わない**（旧体系）
 - 既存の電話番号を転送設定するだけ。工事・機器・アプリ不要。最短即日
 - 24時間365日、予約の受付・変更・キャンセル・よくある質問に応答
 - 全通話をテキスト化して管理画面に記録。スタッフへ即時通知

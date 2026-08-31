@@ -13,6 +13,7 @@
 | ページ重量 | 画像だけで **29MB** あった（→ 0.93MB に修正済み） |
 | 技術SEO | error 6件 / warn 104件 あった（→ error 0件 / warn 19件） |
 | Search Console | **未接続**。順位データが取れていない |
+| ドメイン | ブランドは MOYO、公開は callmintai.com。**moyo.tokyo へ集約する方針**（下記） |
 
 要するに「on-page の型はできているのに、**中身の密度と表示速度が足りず、計測もしていない**」
 状態だった。SEOが弱いのは施策不足ではなく、この3点。
@@ -45,32 +46,46 @@
 - **地域名の量産**（「美容室 電話代行 渋谷」等）: 中身の無いページが量産されるだけで、
   現在の記事密度では逆効果。主戦場で1位を取ってから検討する。
 
-## ドメインをどうするか（提案）
+## ドメインの方針（2026-08-31 決定）
 
-**結論: 移すなら今。ただし「ブランドを MOYO で確定させる」判断が先。**
+**MOYO Call も moyo.tokyo 配下へ集約する。** ブランドは MOYO で確定しており、
+`moyo.tokyo` は既に稼働している（`survey.moyo.tokyo` = MOYO Condition／サーベイ）。
+`callmintai.com` は主要KWで圏外＝積み上がったドメイン評価が事実上ゼロなので、
+**移行コストが最も安いのが今**で、記事が増えるほど高くなる。
 
-判断材料:
+### 移行の手順
 
-| | 内容 |
-|---|---|
-| 失うもの | ほぼ無い。callmintai.com は主要KWで圏外＝積み上がったドメイン評価が事実上ゼロ。移行コストが最も安いのが今で、記事が増えるほど高くなる |
-| 得るもの | ブランドとドメインの一致。今は LP に「MOYO Call」と書いてあるのに URL が callmintai.com で、指名検索・名刺・口頭説明のすべてで一段説明が要る |
-| 巻き込む範囲 | LP だけでは済まない。cms（`app.callmintai.com`）、メール、Twilio、Stripe、Search Console のプロパティ再登録。手順書は `callmint-cms/docs/2026-08-18-moyo-domain-migration-plan.md` にある |
-| やらない場合のコスト | 「Callmint」と「MOYO」の二重ブランドが恒久化する。SEO 上は致命傷ではないが、指名検索が育たない |
+コード側は1コマンドで終わる。落とすと評価が消えるのは 2 と 3。
 
-**推奨する進め方**:
+```sh
+# 1. ページ内の絶対URL・構造化データ・llms.txt・keywords.json を一括書き換え
+python3 tools/seo_fix.py --migrate-domain https://call.moyo.tokyo
+python3 tools/seo_fix.py            # sitemap / robots を新ドメインで再生成
+python3 tools/seo_audit.py --strict  # canonical の不整合が 0 件になることを確認
+```
 
-1. まず **ブランド名を MOYO で確定**する（ここが決まらないうちは動かさない）
-2. 確定したら `moyo` を含むドメインを取得し、**LP を先に移す**（cms は後でよい）
-3. 旧URL → 新URL を **1対1で 301**。トップにまとめてリダイレクトしない（評価が渡らない）
-4. Search Console で新旧プロパティを両方登録し、**アドレス変更ツール**を使う
-5. `sitemap.xml` / `canonical` / `llms.txt` / 構造化データの `@id` を一斉に書き換える
-   （`tools/seo_fix.py` の `SITE` 定数を変えれば sitemap と robots は自動追従する）
-6. 旧ドメインは最低2年維持する。切ると 301 が消えて評価が落ちる
+2. **旧URL → 新URL を1対1で 301**。`callmintai.com/blog/xxx/` → `call.moyo.tokyo/blog/xxx/`。
+   **トップにまとめてリダイレクトしない**（評価が渡らず、実質やり直しになる）
+3. **Search Console で新プロパティを登録し、アドレス変更ツールを使う**。
+   これを省くと、Google が別サイトとして扱い直すまで数ヶ月かかる
+4. `GSC_SITE_URL` の secret を新プロパティへ差し替える（日次エージェントの参照先）
+5. **旧ドメインは最低2年維持する**。切ると 301 が消えて評価が落ちる
+6. cms（`app.callmintai.com`）・メール・Twilio・Stripe の参照は別途。
+   手順書は `callmint-cms/docs/2026-08-18-moyo-domain-migration-plan.md`
 
-**移行を保留するなら**: それはそれで構わない。その場合は `seo/keywords.json` の
-`brand` クラスタの優先度を下げ、サロンクラスタに全振りする。
-中途半端に両ブランドで記事を書き分けるのが一番損。
+### 移行前に決めること
+
+- **サブドメインかパスか**。`call.moyo.tokyo` と `moyo.tokyo/call` では、後者のほうが
+  moyo.tokyo 本体の評価を共有できる。サーベイが `survey.moyo.tokyo` でサブドメイン運用に
+  なっているため揃えるなら前者だが、**SEO 上有利なのはパス**
+- 移行のタイミング。**記事の拡充が一巡してからのほうがよい**（移行直後は順位が
+  一時的に揺れるため、揺れと施策の効果が混ざると判断できなくなる）
+
+### 単独の「MOYO」は追わない
+
+日本では既に衣料・文具の MOYO ブランドが EC で面を取っている。異業種なので実害は無いが、
+この語で1位を取りに行くのは費用対効果が悪い。狙うのは「MOYO 電話」「MOYO サロン」
+「MOYO Call」の複合語。
 
 ## 1位までの道筋
 

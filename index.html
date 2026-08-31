@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="38ZEoGSRH3ySirEISJhRONcJuKX73GG3q-e7h_nm5rI">
 <title>サロン・美容室の電話対応をAIが24時間代行｜MOYO Call</title>
-<meta name="description" content="MOYO Callは美容室・ネイル・エステなどサロン専門のAI電話予約代行サービス。24時間365日、施術中の電話もAIが応対し予約を自動受付。月額¥5,480〜、工事不要・最短即日導入、14日間無料トライアル。">
+<meta name="description" content="MOYO Callは美容室・ネイル・エステなどサロン専門のAI電話予約代行サービス。24時間365日、施術中の電話もAIが応対し予約を自動受付。月額¥5,000〜、工事不要・最短即日導入、14日間無料トライアル。">
 <meta name="keywords" content="サロン 電話 自動化,美容室 電話 対応,AI 電話代行,AI 電話自動応答,電話予約 自動化,一人サロン 電話,ネイルサロン 電話,エステ 電話 受付,MOYO Call">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://callmintai.com/">
@@ -14,13 +14,13 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://callmintai.com/">
 <meta property="og:title" content="サロン・美容室の電話対応をAIが24時間代行｜MOYO Call">
-<meta property="og:description" content="美容室・ネイル・エステ専門のAI電話予約代行。24時間365日、施術中の電話もAIが応対。月額¥5,480〜、工事不要・最短即日、14日間無料トライアル。">
+<meta property="og:description" content="美容室・ネイル・エステ専門のAI電話予約代行。24時間365日、施術中の電話もAIが応対。月額¥5,000〜、工事不要・最短即日、14日間無料トライアル。">
 <meta property="og:image" content="https://callmintai.com/images/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="サロン・美容室の電話対応をAIが24時間代行｜MOYO Call">
-<meta name="twitter:description" content="美容室・ネイル・エステ専門のAI電話予約代行。24時間365日応対、月額¥5,480〜、最短即日導入、14日間無料。">
+<meta name="twitter:description" content="美容室・ネイル・エステ専門のAI電話予約代行。24時間365日応対、月額¥5,000〜、最短即日導入、14日間無料。">
 <meta name="twitter:image" content="https://callmintai.com/images/og-image.png">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
@@ -48,7 +48,9 @@
       "url": "https://callmintai.com/",
       "name": "MOYO",
       "inLanguage": "ja",
-      "publisher": { "@id": "https://callmintai.com/#organization" }
+      "publisher": {
+        "@id": "https://callmintai.com/#organization"
+      }
     },
     {
       "@type": "SoftwareApplication",
@@ -56,22 +58,38 @@
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web",
       "url": "https://callmintai.com/",
-      "description": "サロン専門のAI電話予約代行サービス。24時間365日、施術中の電話もAIが応対し予約を自動受付します。",
-      "publisher": { "@id": "https://callmintai.com/#organization" },
+      "description": "サロン専門のAI電話予約代行サービス。24時間365日、施術中の電話もAIが応対し予約を自動受付します。料金は使う機能の数で決まり、電話を選んだときだけ通話量を加算します。",
+      "publisher": {
+        "@id": "https://callmintai.com/#organization"
+      },
       "offers": [
         {
           "@type": "Offer",
-          "name": "Starter",
-          "price": "5480",
+          "name": "機能1つ",
+          "price": "5000",
           "priceCurrency": "JPY",
-          "description": "受付だけ自動化したいサロン向け。月50件まで。"
+          "description": "電話・集客・LINE会員・サーベイから1つ。電話を選んだ場合は月50件まで加算なし。"
         },
         {
           "@type": "Offer",
-          "name": "Growth",
-          "price": "19800",
+          "name": "機能2つ",
+          "price": "9000",
           "priceCurrency": "JPY",
-          "description": "電話業務を丸ごと任せたいサロン向け。月200件まで。"
+          "description": "4機能のうち2つを組み合わせた場合の基本料。"
+        },
+        {
+          "@type": "Offer",
+          "name": "機能3つ",
+          "price": "13000",
+          "priceCurrency": "JPY",
+          "description": "4機能のうち3つを組み合わせた場合の基本料。"
+        },
+        {
+          "@type": "Offer",
+          "name": "機能4つ",
+          "price": "15000",
+          "priceCurrency": "JPY",
+          "description": "電話・集客・LINE会員・サーベイのすべて。"
         }
       ]
     },
@@ -108,6 +126,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "はい、14日間の無料トライアルをご用意しています。クレジットカード不要でお試しいただけます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "料金はどう決まりますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "使う機能の数で基本料が決まります。1つ5,000円／2つ9,000円／3つ13,000円／4つすべてで15,000円（月額・税抜）です。電話（MOYO Call）を選んだときだけ通話量を加算し、月50件までは加算なし、月200件までは+10,000円、200件を超えた分は1件100円です。電話を選ばない場合、通話量の加算はありません。"
           }
         }
       ]
@@ -758,6 +784,22 @@ footer {
   .gs-grid { grid-template-columns: repeat(2,1fr); }
   .cta-left, .cta-right { padding: 48px 20px; }
 }
+
+/* ── PACK PRICING ── */
+.pack-table-wrap { overflow-x: auto; margin: 0 auto 28px; max-width: 560px; }
+.pack-table { width: 100%; border-collapse: collapse; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.pack-table th { background: var(--green-light); color: var(--green-dark); font-size: 13px; font-weight: 700; text-align: left; padding: 14px 20px; }
+.pack-table td { padding: 14px 20px; font-size: 15px; border-top: 1px solid var(--border); }
+.pack-table td:last-child { font-family: 'Outfit', sans-serif; font-weight: 800; color: var(--green); text-align: right; }
+.pack-features { grid-template-columns: repeat(4, 1fr); }
+.pack-features .plan { padding: 28px 24px; }
+.call-tier { margin-top: 36px; padding: 32px; background: var(--bg); border: 1px solid var(--border); border-radius: 24px; }
+.call-tier-head { font-weight: 700; font-size: 15px; text-align: center; margin-bottom: 20px; }
+.call-tier-note { font-size: 13px; color: var(--muted); text-align: center; line-height: 1.9; }
+.pricing-cta { display: flex; justify-content: center; margin-top: 32px; }
+.pricing-cta .plan-btn { max-width: 320px; }
+@media (max-width: 900px) { .pack-features { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .pack-features { grid-template-columns: 1fr; } .call-tier { padding: 24px 18px; } }
 </style>
 <!-- PostHog -->
 <script>
@@ -809,7 +851,7 @@ footer {
         <div class="metric-label">工事不要<br>最短1日で開始</div>
       </div>
       <div class="metric-card">
-        <div class="metric-num">¥5,480</div>
+        <div class="metric-num">¥5,000</div>
         <div class="metric-label">月額〜（税抜）<br>初期費用 <s style="color:var(--muted)">¥29,800</s> → <strong style="color:var(--green)">今なら無料</strong></div>
       </div>
     </div>
@@ -1028,65 +1070,100 @@ footer {
   <div class="pricing-header">
     <div>
       <div class="section-tag">料金プラン</div>
-      <h2 class="section-title" style="margin-bottom:0">シンプルで明快な料金プラン</h2>
+      <h2 class="section-title" style="margin-bottom:0">使う機能の数で決まる料金</h2>
     </div>
-    <p class="pricing-note">表示価格はすべて税抜です<br>すべてのプランに初期設定サポートが含まれます</p>
+    <p class="pricing-note">表示価格はすべて税抜です<br>どの組み合わせでも初期設定サポートが含まれます</p>
   </div>
   <div style="background: var(--green-light); border: 1px solid rgba(109,75,246,.3); border-radius: 14px; padding: 16px 28px; margin-bottom: 28px; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;">
     <span style="font-family:'Outfit',sans-serif; font-size:13px; color:var(--muted);">初期費用 通常 <s>¥29,800</s>（税抜）</span>
     <span style="font-family:'Outfit',sans-serif; font-weight:800; font-size:15px; color:var(--green);">→ 今なら 0円！</span>
     <span style="font-family:'Outfit',sans-serif; font-size:11px; font-weight:700; color:var(--green-dark); background:#fff; border:1px solid rgba(109,75,246,.3); border-radius:100px; padding:3px 12px;">期間限定</span>
   </div>
-  <div class="pricing-grid">
+  <div class="pack-table-wrap">
+    <table class="pack-table">
+      <thead>
+        <tr><th>選んだ機能の数</th><th>基本料（月額・税抜）</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1つ</td><td>¥5,000</td></tr>
+        <tr><td>2つ</td><td>¥9,000</td></tr>
+        <tr><td>3つ</td><td>¥13,000</td></tr>
+        <tr><td>4つすべて</td><td>¥15,000</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pricing-grid pack-features">
     <div class="plan">
-      <div class="plan-concept">受付だけ自動化したい</div>
-      <div class="plan-name">Starter</div>
-      <div class="plan-price">¥5,480<span>/月（税抜）</span></div>
-      <div class="plan-limit">月50件 / 超過 ¥150/件</div>
+      <div class="plan-concept">電話が鳴っても手を止めない</div>
+      <div class="plan-name">MOYO Call</div>
+      <div class="plan-add-note">AIが電話を24時間一次応対</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
         <li><span class="plan-check">✓</span>新規仮予約の受付</li>
+        <li><span class="plan-check">✓</span>予約の確認・変更・キャンセル</li>
         <li><span class="plan-check">✓</span>スタッフ指名対応</li>
         <li><span class="plan-check">✓</span>SMS・LINE通知</li>
         <li><span class="plan-check">✓</span>営業時間・定休日設定</li>
-        <li><span class="plan-check">✓</span>初期設定サポート</li>
       </ul>
-      <a href="#contact" class="plan-btn">始める</a>
     </div>
-    <div class="plan rec">
-      <div class="plan-badge">★ おすすめ</div>
-      <div class="plan-concept">電話業務を丸ごと任せたい</div>
-      <div class="plan-name">Growth</div>
-      <div class="plan-price">¥19,800<span>/月（税抜）</span></div>
-      <div class="plan-limit">月200件 / 超過 ¥100/件</div>
+    <div class="plan">
+      <div class="plan-concept">クチコミとブログを回す</div>
+      <div class="plan-name">集客</div>
+      <div class="plan-add-note">ホットペッパー連携</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li><span class="plan-check">✓</span>Starterの全機能</li>
-        <li><span class="plan-check">✓</span>通話内アップセル提案</li>
-        <li><span class="plan-check">✓</span>キャンセル時のリスケ（代替枠）提案</li>
-        <li><span class="plan-check">✓</span>複数店舗管理</li>
-        <li><span class="plan-check">✓</span>月次通話レポート（件数・成約率）</li>
-        <li><span class="plan-check">✓</span>チャットサポート優先対応</li>
+        <li><span class="plan-check">✓</span>ブログの下書き生成</li>
+        <li><span class="plan-check">✓</span>クチコミの検知</li>
+        <li><span class="plan-check">✓</span>返信案の作成</li>
       </ul>
-      <a href="#contact" class="plan-btn">始める</a>
     </div>
-    <div class="plan plan-option">
-      <div class="plan-badge plan-badge-option">＋ LINE OPTION</div>
-      <div class="plan-concept">リピーター育成まで自動化</div>
-      <div class="plan-name">LINE連携</div>
-      <div class="plan-price">+¥4,980<span>/月（税抜）</span></div>
-      <div class="plan-add-note">Starter / Growth に追加できます</div>
+    <div class="plan">
+      <div class="plan-concept">来た人をもう一度呼ぶ</div>
+      <div class="plan-name">LINE会員</div>
+      <div class="plan-add-note">会員証・クーポン・配信</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
         <li><span class="plan-check">✓</span>メンバーズカード</li>
         <li><span class="plan-check">✓</span>メッセージ配信</li>
         <li><span class="plan-check">✓</span>予約・予約確認</li>
-        <li><span class="plan-check">✓</span>予約履歴</li>
         <li><span class="plan-check">✓</span>クーポン配布</li>
       </ul>
-      <a href="#contact" class="plan-btn">追加する</a>
+    </div>
+    <div class="plan">
+      <div class="plan-concept">スタッフの本音を毎月見る</div>
+      <div class="plan-name">サーベイ</div>
+      <div class="plan-add-note">匿名のスタッフアンケート</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="plan-check">✓</span>月1回・LINEで回答</li>
+        <li><span class="plan-check">✓</span>個人が特定されない設計</li>
+        <li><span class="plan-check">✓</span>前月との変化を表示</li>
+      </ul>
     </div>
   </div>
+
+  <div class="call-tier">
+    <div class="call-tier-head">MOYO Call を選んだときだけ、通話量を加算します</div>
+    <div class="pack-table-wrap">
+      <table class="pack-table">
+        <thead>
+          <tr><th>月の通話件数</th><th>加算（月額・税抜）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>50件まで</td><td>+¥0</td></tr>
+          <tr><td>200件まで</td><td>+¥10,000</td></tr>
+          <tr><td>200件を超えた分</td><td>¥100 / 件</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="call-tier-note">電話を選ばない場合、通話量の加算はありません。<br>例：電話だけ・月50件までなら <strong>¥5,000/月</strong>、電話＋LINE会員で月200件までなら <strong>¥19,000/月</strong>。</p>
+  </div>
+
+  <div class="pricing-cta">
+    <a href="#contact" class="plan-btn">14日間無料で試す</a>
+  </div>
+
   <p class="pricing-footnote">※ 表示価格はすべて消費税抜きです。別途、消費税が加算されます。<br>※ 初期費用は通常¥29,800（税抜）ですが、期間限定キャンペーンにより現在無料でご提供しています。<br>※ 別途、AI専用電話番号の維持費として¥739/月（税抜）が加算されます。為替レートにより変動する場合があります。<br>※ 既存の電話番号からMOYO Callへの転送（ボイスワープ等）には、月額約500円（税別）と転送通話料が別途必要です。契約中のプロバイダ・キャリアによってサービス名・料金が異なります。</p>
 </section>
 

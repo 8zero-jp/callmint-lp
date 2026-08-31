@@ -12,12 +12,30 @@ import json
 import os
 import re
 import subprocess
+import sys
 from datetime import date
 
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = "https://callmintai.com"
+def site_url() -> str:
+    """公開ドメインの正本は seo/keywords.json の "site"。
+
+    MOYO Call を moyo.tokyo 配下へ移すときは、そこ1箇所を書き換えれば
+    sitemap・canonical・構造化データの生成がすべて追従する。
+    環境変数 MOYO_SITE_URL があればそれを優先する（移行の検証用）。
+    """
+    env = os.environ.get("MOYO_SITE_URL")
+    if env:
+        return env.rstrip("/")
+    try:
+        with open(os.path.join(ROOT, "seo", "keywords.json"), encoding="utf-8") as f:
+            return json.load(f)["site"].rstrip("/")
+    except Exception:
+        return "https://callmintai.com"
+
+
+SITE = site_url()
 changed: list[str] = []
 
 
@@ -369,7 +387,56 @@ def fix_table_css() -> None:
         log(f"{rel(p)}: 素の table 用ベーススタイルを追加")
 
 
+# --------------------------------------------- ドメイン移行（明示指定のときだけ）
+def migrate_domain(old: str, new: str) -> None:
+    """ページ内の絶対URLを一括で新ドメインへ書き換える。
+
+    canonical / og:url / twitter / 構造化データの @id・item・image・url が対象。
+    seo/keywords.json の site も更新するので、以後の sitemap 生成が追従する。
+    301 の設定と Search Console のアドレス変更は**別途人間がやること**。
+    """
+    old = old.rstrip("/")
+    new = new.rstrip("/")
+    n = 0
+    for p in all_pages() + [os.path.join(ROOT, "llms.txt")]:
+        if not os.path.exists(p):
+            continue
+        s = open(p, encoding="utf-8").read()
+        if old not in s:
+            continue
+        open(p, "w", encoding="utf-8").write(s.replace(old, new))
+        log(f"{rel(p)}: {old} → {new}")
+        n += 1
+
+    kw = os.path.join(ROOT, "seo", "keywords.json")
+    if os.path.exists(kw):
+        with open(kw, encoding="utf-8") as f:
+            data = json.load(f)
+        if data.get("site", "").rstrip("/") != new:
+            data["site"] = new
+            with open(kw, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+                f.write("\n")
+            log(f"seo/keywords.json: site を {new} に")
+    print(f"\n{n}ファイルを書き換えた。次にやること:\n"
+          f"  1. 旧ドメインで {old}/<path> → {new}/<path> の**1対1** 301 を設定する\n"
+          f"     （トップにまとめてリダイレクトすると評価が渡らない）\n"
+          f"  2. Search Console で新プロパティを登録し、アドレス変更ツールを使う\n"
+          f"  3. 旧ドメインは最低2年維持する（切ると 301 が消えて評価が落ちる）\n"
+          f"  4. python3 tools/seo_audit.py --strict が通ることを確認する")
+
+
 def main() -> int:
+    if "--migrate-domain" in sys.argv:
+        i = sys.argv.index("--migrate-domain")
+        try:
+            new = sys.argv[i + 1]
+        except IndexError:
+            print("使い方: python3 tools/seo_fix.py --migrate-domain https://call.moyo.tokyo")
+            return 2
+        migrate_domain(SITE, new)
+        return 0
+
     fix_hero_images()
     fix_article_image()
     fix_legal_meta()
