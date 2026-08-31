@@ -1,0 +1,253 @@
+{
+  "$comment": "MOYO の検索1位を狙うキーワードマップ。日次SEOエージェント（tools/seo_daily.mjs）がこのファイルを読み、cluster の優先度と status を見て次に着手する1件を決める。人間が編集してよい正本。",
+  "site": "https://call.moyo.tokyo",
+  "plannedSite": "https://call.moyo.tokyo",
+  "$siteNote": "site = いま配信しているドメイン（正本）。2026-08-31 に callmintai.com から移行済み。旧ドメインは Vercel 側で 1対1 の 301 に設定してあり、最低2年は維持すること（切ると 301 が消えて評価が落ちる）。次にドメインを変えるときは plannedSite を新しい先にしてから `python3 tools/seo_fix.py --migrate-domain --yes` を実行する。",
+  "brand": "MOYO Call",
+  "updated": "2026-08-31",
+  "policy": {
+    "minCharsPillar": 10000,
+    "minCharsSupporting": 6000,
+    "note": "日本語の記事文字数（タグ除去後の可視テキスト）。上位表示している競合が概ね8,000〜15,000字のため、これを下回る記事は「拡充対象」として扱う。LP・事例・一覧ページはデザイン主導なので minCharsLanding で緩く見る。",
+    "minCharsLanding": 3000
+  },
+  "clusters": [
+    {
+      "id": "salon-ai-phone",
+      "name": "サロン×AI電話（主戦場・1位を取りに行く）",
+      "priority": 1,
+      "rationale": "検索volumeは中程度だが競合が弱く、指名買いに最も近い。ここで面を取るのが最短で1位に届く。既存記事の軸とも一致する。",
+      "pillar": "/blog/salon-phone-complete-guide/",
+      "keywords": [
+        {
+          "kw": "美容室 電話 自動化",
+          "intent": "solution",
+          "priority": 1,
+          "url": "/blog/salon-phone-complete-guide/",
+          "status": "needs-depth"
+        },
+        {
+          "kw": "サロン AI 電話",
+          "intent": "solution",
+          "priority": 1,
+          "url": "/",
+          "status": "live"
+        },
+        {
+          "kw": "美容室 電話代行",
+          "intent": "commercial",
+          "priority": 1,
+          "url": "/blog/ai-phone-salon-comparison/",
+          "status": "needs-depth"
+        },
+        {
+          "kw": "施術中 電話 対応",
+          "intent": "problem",
+          "priority": 1,
+          "url": "/blog/phone-during-treatment/",
+          "status": "needs-depth"
+        },
+        {
+          "kw": "一人サロン 電話 対応",
+          "intent": "problem",
+          "priority": 1,
+          "url": "/blog/solo-salon-phone-automation/",
+          "status": "needs-depth"
+        },
+        {
+          "kw": "美容室 電話 出れない",
+          "intent": "problem",
+          "priority": 2,
+          "url": "/blog/phone-during-treatment/",
+          "status": "needs-depth"
+        },
+        {
+          "kw": "美容室 留守電 メッセージ 例文",
+          "intent": "howto",
+          "priority": 2,
+          "url": "/blog/salon-answering-machine-message/",
+          "status": "needs-depth"
+        },
+        {
+          "kw": "美容室 予約 電話 自動受付",
+          "intent": "solution",
+          "priority": 2,
+          "url": "/blog/salon-phone-complete-guide/",
+          "status": "needs-depth"
+        },
+        {
+          "kw": "ネイルサロン 電話 自動応答",
+          "intent": "solution",
+          "priority": 2,
+          "url": "/blog/nail-salon-phone-automation/",
+          "status": "needs-depth"
+        },
+        {
+          "kw": "サロン 電話 取りこぼし 損失",
+          "intent": "problem",
+          "priority": 2,
+          "url": "/blog/salon-phone-complete-guide/",
+          "status": "needs-depth"
+        },
+        {
+          "kw": "エステサロン 電話 代行",
+          "intent": "solution",
+          "priority": 3,
+          "url": "/blog/esthe-salon-phone-automation/",
+          "status": "planned"
+        },
+        {
+          "kw": "美容室 営業電話 断り方",
+          "intent": "howto",
+          "priority": 3,
+          "url": "/blog/salon-sales-call-blocking/",
+          "status": "planned"
+        },
+        {
+          "kw": "美容室 定休日 予約 受付",
+          "intent": "problem",
+          "priority": 3,
+          "url": "/blog/salon-holiday-booking-automation/",
+          "status": "planned"
+        },
+        {
+          "kw": "まつエクサロン 電話 受付",
+          "intent": "solution",
+          "priority": 3,
+          "url": "/blog/eyelash-salon-phone-automation/",
+          "status": "planned"
+        },
+        {
+          "kw": "リラクゼーションサロン 電話 受付",
+          "intent": "solution",
+          "priority": 4,
+          "url": "/blog/relaxation-salon-phone-automation/",
+          "status": "planned"
+        },
+        {
+          "kw": "美容室 電話 何コールで出る",
+          "intent": "howto",
+          "priority": 4,
+          "url": "/blog/salon-phone-etiquette/",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "ai-phone-general",
+      "name": "AI電話代行 全般（面を広げる・中期戦）",
+      "priority": 2,
+      "rationale": "volume は大きいが Salesforce・比較メディアが上位を固めている。まずは比較・料金・仕組みの網羅性で入り、指名検索を育ててから狙う。",
+      "pillar": "/blog/ai-phone-guide/",
+      "keywords": [
+        {
+          "kw": "AI電話代行 比較",
+          "intent": "commercial",
+          "priority": 2,
+          "url": "/blog/ai-phone-salon-comparison/",
+          "status": "needs-depth"
+        },
+        {
+          "kw": "AI電話代行 おすすめ",
+          "intent": "commercial",
+          "priority": 2,
+          "url": "/blog/ai-phone-salon-comparison/",
+          "status": "needs-depth"
+        },
+        {
+          "kw": "AI電話代行 料金 相場",
+          "intent": "commercial",
+          "priority": 2,
+          "url": "/blog/salon-ai-phone-cost/",
+          "status": "needs-depth"
+        },
+        {
+          "kw": "電話自動応答 サービス 比較",
+          "intent": "commercial",
+          "priority": 3,
+          "url": "/blog/ai-phone-guide/",
+          "status": "planned"
+        },
+        {
+          "kw": "AI電話 仕組み",
+          "intent": "informational",
+          "priority": 3,
+          "url": "/blog/ai-phone-guide/",
+          "status": "planned"
+        },
+        {
+          "kw": "IVR AI電話 違い",
+          "intent": "informational",
+          "priority": 3,
+          "url": "/blog/ivr-vs-ai-phone/",
+          "status": "planned"
+        },
+        {
+          "kw": "電話代行 AI 人 どっち",
+          "intent": "commercial",
+          "priority": 3,
+          "url": "/blog/human-vs-ai-answering-service/",
+          "status": "planned"
+        },
+        {
+          "kw": "小規模店舗 電話代行",
+          "intent": "commercial",
+          "priority": 4,
+          "url": "/blog/small-business-phone-automation/",
+          "status": "planned"
+        },
+        {
+          "kw": "AI電話 導入 事例",
+          "intent": "commercial",
+          "priority": 4,
+          "url": "/cases/",
+          "status": "needs-depth"
+        },
+        {
+          "kw": "電話 一次受け 自動化",
+          "intent": "solution",
+          "priority": 4,
+          "url": "/blog/ai-phone-guide/",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "brand",
+      "name": "指名検索「MOYO」（ブランド確立）",
+      "priority": 3,
+      "rationale": "ブランドは MOYO で確定し、moyo.tokyo へ集約する方針（seo/STRATEGY.md）。単独の「MOYO」は既存の衣料・文具ブランドが EC で面を取っているため追わない。狙うのは複合語。移行後は site を書き換えれば全ツールが追従する。",
+      "pillar": "/",
+      "keywords": [
+        {
+          "kw": "MOYO Call",
+          "intent": "navigational",
+          "priority": 2,
+          "url": "/",
+          "status": "live"
+        },
+        {
+          "kw": "MOYO 電話 サロン",
+          "intent": "navigational",
+          "priority": 3,
+          "url": "/",
+          "status": "live"
+        },
+        {
+          "kw": "MOYO 料金",
+          "intent": "navigational",
+          "priority": 3,
+          "url": "/",
+          "status": "live"
+        },
+        {
+          "kw": "MOYO サロン",
+          "intent": "navigational",
+          "priority": 3,
+          "url": "/",
+          "status": "live"
+        }
+      ]
+    }
+  ]
+}

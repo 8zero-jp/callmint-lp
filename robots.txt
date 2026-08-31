@@ -1,4 +1,20 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://callmintai.com/sitemap.xml
+# OG 画像を書き出すためだけの内部テンプレート。実ページではない。
+Disallow: /og-image.html
+
+# 生成AI/回答エンジンからの参照は歓迎する（llms.txt を置いている）
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://call.moyo.tokyo/sitemap.xml

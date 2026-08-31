@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>プライバシーポリシー — MOYO Call</title>
+<meta name="description" content="MOYO Call（合同会社8ZERO）のプライバシーポリシー。通話データ・予約情報など、サロンとお客様からお預かりする個人情報の取得目的・管理方法・第三者提供の考え方を記載しています。">
+<link rel="canonical" href="https://call.moyo.tokyo/privacy.html">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MOYO">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://call.moyo.tokyo/privacy.html">
+<meta property="og:title" content="プライバシーポリシー — MOYO Call">
+<meta property="og:description" content="MOYO Call（合同会社8ZERO）のプライバシーポリシー。通話データ・予約情報など、サロンとお客様からお預かりする個人情報の取得目的・管理方法・第三者提供の考え方を記載しています。">
+<meta property="og:image" content="https://call.moyo.tokyo/images/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -116,6 +129,10 @@ footer {
   .page-content th, .page-content td { padding: 10px 12px; }
   footer { padding: 24px 20px; flex-direction: column; text-align: center; }
 }
+
+/* 固定ナビ（高さ72px）の下に見出しが潜らないようにする。
+   ナビのリンクと、記事の目次リンクの着地点が両方これに乗る。 */
+[id] { scroll-margin-top: 88px; }
 </style>
 <!-- PostHog -->
 <script>
@@ -130,7 +147,7 @@ footer {
 <body>
 
 <nav>
-  <a href="index.html"><img src="images/lockup-call.png" alt="MOYO Call" style="height:32px;"></a>
+  <a href="index.html"><img src="images/lockup-call.png" alt="MOYO Call" style="height:32px;" decoding="async"></a>
   <a href="index.html#contact" class="nav-cta">14日間無料で試す</a>
 </nav>
 
@@ -226,7 +243,7 @@ footer {
 </main>
 
 <footer>
-  <img src="images/lockup-call-white.png" alt="MOYO Call" style="height:22px;opacity:.55;">
+  <img src="images/lockup-call-white.png" alt="MOYO Call" style="height:22px;opacity:.55;" decoding="async" loading="lazy">
   <div class="footer-links">
     <a href="privacy.html">プライバシーポリシー</a>
     <a href="terms.html">利用規約</a>
