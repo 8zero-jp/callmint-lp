@@ -41,9 +41,21 @@ ANTHROPIC_API_KEY=... node tools/seo_daily.mjs   # 実際に書かせる
 
 ## リポジトリ側で1回だけやる設定
 
-`gh pr create` を `GITHUB_TOKEN` で行うため、**Settings → Actions → General →
-Workflow permissions** で「Allow GitHub Actions to create and approve pull requests」を
-有効にしておく。無効のままだと日次ワークフローは PR 作成のところで失敗する。
+`gh pr create` を `GITHUB_TOKEN` で行うため、「Allow GitHub Actions to create and
+approve pull requests」を有効にしておく。
+
+⚠️ **この設定は組織側でロックされることがある。** リポジトリの
+Settings → Actions → General でチェックが押せない場合は、組織の設定で無効にされている:
+
+```
+https://github.com/organizations/8zero-jp/settings/actions
+```
+
+組織オーナーがここで有効にすると、リポジトリ側でも押せるようになる。
+
+無効のままでも**ワークフローは落ちない**。ブランチは push されるので作業は失われず、
+Actions のジョブ要約に「PR を開くリンク」が出る。1日1クリックで済ませたいなら
+組織設定を直す、それが難しければ毎朝そのリンクを踏む、のどちらでもよい。
 
 ## ドメイン移行（callmintai.com → call.moyo.tokyo）
 
