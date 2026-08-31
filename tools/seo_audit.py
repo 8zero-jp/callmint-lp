@@ -146,9 +146,21 @@ def main() -> int:
             add("warn", u, "thin-content", f"本文 {chars}字。上位表示している競合は8,000〜15,000字で、この長さでは1位は取れない")
 
         # --- 画像 ---
+        def resolve(ref: str) -> str:
+            if ref.startswith("/"):
+                return os.path.join(ROOT, ref.lstrip("/"))
+            return os.path.join(os.path.dirname(p), ref)
+
+        # preload が存在しないファイルを指していると、無駄なリクエストが1本増えるだけ
+        for ref in re.findall(r'<link[^>]*as="image"[^>]*href="([^"]+)"', head):
+            if not ref.startswith("http") and not os.path.exists(resolve(ref)):
+                add("error", u, "preload-404", f"存在しない画像を preload している: {ref}")
+
         for tag in re.findall(r"<img\b[^>]*>", body):
             src = re.search(r'src="([^"]+)"', tag)
             src = src.group(1) if src else "?"
+            if src != "?" and not src.startswith(("http", "data:")) and not os.path.exists(resolve(src)):
+                add("error", u, "img-404", f"存在しない画像を参照している: {src}")
             if "alt=" not in tag:
                 add("error", u, "img-no-alt", f"alt が無い img: {src}")
             # ヘッダーロゴはファーストビュー内なので eager（属性なし）が正しい
@@ -287,4 +299,9 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except BrokenPipeError:
+        # `| head` などで受け手が先に閉じただけ。set -o pipefail の CI を落とさない。
+        os.dup2(os.open(os.devnull, os.O_WRONLY), sys.stdout.fileno())
+        raise SystemExit(0)

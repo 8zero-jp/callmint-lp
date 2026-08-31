@@ -42,6 +42,29 @@ def all_pages() -> list[str]:
     return sorted(p for p in out if rel(p) != "og-image.html")
 
 
+
+def hero_src(page: str, html: str) -> str | None:
+    """そのページが実際に表示しているヒーロー画像の src を返す。
+
+    記事によって自前の hero（相対パス）と共有 hero（/blog/hero.webp）が混ざる。
+    決め打ちで "hero.webp" を使うと、共有 hero のページで存在しないファイルを
+    指してしまう。必ず本文の <img> から取る。
+    """
+    m = re.search(r'<img[^>]*class="article-hero-img"[^>]*>', html)
+    if not m:
+        m = re.search(r'<img[^>]*src="([^"]*hero\.webp)"[^>]*>', html)
+        if not m:
+            return None
+        src = m.group(1)
+    else:
+        sm = re.search(r'src="([^"]+)"', m.group(0))
+        if not sm:
+            return None
+        src = sm.group(1)
+    f = os.path.join(ROOT, src.lstrip("/")) if src.startswith("/") else os.path.join(os.path.dirname(page), src)
+    return src if os.path.exists(f) else None
+
+
 # ---------------------------------------------------------------- 1. hero を WebP へ
 def fix_hero_images() -> None:
     for src in sorted(glob.glob(os.path.join(ROOT, "blog", "**", "hero.jpg"), recursive=True)):
@@ -127,14 +150,27 @@ def fix_img_attrs() -> None:
 def fix_hero_preload() -> None:
     for p in sorted(glob.glob(os.path.join(ROOT, "blog", "*", "index.html"))):
         s = open(p, encoding="utf-8").read()
-        if 'as="image"' in s or "hero.webp" not in s:
+        src = hero_src(p, s)
+
+        # 存在しないファイルを指す preload は、無駄なリクエストを1本増やすだけ
+        stale = re.search(r'<link rel="preload" as="image" href="([^"]+)"[^>]*>\n?', s)
+        if stale:
+            f = os.path.join(ROOT, stale.group(1).lstrip("/")) if stale.group(1).startswith("/") \
+                else os.path.join(os.path.dirname(p), stale.group(1))
+            if os.path.exists(f):
+                continue
+            s = s[: stale.start()] + s[stale.end():]
+            log(f"{rel(p)}: 存在しない画像への preload を削除（{stale.group(1)}）")
+            open(p, "w", encoding="utf-8").write(s)
+
+        if not src:
             continue
         anchor = '<link rel="preconnect" href="https://fonts.googleapis.com">'
         if anchor not in s:
             continue
-        s = s.replace(anchor, '<link rel="preload" as="image" href="hero.webp" fetchpriority="high">\n' + anchor, 1)
+        s = s.replace(anchor, f'<link rel="preload" as="image" href="{src}" fetchpriority="high">\n' + anchor, 1)
         open(p, "w", encoding="utf-8").write(s)
-        log(f"{rel(p)}: ヒーロー画像を preload")
+        log(f"{rel(p)}: ヒーロー画像を preload（{src}）")
 
 
 # ------------------------------------------- 4. Article schema に image を入れる
@@ -144,10 +180,10 @@ def fix_article_image() -> None:
         if '"image"' in s:
             continue
         slug = os.path.basename(os.path.dirname(p))
-        hero = os.path.join(os.path.dirname(p), "hero.webp")
-        if not os.path.exists(hero):
+        src = hero_src(p, s)
+        if not src:
             continue
-        img = f"{SITE}/blog/{slug}/hero.webp"
+        img = SITE + (src if src.startswith("/") else f"/blog/{slug}/{src}")
         n = re.sub(r'("@type": "Article",)', r'\1\n  "image": "' + img + '",', s, count=1)
         if n != s:
             open(p, "w", encoding="utf-8").write(n)
