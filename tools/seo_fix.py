@@ -300,6 +300,39 @@ def fix_sitemap() -> None:
         log(f"sitemap.xml を再生成（{len(rows)} URL）")
 
 
+# ------------------------------------ 9. 記事本文の素の <table> にスタイルを与える
+# 日次エージェントが書く比較表は、ページごとに違う .compare-table / .comp-table を
+# 当てにできない。素の <table> がそのまま整って見えるベーススタイルを全記事に置く。
+TABLE_CSS = """
+/* seo_fix: 記事本文の素の table 用ベーススタイル（自動挿入・手で消さない） */
+.article-body table {
+  width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 28px 0;
+  display: block; overflow-x: auto;
+}
+.article-body table th {
+  background: var(--surface2); text-align: left; padding: 12px 14px;
+  font-weight: 700; border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+.article-body table td {
+  padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top;
+}
+.article-body table tr:last-child td { border-bottom: none; }
+"""
+
+
+def fix_table_css() -> None:
+    for p in sorted(glob.glob(os.path.join(ROOT, "blog", "*", "index.html"))):
+        s = open(p, encoding="utf-8").read()
+        if "seo_fix: 記事本文の素の table" in s:
+            continue
+        i = s.rfind("</style>")
+        if i < 0:
+            continue
+        s = s[:i] + TABLE_CSS + s[i:]
+        open(p, "w", encoding="utf-8").write(s)
+        log(f"{rel(p)}: 素の table 用ベーススタイルを追加")
+
+
 def main() -> int:
     fix_hero_images()
     fix_article_image()
@@ -307,6 +340,7 @@ def main() -> int:
     fix_title_suffix()
     fix_img_attrs()
     fix_hero_preload()
+    fix_table_css()
     fix_robots()
     fix_sitemap()
     print(f"\n{len(changed)}件の修正" if changed else "\n修正なし（すべて適合）")

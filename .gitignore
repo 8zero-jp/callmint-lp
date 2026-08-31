@@ -1,3 +1,6 @@
 .claude/
 .vercel/
 .DS_Store
+
+# 日次SEOエージェントが PR 本文を書き出す一時ファイル
+seo/.pr-body.md
