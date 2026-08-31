@@ -129,6 +129,10 @@ footer {
   .page-content th, .page-content td { padding: 10px 12px; }
   footer { padding: 24px 20px; flex-direction: column; text-align: center; }
 }
+
+/* 固定ナビ（高さ72px）の下に見出しが潜らないようにする。
+   ナビのリンクと、記事の目次リンクの着地点が両方これに乗る。 */
+[id] { scroll-margin-top: 88px; }
 </style>
 <!-- PostHog -->
 <script>

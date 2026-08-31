@@ -317,6 +317,10 @@ footer {
   padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top;
 }
 .article-body table tr:last-child td { border-bottom: none; }
+
+/* 固定ナビ（高さ72px）の下に見出しが潜らないようにする。
+   ナビのリンクと、記事の目次リンクの着地点が両方これに乗る。 */
+[id] { scroll-margin-top: 88px; }
 </style>
 </head>
 <body>
