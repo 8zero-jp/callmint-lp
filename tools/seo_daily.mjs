@@ -208,7 +208,16 @@ ${currentBody.replace(/\s+/g, " ").slice(0, 12000)}
 
   const out = await claude({ model: MODEL_WRITE, system: BRAND, user, tool: EXPAND_TOOL, maxTokens: 20000 });
 
-  const blocks = out.sections.map(
+  // ID はモデルの申告を使わない。「続き番号から」と指示しても既存の番号を
+  // 再利用してくることがあり、実際に section5〜7 が重複した（2026-08-31）。
+  // 重複した id はアンカーが誤爆し、目次も二重になる。採番はここで確定させる。
+  const numbered = out.sections.map((sec, i) => ({
+    ...sec,
+    id: `section${lastSection + 1 + i}`,
+    html: closeDanglingParagraphs(sec.html),
+  }));
+
+  const blocks = numbered.map(
     (s) => `\n    <h2 id="${s.id}">${escapeText(s.heading)}</h2>\n${indent(s.html)}\n`
   ).join("");
 
@@ -216,7 +225,7 @@ ${currentBody.replace(/\s+/g, " ").slice(0, 12000)}
 
   // 目次に追記
   next = next.replace(/(<div class="toc">[\s\S]*?<ol>[\s\S]*?)(\s*<\/ol>)/, (m, head, tail) => {
-    const items = out.sections
+    const items = numbered
       .map((s) => `\n        <li><a href="#${s.id}">${escapeText(s.heading)}</a></li>`).join("");
     return head + items + tail;
   });
@@ -225,7 +234,7 @@ ${currentBody.replace(/\s+/g, " ").slice(0, 12000)}
   next = touchDateModified(next);
   fs.writeFileSync(file, next);
 
-  return { file: path.relative(ROOT, file), note: out.note, sections: out.sections.length };
+  return { file: path.relative(ROOT, file), note: out.note, sections: numbered.length };
 }
 
 // ---------------------------------------------------------------- 記事の新規作成
@@ -291,6 +300,10 @@ ${ctx.gscHint}
 `.trim();
 
   const a = await claude({ model: MODEL_WRITE, system: BRAND, user, tool: CREATE_TOOL, maxTokens: 20000 });
+
+  a.sections = a.sections.map((sec, i) => ({
+    ...sec, id: `section${i + 1}`, html: closeDanglingParagraphs(sec.html),
+  }));
 
   const bodyHtml =
     a.lead + "\n" +
@@ -475,6 +488,40 @@ ${list}`,
     n++;
   }
   return n ? `title を ${n}本 短縮` : null;
+}
+
+
+/**
+ * 閉じ忘れた <p> を塞ぐ。
+ *
+ * モデルは長い段落の最後で </p> を落とすことがある（2026-08-31 に2箇所発生）。
+ * ブラウザは表示を繕うが、HTML としては壊れていて、あとから本文を機械処理する
+ * ときに崩れる。ブロック要素が始まる直前とフラグメント末尾で閉じる。
+ */
+function closeDanglingParagraphs(html) {
+  const BLOCK = /<(?:p|h[1-6]|ul|ol|table|div|blockquote|pre)[\s>]/i;
+  let out = "";
+  let open = false;
+  const re = /<\/?[a-zA-Z][^>]*>/g;
+  let last = 0;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    const tag = m[0];
+    let chunk = html.slice(last, m.index);
+    last = m.index + tag.length;
+
+    if (open && BLOCK.test(tag)) {
+      out += chunk + "</p>";
+      open = false;
+      chunk = "";
+    }
+    out += chunk + tag;
+    if (/^<p[\s>]/i.test(tag)) open = true;
+    else if (/^<\/p>/i.test(tag)) open = false;
+  }
+  out += html.slice(last);
+  if (open) out += "</p>";
+  return out;
 }
 
 // ---------------------------------------------------------------- HTML 小道具
