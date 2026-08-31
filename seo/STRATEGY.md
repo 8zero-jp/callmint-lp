@@ -53,7 +53,53 @@
 `callmintai.com` は主要KWで圏外＝積み上がったドメイン評価が事実上ゼロなので、
 **移行コストが最も安いのが今**で、記事が増えるほど高くなる。
 
-### 移行の手順
+### 0. DNS と Vercel の設定（コードより先）
+
+いま `callmint-lp` の Vercel プロジェクト（team: `callmintai`）が
+`callmintai.com` と `www.callmintai.com` を配信している。ここに新ドメインを足す。
+
+**1. Vercel にドメインを追加する**
+
+```
+Vercel → callmintai チーム → callmint-lp → Settings → Domains → Add
+  call.moyo.tokyo
+```
+
+CLI なら `vercel domains add call.moyo.tokyo callmint-lp --scope callmintai`。
+
+**追加すると Vercel が「作るべき DNS レコード」をその場に表示する。値はここに書き写さない**
+（Vercel 側で変わることがあるため、必ず画面に出たものを使う）。出方は2通り:
+
+- `moyo.tokyo` が Vercel のネームサーバを使っている → Vercel が自動でレコードを足す。**DNS 作業なし**
+- 外部レジストラ/DNS で管理している → 表示された CNAME を、ホスト名 `call` に対して作る
+
+`survey.moyo.tokyo` が既に動いているので、**そのとき触った場所と同じ場所**に足せばよい。
+
+**2. 反映を待って、実際に配信されることを確認する**
+
+Vercel の Domains 画面が `Valid Configuration` になり、`https://call.moyo.tokyo/` が
+LP を返すまで待つ。ここが済むまで次に進まない。
+
+**3. 旧ドメインを「301 リダイレクト」に切り替える**
+
+`callmintai.com` と `www.callmintai.com` を **プロジェクトから外さない**。
+外すと 301 が消えて評価が渡らない。Domains 画面でそれぞれを編集し、
+
+```
+Redirect to: call.moyo.tokyo
+Status code: 301
+```
+
+に設定する。Vercel のドメインリダイレクトは**パスを保持する**ので、
+`callmintai.com/blog/xxx/` → `call.moyo.tokyo/blog/xxx/` の1対1になる
+（トップへまとめるのはこれで避けられる）。
+
+**4. 切り替え前に TTL を下げておく**
+
+外部 DNS の場合、切り替えの数日前に該当レコードの TTL を 300 秒程度まで下げておくと、
+問題が起きたときに戻しやすい。
+
+### 移行の手順（DNS が済んでから）
 
 コード側は1コマンドで終わる。落とすと評価が消えるのは 2 と 3。
 
