@@ -1,8 +1,8 @@
 {
   "$comment": "MOYO の検索1位を狙うキーワードマップ。日次SEOエージェント（tools/seo_daily.mjs）がこのファイルを読み、cluster の優先度と status を見て次に着手する1件を決める。人間が編集してよい正本。",
-  "site": "https://callmintai.com",
+  "site": "https://call.moyo.tokyo",
   "plannedSite": "https://call.moyo.tokyo",
-  "$siteNote": "site = いま配信しているドメイン。plannedSite = 移行先（2026-08-31 決定）。DNS と 1対1の301 が動いてから `python3 tools/seo_fix.py --migrate-domain --yes` を実行すると site が plannedSite に切り替わり、canonical・構造化データ・sitemap がすべて追従する。先に切り替えると canonical が存在しない先を指してインデックスから落ちる。",
+  "$siteNote": "site = いま配信しているドメイン（正本）。2026-08-31 に callmintai.com から移行済み。旧ドメインは Vercel 側で 1対1 の 301 に設定してあり、最低2年は維持すること（切ると 301 が消えて評価が落ちる）。次にドメインを変えるときは plannedSite を新しい先にしてから `python3 tools/seo_fix.py --migrate-domain --yes` を実行する。",
   "brand": "MOYO Call",
   "updated": "2026-08-31",
   "policy": {

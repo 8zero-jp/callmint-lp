@@ -2,7 +2,7 @@
 
 MOYO Callは、日本のヘアサロン・ネイルサロン・エステ・リラクゼーションなどサロン向けに特化したAI電話自動化SaaSサービスです。
 提供会社：合同会社8ZERO（日本）
-URL：https://callmintai.com/
+URL：https://call.moyo.tokyo/
 
 ---
 
@@ -129,7 +129,7 @@ A: はい。ネイルサロン・エステ・リラクゼーションサロン�
   サロンボード経由の予約通知も管理画面に取り込むことで、電話とWebの予約を
   1画面で一元管理している。
 
-事例ページ：https://callmintai.com/cases/
+事例ページ：https://call.moyo.tokyo/cases/
 
 ---
 
@@ -138,7 +138,7 @@ A: はい。ネイルサロン・エステ・リラクゼーションサロン�
 - **サービス名**：MOYO Call（MOYOブランドのAI電話製品）
 - **運営会社**：合同会社8ZERO
 - **設立**：2024年
-- **URL**：https://callmintai.com/
+- **URL**：https://call.moyo.tokyo/
 - **デモ電話番号**：050-1793-6450（実際のAI応答を体験できます）
 - **サポート時間**：平日10:00〜18:00
 
@@ -146,11 +146,11 @@ A: はい。ネイルサロン・エステ・リラクゼーションサロン�
 
 ## 重要ページ
 
-- ホームページ：https://callmintai.com/
-- お問い合わせ：https://callmintai.com/#contact
-- プライバシーポリシー：https://callmintai.com/privacy.html
-- 利用規約：https://callmintai.com/terms.html
-- 特定商取引法に基づく表記：https://callmintai.com/tokushoho.html
-- 導入事例：https://callmintai.com/cases/
-- ブログ：https://callmintai.com/blog/
-- サイトマップ：https://callmintai.com/sitemap.xml
+- ホームページ：https://call.moyo.tokyo/
+- お問い合わせ：https://call.moyo.tokyo/#contact
+- プライバシーポリシー：https://call.moyo.tokyo/privacy.html
+- 利用規約：https://call.moyo.tokyo/terms.html
+- 特定商取引法に基づく表記：https://call.moyo.tokyo/tokushoho.html
+- 導入事例：https://call.moyo.tokyo/cases/
+- ブログ：https://call.moyo.tokyo/blog/
+- サイトマップ：https://call.moyo.tokyo/sitemap.xml

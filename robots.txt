@@ -17,4 +17,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://callmintai.com/sitemap.xml
+Sitemap: https://call.moyo.tokyo/sitemap.xml
