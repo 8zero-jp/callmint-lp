@@ -170,6 +170,20 @@ def main() -> int:
             if src.endswith((".png", ".jpg", ".jpeg")) and "lockup" not in src and "favicon" not in src:
                 add("warn", u, "img-not-webp", f"WebP 化されていない画像: {src}")
 
+        # --- 捏造されやすい表現 ---
+        # 実在しない成果・出典のない統計は、過去に実際に載っていた。
+        # 機械では真偽を判定できないので「人間が確認する対象」として挙げるだけにする。
+        for pat, why in (
+            (r"業界平均", "出典の無い業界平均"),
+            (r"ある調査では", "出典の無い調査"),
+            (r"\d+\s*%が[^。]{0,20}と回答", "出典の無いアンケート結果"),
+            (r"導入後[^。]{0,15}(ヶ月|カ月|か月)[^。]{0,30}(増|減|ゼロ|0件)", "実在しない導入成果"),
+            (r"多くのサロンで[^。]{0,20}(回収|改善|増加)", "根拠の無い実績主張"),
+        ):
+            for m in re.finditer(pat, visible_text(body)):
+                add("warn", u, "unverified-claim",
+                    f"{why}の可能性: 「{m.group(0)}」— 出典を付けるか、読者が自分で見積もる書き方に直す")
+
         # --- 内部リンク ---
         hrefs = re.findall(r'href="([^"]+)"', body)
         internal = set()
