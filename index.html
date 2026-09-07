@@ -1266,7 +1266,7 @@ footer {
           <span class="pk-seg-sub">¥14,800</span>
         </label>
       </div>
-      <p class="pk-overage">超えた分はどの段階でも1件 ¥100。4つすべてを選ぶと全部入りセットの料金になります（お試しは対象外）。</p>
+      <p class="pk-overage">超えた分はどの段階でも1件 ¥100。4つすべてを選ぶと全部入りセットの料金になります（お試しは対象外）。<br>サーベイは1店舗あたりの料金です。この見積りは1店舗分で、複数店舗は店舗数分がかかります（4店舗目以降は1店舗あたり割引）。</p>
     </div>
 
     <aside class="pk-sum">
@@ -1298,6 +1298,7 @@ footer {
           <tr><td>サーベイ（1店舗あたり）</td><td>¥2,980</td></tr>
         </tbody>
       </table>
+      <p>サーベイは店舗が増えるほど1店舗あたりの単価が下がります（1〜3店舗目 ¥2,980／4〜10店舗目 ¥2,480／11〜20店舗目 ¥1,980／21店舗目〜 ¥1,480）。</p>
       <p><strong>電話（MOYO Call）</strong>は月の通話件数で決まります。</p>
       <table>
         <thead><tr><th>月の通話件数</th><th>月額</th></tr></thead>
@@ -1514,7 +1515,8 @@ async function handleSubmit(e) {
   var CALL = { '10': 3500, '50': 5000, '200': 14800 };
   // 4つすべてを選んだときのセット価格（お試し10件は対象外）
   var BUNDLE = { '50': 11800, '200': 19800 };
-  var LABEL = { call: 'MOYO Call', mkt: '集客', line: 'LINE会員', survey: 'サーベイ' };
+  // サーベイは1店舗あたりの単価。このビルダーは1店舗分で見積もる（複数店舗は店舗数分・4店舗目以降は割引）
+  var LABEL = { call: 'MOYO Call', mkt: '集客', line: 'LINE会員', survey: 'サーベイ（1店舗）' };
   var FEATURE_COUNT = 4;
 
   var pick = document.querySelector('.pk-pick');
