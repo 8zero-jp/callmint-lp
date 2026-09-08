@@ -431,7 +431,7 @@ posthog.init("phc_CZUuhM26c3BNkvvAx5Cg79Ci77Ux935w4ckfCdhrUXcR", {
     <div class="billing">
       <h3>料金が発生するタイミング</h3>
       <ul>
-        <li>このフォームを送信した時点では、料金は一切発生しません。クレジットカードの登録も不要です。</li>
+        <li>このフォームを送信した時点では、料金は一切発生しません。この時点でクレジットカードの登録も必要ありません。</li>
         <li>担当者からご連絡し、内容にご納得いただいたうえで利用を開始します。</li>
         <li>無料期間が終わる2週間前にメールでご案内します。</li>
         <li>継続のご意思を確認できた場合にのみ、4ヶ月目から有料契約に移行します。ご返信がないまま自動で課金されることはありません。</li>
@@ -620,51 +620,57 @@ posthog.init("phc_CZUuhM26c3BNkvvAx5Cg79Ci77Ux935w4ckfCdhrUXcR", {
   <div class="wrap">
     <p class="eyebrow">Pricing</p>
     <h2 class="h2">料金とキャンペーン条件</h2>
-    <p class="lead">キャンペーン期間中に無料になるのは<strong>月額基本料</strong>です。実費は下記のとおり分けて記載しています。</p>
+    <p class="lead">複雑なプランはありません。使う機能の月額を足すだけです。キャンペーン期間中に無料になるのは<strong>この月額</strong>です。実費は分けて記載しています。</p>
 
     <div class="price-free">
       <strong>MOYOを3ヶ月無料でお試し（9月30日まで・先着10店舗）</strong><br>
-      ご利用開始日から3ヶ月間、月額基本料が0円になります。初期費用も0円です。4ヶ月目から下記の通常料金です。
+      ご利用開始日から3ヶ月間、月額が0円になります。初期費用も0円です。4ヶ月目から下記の通常料金です。
     </div>
 
     <div class="price-card">
-      <h3>月額基本料（4ヶ月目から）</h3>
-      <p>使う機能の数で基本料が決まります（税抜・月額）<br>選べる機能：電話（MOYO 電話）／集客／LINE会員／サーベイ</p>
-      <table class="ptable">
-        <tbody>
-          <tr><th>機能 1つ</th><td><span class="amt">5,000円</span></td></tr>
-          <tr><th>機能 2つ</th><td><span class="amt">9,000円</span></td></tr>
-          <tr><th>機能 3つ</th><td><span class="amt">13,000円</span></td></tr>
-          <tr><th>機能 4つすべて</th><td><span class="amt">15,000円</span></td></tr>
-        </tbody>
-      </table>
+      <h3>AI電話対応</h3>
+      <p>月の通話件数で決まります。超過分はどの段階でも ¥100/件</p>
+      <table class="ptable"><tbody>
+        <tr><th>お試し（月10件まで）</th><td><span class="amt">¥3,500 /月</span><span class="note">1件あたり ¥350</span></td></tr>
+        <tr><th>スタンダード（月50件まで）</th><td><span class="amt">¥5,000 /月</span><span class="note">1件あたり ¥100</span></td></tr>
+        <tr><th>ビジネス（月200件まで）</th><td><span class="amt">¥14,800 /月</span><span class="note">1件あたり ¥74</span></td></tr>
+      </tbody></table>
     </div>
 
     <div class="price-card">
-      <h3>電話を使う場合の通話量</h3>
-      <p>「電話（MOYO 電話）」を選んだときだけ、基本料に加算されます。</p>
-      <table class="ptable">
-        <tbody>
-          <tr><th>月50件まで</th><td><span class="amt">加算なし</span></td></tr>
-          <tr><th>月200件まで</th><td><span class="amt">+10,000円</span></td></tr>
-          <tr><th>月200件を超えた分</th><td><span class="amt">1件あたり100円（従量）</span></td></tr>
-        </tbody>
-      </table>
+      <h3>ほかの機能を足す場合</h3>
+      <p>使う機能の月額を足すだけです。</p>
+      <table class="ptable"><tbody>
+        <tr><th>ブログ・口コミ対応</th><td><span class="amt">¥2,980 /月</span></td></tr>
+        <tr><th>LINE会員証・クーポン</th><td><span class="amt">¥2,980 /月</span></td></tr>
+        <tr><th>スタッフサーベイ</th><td><span class="amt">¥2,980 /店・月</span></td></tr>
+        
+      </tbody></table>
     </div>
+
+    <div class="price-card">
+      <h3>4つすべてを使う場合（セット割）</h3>
+      <p>単品の合計より安くなります。</p>
+      <table class="ptable"><tbody>
+        <tr><th>全部入り（電話 月50件まで）</th><td><span class="amt">¥11,800 /月</span><span class="note">単品合計 ¥13,940 から 15% OFF</span></td></tr>
+        <tr><th>全部入り ビジネス（電話 月200件まで）</th><td><span class="amt">¥19,800 /月</span><span class="note">単品合計 ¥23,740 から 17% OFF</span></td></tr>
+      </tbody></table>
+      <p class="fineprint">サーベイは1店舗分を含みます。お試し（月10件）は全部入りセットの対象外です。</p>
+    </div>
+
     <div class="price-card">
       <h3>電話まわりの実費（無料期間中もかかります）</h3>
-      <p>下記は月額基本料とは別の実費です。3ヶ月無料の対象には含まれません。</p>
-      <table class="ptable">
-        <tbody>
-          <tr><th>AI専用電話番号の維持費</th><td><span class="amt">月額 739円</span><span class="note">為替レートにより変動する場合があります</span></td></tr>
-          <tr><th>転送サービス料</th><td><span class="amt">月額 約500円</span><span class="note">既存の番号から転送する場合。ご契約中の通信事業者へお支払いいただきます</span></td></tr>
-          <tr><th>転送通話料</th><td><span class="amt">通信事業者の料金</span><span class="note">既存の番号から転送する場合。ご契約中の通信事業者へお支払いいただきます</span></td></tr>
-          <tr><th>月200件を超えた分の通話</th><td><span class="amt">1件あたり 100円</span><span class="note">無料期間中も超過分は実費です</span></td></tr>
-        </tbody>
-      </table>
+      <p>下記は月額とは別の実費です。3ヶ月無料の対象には含まれません。</p>
+      <table class="ptable"><tbody>
+        <tr><th>AI専用電話番号の維持費</th><td><span class="amt">月額 739円</span><span class="note">電話をご利用の場合。為替レートにより変動する場合があります</span></td></tr>
+        <tr><th>転送サービス料</th><td><span class="amt">月額 約500円</span><span class="note">既存の番号から転送する場合。ご契約中の通信事業者へお支払いいただきます</span></td></tr>
+        <tr><th>転送通話料</th><td><span class="amt">通信事業者の料金</span><span class="note">既存の番号から転送する場合。ご契約中の通信事業者へお支払いいただきます</span></td></tr>
+        <tr><th>通話件数の超過分</th><td><span class="amt">1件あたり 100円</span><span class="note">どの段階でも同じ単価です。無料期間中も超過分は実費です</span></td></tr>
+      </tbody></table>
     </div>
 
     <p class="fineprint">
+      初期費用は0円です。工事も機材も必要ありません。<br>
       表示価格はすべて税抜です。別途、消費税が加算されます。<br>
       最低契約期間はありません。解約のお申し出をいただいた場合、次回請求分以降を停止します。<br>
       料金の詳細は<a href="/tokushoho.html">特定商取引法に基づく表記</a>をご確認ください。
@@ -694,7 +700,7 @@ posthog.init("phc_CZUuhM26c3BNkvvAx5Cg79Ci77Ux935w4ckfCdhrUXcR", {
       </details>
       <details>
         <summary>無料期間中も費用がかかるものはありますか？</summary>
-        <div class="faq-a">あります。無料になるのは月額基本料です。AI専用電話番号の維持費（月額739円・税抜）、既存番号から転送する場合の転送サービス料と転送通話料、月200件を超えた分の通話料（1件100円・税抜）は実費としてかかります。詳しくは「料金」をご確認ください。</div>
+        <div class="faq-a">あります。無料になるのは月額です。AI専用電話番号の維持費（月額739円・税抜）、既存番号から転送する場合の転送サービス料と転送通話料、通話件数の超過分（1件100円・税抜）は実費としてかかります。詳しくは「料金」をご確認ください。</div>
       </details>
       <details>
         <summary>無料期間が終わったら自動的に課金されますか？</summary>
@@ -702,7 +708,7 @@ posthog.init("phc_CZUuhM26c3BNkvvAx5Cg79Ci77Ux935w4ckfCdhrUXcR", {
       </details>
       <details>
         <summary>他の機能と一緒に使えますか？</summary>
-        <div class="faq-a">はい。MOYO には電話・集客・LINE会員・サーベイの4つがあり、使う機能の数で基本料が決まります。お申し込みフォームで複数選択できます。</div>
+        <div class="faq-a">はい。MOYO には AI電話対応・ブログ/口コミ対応・LINE会員証/クーポン・スタッフサーベイの4つがあり、使う機能の月額を足すだけです。4つすべてを使う場合はセット割があります。お申し込みフォームで複数選択できます。</div>
       </details>
     </div>
   </div>
@@ -763,20 +769,20 @@ posthog.init("phc_CZUuhM26c3BNkvvAx5Cg79Ci77Ux935w4ckfCdhrUXcR", {
           <legend class="fieldset-label">興味のある機能<span class="req">必須</span></legend>
           <div class="checks">
         <label class="check">
-          <input type="checkbox" name="features" value="survey" data-label="スタッフサーベイ（MOYO サーベイ）">
-          <span>スタッフサーベイ（MOYO サーベイ）</span>
+          <input type="checkbox" name="features" value="survey" data-label="スタッフサーベイ">
+          <span>スタッフサーベイ</span>
         </label>
         <label class="check">
-          <input type="checkbox" name="features" value="marketing" data-label="ブログ自動作成・クチコミ返信（MOYO 集客）">
-          <span>ブログ自動作成・クチコミ返信（MOYO 集客）</span>
+          <input type="checkbox" name="features" value="marketing" data-label="ブログ・口コミ対応">
+          <span>ブログ・口コミ対応</span>
         </label>
         <label class="check">
-          <input type="checkbox" name="features" value="call" data-label="AI電話一次受付（MOYO 電話）" checked>
-          <span>AI電話一次受付（MOYO 電話）</span>
+          <input type="checkbox" name="features" value="call" data-label="AI電話対応" checked>
+          <span>AI電話対応</span>
         </label>
         <label class="check">
-          <input type="checkbox" name="features" value="line" data-label="LINE会員証・クーポン（MOYO LINE）">
-          <span>LINE会員証・クーポン（MOYO LINE）</span>
+          <input type="checkbox" name="features" value="line" data-label="LINE会員証・クーポン">
+          <span>LINE会員証・クーポン</span>
         </label>
           </div>
           <span class="err" id="err-features" aria-live="polite"></span>
@@ -796,7 +802,7 @@ posthog.init("phc_CZUuhM26c3BNkvvAx5Cg79Ci77Ux935w4ckfCdhrUXcR", {
         <span class="err" id="err-consent" aria-live="polite"></span>
 
         <button type="submit" class="btn btn--primary" data-cta="form_submit">3ヶ月無料で試す</button>
-        <p class="btn-note">担当者より2営業日以内にご連絡します。クレジットカードの登録は不要です。</p>
+        <p class="btn-note">担当者より2営業日以内にご連絡します。この時点では料金は発生しません。</p>
       </form>
     </div>
   </div>

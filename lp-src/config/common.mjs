@@ -50,7 +50,7 @@ export const CAMPAIGN = {
   billing: {
     title: '料金が発生するタイミング',
     points: [
-      'このフォームを送信した時点では、料金は一切発生しません。クレジットカードの登録も不要です。',
+      'このフォームを送信した時点では、料金は一切発生しません。この時点でクレジットカードの登録も必要ありません。',
       '担当者からご連絡し、内容にご納得いただいたうえで利用を開始します。',
       '無料期間が終わる2週間前にメールでご案内します。',
       '継続のご意思を確認できた場合にのみ、4ヶ月目から有料契約に移行します。ご返信がないまま自動で課金されることはありません。',
@@ -60,33 +60,58 @@ export const CAMPAIGN = {
 }
 
 /**
- * 料金。正本は callmint-repo `spec/pricing.md`（= Stripe の price）と `tokushoho.html`。
+ * 料金。**正本は moyo.tokyo の料金セクション**（2026-09 改定）。
+ *
+ * 2026-09 の改定で「機能の数で決まるパック料金」は廃止され、
+ * **使う機能の月額を足す**方式になった。電話だけは月の通話件数で決まる。
+ *
+ * ⚠️ call.moyo.tokyo の `tokushoho.html` は旧パック料金のままで、
+ *    この新料金と食い違っている。特商法ページの更新は別途必要（人の承認が要る）。
+ *
  * すべて税抜・月額。
  */
 export const PRICING = {
-  packNote: '使う機能の数で基本料が決まります（税抜・月額）',
-  packs: [
-    { count: '機能 1つ', price: '5,000円' },
-    { count: '機能 2つ', price: '9,000円' },
-    { count: '機能 3つ', price: '13,000円' },
-    { count: '機能 4つすべて', price: '15,000円' },
+  note: '複雑なプランはありません。使う機能の月額を足すだけです。',
+
+  /** 機能ごとの月額（電話以外） */
+  features: [
+    { key: 'marketing', name: 'ブログ・口コミ対応', price: '¥2,980', unit: '/月' },
+    { key: 'line', name: 'LINE会員証・クーポン', price: '¥2,980', unit: '/月' },
+    { key: 'survey', name: 'スタッフサーベイ', price: '¥2,980', unit: '/店・月' },
   ],
-  featureNames: '電話（MOYO 電話）／集客／LINE会員／サーベイ',
-  /** 電話を選んだときだけ発生する加算。tokushoho.html と一致させること */
+
+  /** サーベイは店舗が増えるほど1店舗あたりが下がる */
+  surveyTiers: [
+    { label: '1〜3店舗目', price: '¥2,980' },
+    { label: '4〜10店舗目', price: '¥2,480' },
+    { label: '11〜20店舗目', price: '¥1,980' },
+    { label: '21店舗目〜', price: '¥1,480' },
+  ],
+
+  /** AI電話は月の通話件数で決まる */
   callTiers: [
-    { label: '月50件まで', price: '加算なし' },
-    { label: '月200件まで', price: '+10,000円' },
-    { label: '月200件を超えた分', price: '1件あたり100円（従量）' },
+    { name: 'お試し', label: '月10件まで', price: '¥3,500', per: '1件あたり ¥350' },
+    { name: 'スタンダード', label: '月50件まで', price: '¥5,000', per: '1件あたり ¥100' },
+    { name: 'ビジネス', label: '月200件まで', price: '¥14,800', per: '1件あたり ¥74' },
   ],
+  callOverage: '超過分はどの段階でも ¥100/件',
+
+  /** 4つすべてを使う場合のセット価格 */
+  bundles: [
+    { name: '全部入り', detail: '電話 月50件まで', single: '単品合計 ¥13,940', off: '15% OFF', price: '¥11,800' },
+    { name: '全部入り ビジネス', detail: '電話 月200件まで', single: '単品合計 ¥23,740', off: '17% OFF', price: '¥19,800' },
+  ],
+  bundleNote: 'サーベイは1店舗分を含みます。お試し（月10件）は全部入りセットの対象外です。',
+
   /**
    * 電話まわりの実費。**無料キャンペーンの対象外**。
-   * 正本は tokushoho.html「商品代金以外の必要料金」。
+   * 番号維持費は moyo.tokyo・tokushoho.html とも ¥739 で一致している。
    */
   callActualCosts: [
     {
       label: 'AI専用電話番号の維持費',
       price: '月額 739円',
-      note: '為替レートにより変動する場合があります',
+      note: '電話をご利用の場合。為替レートにより変動する場合があります',
     },
     {
       label: '転送サービス料',
@@ -99,20 +124,22 @@ export const PRICING = {
       note: '既存の番号から転送する場合。ご契約中の通信事業者へお支払いいただきます',
     },
     {
-      label: '月200件を超えた分の通話',
+      label: '通話件数の超過分',
       price: '1件あたり 100円',
-      note: '無料期間中も超過分は実費です',
+      note: 'どの段階でも同じ単価です。無料期間中も超過分は実費です',
     },
   ],
+
+  initialNote: '初期費用は0円です。工事も機材も必要ありません。',
   taxNote: '表示価格はすべて税抜です。別途、消費税が加算されます。',
 }
 
 /** 申込みフォームの「希望機能」。値は cms `lib/moyoPricing.ts` の MOYO_FEATURES と揃える */
 export const FORM_FEATURES = [
-  { value: 'survey', label: 'スタッフサーベイ（MOYO サーベイ）' },
-  { value: 'marketing', label: 'ブログ自動作成・クチコミ返信（MOYO 集客）' },
-  { value: 'call', label: 'AI電話一次受付（MOYO 電話）' },
-  { value: 'line', label: 'LINE会員証・クーポン（MOYO LINE）' },
+  { value: 'survey', label: 'スタッフサーベイ' },
+  { value: 'marketing', label: 'ブログ・口コミ対応' },
+  { value: 'call', label: 'AI電話対応' },
+  { value: 'line', label: 'LINE会員証・クーポン' },
 ]
 
 export const SALON_COUNT_OPTIONS = ['1店舗', '2〜3店舗', '4〜9店舗', '10店舗以上']

@@ -39,31 +39,62 @@ describe('html ユーティリティ', () => {
   })
 })
 
-describe('料金表記が特商法（tokushoho.html）と一致する', () => {
+describe('料金表記', () => {
   const tokushoho = readFileSync(join(ROOT, 'tokushoho.html'), 'utf8')
 
-  it('パック料金の4段階が特商法と同じ', () => {
+  // 2026-09 の改定で「機能の数で決まるパック料金」は廃止され、
+  // 「使う機能の月額を足す」方式になった。正本は moyo.tokyo の料金セクション。
+  it('機能ごとの月額が改定後の金額', () => {
     assert.deepEqual(
-      PRICING.packs.map((p) => p.price),
-      ['5,000円', '9,000円', '13,000円', '15,000円']
+      PRICING.features.map((f) => `${f.name} ${f.price}${f.unit}`),
+      [
+        'ブログ・口コミ対応 ¥2,980/月',
+        'LINE会員証・クーポン ¥2,980/月',
+        'スタッフサーベイ ¥2,980/店・月',
+      ]
     )
-    for (const amount of ['5,000円', '9,000円', '13,000円', '15,000円']) {
-      assert.ok(tokushoho.includes(amount), `特商法に ${amount} が無い`)
-    }
   })
 
-  it('通話量の加算と超過単価が特商法と同じ', () => {
-    assert.ok(tokushoho.includes('10,000円'))
-    assert.ok(tokushoho.includes('100円'))
-    assert.equal(PRICING.callTiers[1]?.price, '+10,000円')
+  it('サーベイの店舗数による逓減が正しい', () => {
+    assert.deepEqual(
+      PRICING.surveyTiers.map((t) => t.price),
+      ['¥2,980', '¥2,480', '¥1,980', '¥1,480']
+    )
   })
 
-  it('電話まわりの実費が特商法と同じ（番号維持費 739円・転送 約500円）', () => {
+  it('電話の3段階と超過単価が正しい', () => {
+    assert.deepEqual(
+      PRICING.callTiers.map((t) => `${t.label} ${t.price}`),
+      ['月10件まで ¥3,500', '月50件まで ¥5,000', '月200件まで ¥14,800']
+    )
+    assert.match(PRICING.callOverage, /¥100\/件/)
+  })
+
+  it('セット割の金額が単品合計と整合する', () => {
+    // 単品合計 = ブログ2,980 + LINE2,980 + サーベイ1店2,980 + 電話
+    assert.deepEqual(
+      PRICING.bundles.map((b) => `${b.single} → ${b.price}`),
+      ['単品合計 ¥13,940 → ¥11,800', '単品合計 ¥23,740 → ¥19,800']
+    )
+    assert.equal(2980 * 3 + 5000, 13940)
+    assert.equal(2980 * 3 + 14800, 23740)
+  })
+
+  it('電話番号の維持費が特商法と一致する（改定後も据え置き）', () => {
     assert.ok(tokushoho.includes('739'), '特商法に 739円 が無い')
-    assert.ok(tokushoho.includes('500'), '特商法に 転送サービス料 500円 が無い')
-    const labels = PRICING.callActualCosts.map((c) => c.price).join(' ')
-    assert.match(labels, /739円/)
-    assert.match(labels, /約500円/)
+    assert.match(PRICING.callActualCosts.map((c) => c.price).join(' '), /739円/)
+  })
+
+  // ⚠️ 既知のズレ。tokushoho.html は旧パック料金（5,000/9,000/13,000/15,000）のまま。
+  // 特商法ページの更新は人の承認が要るため、このPRでは触っていない。
+  // 更新されたらこのテストは落ちるので、そのとき削除すること。
+  it('【既知の課題】特商法ページが旧パック料金のままである', () => {
+    const old = ['5,000円', '9,000円', '13,000円', '15,000円']
+    const stillOld = old.every((a) => tokushoho.includes(a))
+    assert.ok(
+      stillOld,
+      '特商法ページが更新されたようです。このテストを削除し、料金の整合を取り直してください'
+    )
   })
 })
 

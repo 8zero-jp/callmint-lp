@@ -179,65 +179,96 @@ export function trustSection(c) {
 }
 
 /* ── 9. 料金とキャンペーン条件 ─────────────────
-   金額の正本は spec/pricing.md と tokushoho.html。ここを変えたら両方を必ず揃える。 */
+   金額の正本は moyo.tokyo の料金セクション（2026-09 改定）。
+   「機能ごとの月額を足す」方式で、電話だけ月の通話件数で決まる。 */
 /** @param {any} c */
 export function pricingSection(c) {
-  const packRows = PRICING.packs.map(
-    (p) => `<tr><th>${esc(p.count)}</th><td><span class="amt">${esc(p.price)}</span></td></tr>`
-  ).join('\n          ')
+  const row = (/** @type {string} */ th, /** @type {string} */ amt, /** @type {string} */ note = '') =>
+    `<tr><th>${esc(th)}</th><td><span class="amt">${esc(amt)}</span>${
+      note ? `<span class="note">${esc(note)}</span>` : ''}</td></tr>`
 
-  const tierRows = PRICING.callTiers.map(
-    (t) => `<tr><th>${esc(t.label)}</th><td><span class="amt">${esc(t.price)}</span></td></tr>`
-  ).join('\n          ')
-
-  const costRows = PRICING.callActualCosts.map(
-    (t) => `<tr><th>${esc(t.label)}</th><td><span class="amt">${esc(t.price)}</span><span class="note">${esc(t.note)}</span></td></tr>`
-  ).join('\n          ')
-
-  // 電話まわりの実費は、電話LPでは常に出す。他のLPでは「電話を足したときだけ関係する」と分かる形で出す。
-  const callBlocks = `
-    <div class="price-card">
-      <h3>電話を使う場合の通話量${c.lp === 'call' ? '' : '（MOYO 電話を追加した場合のみ）'}</h3>
-      <p>「電話（MOYO 電話）」を選んだときだけ、基本料に加算されます。</p>
-      <table class="ptable">
-        <tbody>
-          ${tierRows}
-        </tbody>
-      </table>
-    </div>
-    <div class="price-card">
-      <h3>電話まわりの実費（無料期間中もかかります）</h3>
-      <p>下記は月額基本料とは別の実費です。3ヶ月無料の対象には含まれません。</p>
-      <table class="ptable">
-        <tbody>
-          ${costRows}
-        </tbody>
-      </table>
+  /** そのLPが主役にしている機能の料金を最初に見せる */
+  const ownPrice = () => {
+    if (c.lp === 'call') {
+      return `<div class="price-card">
+      <h3>AI電話対応</h3>
+      <p>月の通話件数で決まります。${esc(PRICING.callOverage)}</p>
+      <table class="ptable"><tbody>
+        ${PRICING.callTiers.map((t) =>
+          row(`${t.name}（${t.label}）`, `${t.price} /月`, t.per)).join('\n        ')}
+      </tbody></table>
     </div>`
+    }
+    if (c.lp === 'survey') {
+      return `<div class="price-card">
+      <h3>スタッフサーベイ</h3>
+      <p>1店舗あたりの月額です。店舗が増えるほど1店舗あたりの単価が下がります。</p>
+      <table class="ptable"><tbody>
+        ${PRICING.surveyTiers.map((t) => row(t.label, `${t.price} /店・月`)).join('\n        ')}
+      </tbody></table>
+    </div>`
+    }
+    return `<div class="price-card">
+      <h3>ブログ・口コミ対応</h3>
+      <p>ブログの下書き作成とクチコミ返信案がこの1つに含まれます。</p>
+      <table class="ptable"><tbody>
+        ${row('月額', '¥2,980 /月')}
+      </tbody></table>
+    </div>`
+  }
+
+  /** ほかの機能を足すときの一覧（自分の機能は上で出しているので除く） */
+  const others = PRICING.features.filter((f) => f.key !== c.lp)
+  const otherRows = others.map((f) => row(f.name, `${f.price} ${f.unit}`)).join('\n        ')
+  const callRow = c.lp === 'call' ? '' : row('AI電話対応', '¥3,500〜 /月', '月の通話件数で決まります')
+
+  // 電話の実費は、電話LPでは常に。ほかのLPでは電話を足したときだけ関係する。
+  const costHeading = c.lp === 'call'
+    ? '電話まわりの実費（無料期間中もかかります）'
+    : '電話を追加した場合の実費（無料期間中もかかります）'
 
   return `<section class="section section--tint" id="pricing">
   <div class="wrap">
     <p class="eyebrow">Pricing</p>
     <h2 class="h2">料金とキャンペーン条件</h2>
-    <p class="lead">キャンペーン期間中に無料になるのは<strong>月額基本料</strong>です。実費は下記のとおり分けて記載しています。</p>
+    <p class="lead">${esc(PRICING.note)}キャンペーン期間中に無料になるのは<strong>この月額</strong>です。実費は分けて記載しています。</p>
 
     <div class="price-free">
       <strong>${esc(CAMPAIGN.headline)}（${esc(CAMPAIGN.badge)}）</strong><br>
-      ご利用開始日から3ヶ月間、月額基本料が0円になります。初期費用も0円です。4ヶ月目から下記の通常料金です。
+      ご利用開始日から3ヶ月間、月額が0円になります。初期費用も0円です。4ヶ月目から下記の通常料金です。
+    </div>
+
+    ${ownPrice()}
+
+    <div class="price-card">
+      <h3>ほかの機能を足す場合</h3>
+      <p>使う機能の月額を足すだけです。</p>
+      <table class="ptable"><tbody>
+        ${otherRows}
+        ${callRow}
+      </tbody></table>
     </div>
 
     <div class="price-card">
-      <h3>月額基本料（4ヶ月目から）</h3>
-      <p>${esc(PRICING.packNote)}<br>選べる機能：${esc(PRICING.featureNames)}</p>
-      <table class="ptable">
-        <tbody>
-          ${packRows}
-        </tbody>
-      </table>
+      <h3>4つすべてを使う場合（セット割）</h3>
+      <p>単品の合計より安くなります。</p>
+      <table class="ptable"><tbody>
+        ${PRICING.bundles.map((b) =>
+          row(`${b.name}（${b.detail}）`, `${b.price} /月`, `${b.single} から ${b.off}`)).join('\n        ')}
+      </tbody></table>
+      <p class="fineprint">${esc(PRICING.bundleNote)}</p>
     </div>
-${callBlocks}
+
+    <div class="price-card">
+      <h3>${esc(costHeading)}</h3>
+      <p>下記は月額とは別の実費です。3ヶ月無料の対象には含まれません。</p>
+      <table class="ptable"><tbody>
+        ${PRICING.callActualCosts.map((t) => row(t.label, t.price, t.note)).join('\n        ')}
+      </tbody></table>
+    </div>
 
     <p class="fineprint">
+      ${esc(PRICING.initialNote)}<br>
       ${esc(PRICING.taxNote)}<br>
       最低契約期間はありません。解約のお申し出をいただいた場合、次回請求分以降を停止します。<br>
       料金の詳細は<a href="/tokushoho.html">特定商取引法に基づく表記</a>をご確認ください。
@@ -342,7 +373,7 @@ export function formSection(c) {
         <span class="err" id="err-consent" aria-live="polite"></span>
 
         <button type="submit" class="btn btn--primary" data-cta="form_submit">${esc(c.ctaLabel)}</button>
-        <p class="btn-note">担当者より2営業日以内にご連絡します。クレジットカードの登録は不要です。</p>
+        <p class="btn-note">担当者より2営業日以内にご連絡します。この時点では料金は発生しません。</p>
       </form>
     </div>
   </div>
