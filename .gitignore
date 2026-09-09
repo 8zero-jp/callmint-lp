@@ -4,3 +4,6 @@
 
 # 日次SEOエージェントが PR 本文を書き出す一時ファイル
 seo/.pr-body.md
+
+# npm（lp-src のジェネレータ用ツールチェーン）
+node_modules/

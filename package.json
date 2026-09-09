@@ -1,0 +1,23 @@
+{
+  "name": "callmint-lp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "MOYO の公開サイト（静的HTML）。lp-src/ は広告LPのジェネレータ。",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build:lp": "node lp-src/build.mjs",
+    "check:lp": "node lp-src/build.mjs --check",
+    "test": "node --test lp-src/__tests__/*.test.mjs",
+    "lint": "node lp-src/lint.mjs",
+    "typecheck": "tsc --noEmit -p jsconfig.json",
+    "verify": "npm run lint && npm test && npm run check:lp",
+    "art": "node lp-src/art/render.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.9",
+    "typescript": "^5.9.3"
+  }
+}

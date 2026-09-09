@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>施術写真から、ブログを自動作成。｜サロンのブログ下書きAI MOYO</title>
+<meta name="description" content="施術写真を送るだけで、AIがサロンブログの下書きを作成します。担当スタッフの文体を反映。内容を確認・修正してから、コピーして投稿できます。9月30日まで・先着10店舗、3ヶ月無料。">
+<!-- 広告専用のLP。検索結果では本体ページ（/ と /blog/）を出したいので、
+     このページ自体はインデックスさせない。リンクは辿らせる（follow）。 -->
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://call.moyo.tokyo/lp/blog/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MOYO">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://call.moyo.tokyo/lp/blog/">
+<meta property="og:title" content="施術写真から、ブログを自動作成。｜サロンのブログ下書きAI MOYO">
+<meta property="og:description" content="施術写真を送るだけで、AIがサロンブログの下書きを作成します。担当スタッフの文体を反映。内容を確認・修正してから、コピーして投稿できます。9月30日まで・先着10店舗、3ヶ月無料。">
+<meta property="og:image" content="https://call.moyo.tokyo/images/lp/blog/hero.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="施術写真から、ブログを自動作成。｜サロンのブログ下書きAI MOYO">
+<meta name="twitter:description" content="施術写真を送るだけで、AIがサロンブログの下書きを作成します。担当スタッフの文体を反映。内容を確認・修正してから、コピーして投稿できます。9月30日まで・先着10店舗、3ヶ月無料。">
+<meta name="twitter:image" content="https://call.moyo.tokyo/images/lp/blog/hero.webp">
+<meta name="theme-color" content="#6d4bf6">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="/images/lp/blog/hero.webp" fetchpriority="high">
+<style>
+:root{
+  /* 既存LP index.html と同一のブランドトークン（変数名も揃える） */
+  --bg:#f7f7fa;
+  --surface:#ffffff;
+  --surface2:#eeeafe;
+  --green:#6d4bf6;        /* MOYO パープル（既存の変数名を踏襲） */
+  --green-light:#eeeafe;
+  --green-dark:#4c2fd4;
+  --mint:#b45cf0;         /* ラベンダー寄りのアクセント */
+  --text:#14171a;
+  --muted:#4d545b;
+  --border:#e7e5f2;
+  --radius:20px;
+  --shadow:0 10px 30px rgba(109,75,246,.10);
+  --shadow-lg:0 20px 50px rgba(109,75,246,.14);
+  /* --grad は「明るい背景に置く大きな文字」専用（h1 のグラデ文字）。
+     白文字を載せる面には --grad-deep を使う: 白との比が最小 5.27:1 で
+     小さい文字でも WCAG AA(4.5:1) を満たす。--grad の淡い端(#b45cf0)は
+     白文字だと 3.67:1 しかなく、本文サイズでは不足する。 */
+  --grad:linear-gradient(135deg,#6d4bf6 0%,#8b5cf6 45%,#b45cf0 100%);
+  --grad-deep:linear-gradient(135deg,#5b3ae0 0%,#6d4bf6 45%,#8a3fd0 100%);
+  --grad-soft:linear-gradient(160deg,#f4f1ff 0%,#eeeafe 55%,#faf8ff 100%);
+  --sticky-h:76px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:'Zen Kaku Gothic New',-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif;
+  line-height:1.8;font-size:15px;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:var(--green-dark)}
+h1,h2,h3{line-height:1.35;letter-spacing:-.01em;margin:0}
+p{margin:0}
+[id]{scroll-margin-top:24px}
+.en{font-family:'Outfit',sans-serif}
+
+/* 固定CTAぶんの余白。フッターまで来たら JS で .cta-parked が付く */
+body{padding-bottom:calc(var(--sticky-h) + env(safe-area-inset-bottom,0px))}
+@media (min-width:861px){body{padding-bottom:0}}
+
+.wrap{max-width:560px;margin:0 auto;padding:0 20px}
+.section{padding:56px 0}
+.section--tint{background:var(--surface)}
+.section--soft{background:var(--grad-soft)}
+.eyebrow{
+  display:inline-block;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--green-dark);
+  background:var(--green-light);border-radius:999px;padding:6px 14px;margin-bottom:14px;
+}
+.h2{font-size:26px;font-weight:700;margin-bottom:14px;word-break:auto-phrase}
+.h2 em{font-style:normal;color:var(--green);display:block}
+.lead{font-size:15px;color:var(--muted);margin-bottom:28px}
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px;box-shadow:var(--shadow);
+}
+.stack{display:grid;gap:14px}
+.stack--lg{gap:20px}
+
+/* ── 画像スロット ─────────────────────────────
+   画像が無いときは onerror で .is-missing が付き、仮表示に切り替わる。
+   どちらの状態でも高さは --ratio で確保されるのでレイアウトは動かない。 */
+.imgslot{
+  position:relative;margin:0;border-radius:16px;overflow:hidden;
+  aspect-ratio:var(--ratio,4 / 3);background:var(--surface2);
+  border:1px solid var(--border);
+}
+.imgslot img{width:100%;height:100%;object-fit:cover}
+.imgslot-ph{
+  position:absolute;inset:0;display:none;flex-direction:column;gap:6px;
+  align-items:center;justify-content:center;text-align:center;padding:18px;
+  background:repeating-linear-gradient(45deg,#f3f0ff,#f3f0ff 10px,#eeeafe 10px,#eeeafe 20px);
+  color:var(--green-dark);
+}
+.imgslot.is-missing .imgslot-ph{display:flex}
+.imgslot-ph-label{
+  font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;background:#fff;border-radius:999px;padding:4px 10px;
+}
+.imgslot-ph-caption{font-size:13px;font-weight:500;line-height:1.6;max-width:26em}
+.imgslot-ph-meta{font-family:'Outfit',sans-serif;font-size:10px;color:var(--muted);word-break:break-all}
+
+/* ── スマホモックアップ ── */
+.phone{display:flex;flex-direction:column;align-items:center;gap:10px}
+.phone-frame{
+  position:relative;width:210px;padding:9px;border-radius:34px;background:#1b1630;
+  box-shadow:var(--shadow-lg);
+}
+.phone-notch{
+  position:absolute;top:15px;left:50%;transform:translateX(-50%);
+  width:64px;height:16px;border-radius:999px;background:#0f0c1c;z-index:2;
+}
+.imgslot--phone{border-radius:26px;border:none}
+.phone-label{font-size:13px;color:var(--muted);text-align:center;max-width:230px}
+
+/* ── ヘッダ ── */
+.hdr{
+  position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--border);
+}
+.hdr-in{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 20px;max-width:1200px;margin:0 auto}
+.hdr img{height:26px;width:auto}
+.hdr-cta{
+  font-size:13px;font-weight:700;color:#fff;background:var(--green);
+  border-radius:999px;padding:9px 16px;text-decoration:none;white-space:nowrap;
+}
+
+/* ── ファーストビュー ── */
+.hero{background:var(--grad-soft);padding:28px 0 44px;position:relative}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;background:var(--grad-deep);color:#fff;
+  border-radius:999px;padding:8px 16px;font-size:12px;font-weight:700;
+  box-shadow:var(--shadow);margin-bottom:18px;
+}
+.hero-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;flex:none}
+.hero h1{font-size:30px;font-weight:700;margin-bottom:16px;letter-spacing:-.02em;
+  /* 日本語を文節で折り返す。「か？」だけが行に取り残されるのを防ぐ。
+     未対応ブラウザは無視するだけで、従来どおりの折り返しになる。 */
+  word-break:auto-phrase}
+.hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;display:block}
+.hero-sub{font-size:15px;color:var(--muted);margin-bottom:24px}
+.hero-media{margin-bottom:24px}
+
+/* ── ボタン ── */
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  border:none;cursor:pointer;text-decoration:none;text-align:center;
+  font-family:inherit;font-size:16px;font-weight:700;
+  padding:16px 22px;border-radius:999px;transition:transform .15s,box-shadow .15s;
+}
+.btn--primary{background:var(--grad-deep);color:#fff;box-shadow:0 10px 26px rgba(109,75,246,.34)}
+.btn--primary:hover{transform:translateY(-1px);box-shadow:0 14px 32px rgba(109,75,246,.42)}
+.btn--ghost{background:#fff;color:var(--green-dark);border:1.5px solid var(--green-light)}
+.btn:focus-visible{outline:3px solid var(--green-dark);outline-offset:3px}
+.btn-note{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
+
+/* ── キャンペーン ── */
+.camp{background:var(--grad-deep);color:#fff;border-radius:var(--radius);padding:26px 22px;box-shadow:var(--shadow-lg)}
+.camp-badge{
+  display:inline-block;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.4);
+  border-radius:999px;padding:6px 14px;font-size:12px;font-weight:700;margin-bottom:14px;
+}
+.camp h2{font-size:25px;font-weight:700;margin-bottom:8px}
+.camp-sub{font-size:14px;opacity:.92;margin-bottom:20px}
+.camp-terms{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.camp-terms li{position:relative;padding-left:26px;font-size:13.5px;line-height:1.75}
+.camp-terms li::before{
+  content:"";position:absolute;left:0;top:.55em;width:14px;height:8px;
+  border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg);
+}
+.billing{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-top:16px}
+.billing h3{font-size:15px;font-weight:700;color:var(--green-dark);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.billing ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.billing li{font-size:13.5px;color:var(--muted);padding-left:20px;position:relative;line-height:1.75}
+.billing li::before{content:"";position:absolute;left:4px;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--mint)}
+
+/* ── 悩み ── */
+.pain{display:grid;gap:12px}
+.pain-item{
+  display:flex;gap:14px;align-items:flex-start;background:var(--surface);
+  border:1px solid var(--border);border-radius:16px;padding:18px;
+}
+.pain-icon{
+  flex:none;width:34px;height:34px;border-radius:11px;background:var(--green-light);
+  color:var(--green-dark);display:flex;align-items:center;justify-content:center;
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;
+}
+.pain-item p{font-size:14.5px}
+
+/* ── 解決 ── */
+.sol{display:grid;gap:16px}
+.sol-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.sol-item h3{font-size:17px;font-weight:700;margin-bottom:8px;color:var(--green-dark)}
+.sol-item p{font-size:14px;color:var(--muted)}
+
+/* ── フロー ── */
+.flow{display:grid;gap:28px}
+.flow-step{display:grid;gap:16px;justify-items:center;text-align:center}
+.flow-num{
+  width:34px;height:34px;border-radius:50%;background:var(--grad-deep);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;flex:none;
+}
+.flow-step h3{font-size:17px;font-weight:700}
+.flow-step p{font-size:14px;color:var(--muted);max-width:30em}
+
+/* ── 機能 ── */
+.feat{display:grid;gap:12px}
+.feat-item{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px}
+.feat-item h3{font-size:15.5px;font-weight:700;margin-bottom:6px;display:flex;gap:9px;align-items:flex-start}
+.feat-item h3::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--mint);margin-top:.62em}
+.feat-item p{font-size:13.5px;color:var(--muted);padding-left:15px}
+
+/* ── 安心材料 ── */
+.trust{display:grid;gap:12px}
+.trust-item{background:var(--surface2);border-radius:16px;padding:18px}
+.trust-item h3{font-size:15px;font-weight:700;color:var(--green-dark);margin-bottom:6px}
+.trust-item p{font-size:13.5px;color:var(--muted)}
+
+/* ── 料金 ── */
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.price-card + .price-card{margin-top:14px}
+.price-card h3{font-size:16px;font-weight:700;margin-bottom:6px}
+.price-card > p{font-size:13px;color:var(--muted);margin-bottom:14px}
+.ptable{width:100%;border-collapse:collapse;font-size:14px}
+.ptable th,.ptable td{text-align:left;padding:11px 0;border-bottom:1px solid var(--border);vertical-align:top}
+.ptable tr:last-child th,.ptable tr:last-child td{border-bottom:none}
+.ptable th{font-weight:500;color:var(--muted);width:50%;padding-right:10px}
+/* 金額だけを折り返さない。行のラベル（「転送サービス料」等）まで nowrap にすると
+   狭い画面でラベルが1文字ずつ折れて読めなくなる。 */
+.ptable td{text-align:right;font-family:'Outfit',sans-serif;font-weight:700;padding-left:8px}
+.ptable td .amt{white-space:nowrap}
+.ptable .note{display:block;font-family:inherit;font-weight:400;font-size:11.5px;color:var(--muted);white-space:normal;text-align:right;margin-top:3px}
+.price-free{background:var(--green-light);border:1px solid rgba(109,75,246,.22);border-radius:14px;padding:14px 16px;font-size:13.5px;color:var(--green-dark);margin-bottom:16px}
+.price-free strong{font-weight:700}
+.fineprint{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.8}
+.fineprint a{color:var(--green-dark)}
+
+/* ── FAQ ── */
+.faq{display:grid;gap:10px}
+.faq details{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.faq summary{
+  cursor:pointer;list-style:none;padding:16px 46px 16px 18px;position:relative;
+  font-size:14.5px;font-weight:700;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"";position:absolute;right:20px;top:22px;width:8px;height:8px;
+  border-right:2px solid var(--green);border-bottom:2px solid var(--green);
+  transform:rotate(45deg);transition:transform .2s;
+}
+.faq details[open] summary::after{transform:rotate(-135deg)}
+.faq summary:focus-visible{outline:3px solid var(--green-dark);outline-offset:-3px}
+.faq-a{padding:0 18px 18px;font-size:13.5px;color:var(--muted)}
+
+/* ── フォーム ── */
+.form{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-lg)}
+.field{margin-bottom:16px}
+.field > label,.fieldset-label{display:block;font-size:13.5px;font-weight:700;margin-bottom:7px}
+.req{color:#c02020;font-size:11px;margin-left:6px;font-weight:700}
+.opt{color:var(--muted);font-size:11px;margin-left:6px;font-weight:400}
+.input,.select{
+  width:100%;font-family:inherit;font-size:16px;color:var(--text);
+  background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:13px 14px;
+}
+.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='%236d4bf6' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;background-size:11px;padding-right:36px}
+.input:focus,.select:focus{outline:none;border-color:var(--green);background:#fff;box-shadow:0 0 0 3px rgba(109,75,246,.14)}
+.input[aria-invalid="true"],.select[aria-invalid="true"]{border-color:#c02020;background:#fff8f8}
+.err{display:block;font-size:12px;color:#c02020;margin-top:6px;font-weight:500}
+fieldset{border:none;margin:0 0 16px;padding:0}
+.checks{display:grid;gap:9px}
+.check{
+  display:flex;gap:10px;align-items:flex-start;background:var(--bg);
+  border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;cursor:pointer;font-size:14px;
+}
+.check input{width:19px;height:19px;margin:1px 0 0;accent-color:var(--green);flex:none;cursor:pointer}
+.check:has(input:checked){border-color:var(--green);background:var(--green-light)}
+.check:has(input:focus-visible){outline:3px solid var(--green-dark);outline-offset:2px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7}
+.consent input{width:19px;height:19px;margin:2px 0 0;accent-color:var(--green);flex:none;cursor:pointer}
+.consent a{color:var(--green-dark);text-underline-offset:2px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.form-status{border-radius:12px;padding:14px 16px;font-size:14px;margin-bottom:16px;font-weight:500}
+.form-status--ok{background:var(--green-light);color:var(--green-dark);border:1px solid rgba(109,75,246,.28)}
+.form-status--ng{background:#fff3f3;color:#a01818;border:1px solid #f0caca}
+.form-done{text-align:center;padding:16px 0}
+.form-done h3{font-size:19px;color:var(--green-dark);margin-bottom:10px}
+.form-done p{font-size:14px;color:var(--muted)}
+
+/* ── 最終CTA ── */
+.final{background:var(--grad-deep);color:#fff;padding:52px 0}
+.final h2{font-size:25px;font-weight:700;margin-bottom:12px}
+.final p{font-size:14.5px;opacity:.92;margin-bottom:24px}
+.final .btn--primary{background:#fff;color:var(--green-dark);box-shadow:0 10px 26px rgba(0,0,0,.18)}
+
+/* ── フッター ── */
+.ftr{background:#14101f;color:rgba(255,255,255,.62);padding:36px 0 44px;text-align:center;font-size:12.5px}
+.ftr img{height:20px;width:auto;margin:0 auto 18px;opacity:.6}
+.ftr-links{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;margin-bottom:18px}
+.ftr-links a{color:rgba(255,255,255,.72);text-decoration:none}
+.ftr-links a:hover{color:#fff;text-decoration:underline}
+
+/* ── モバイル固定CTA ──
+   フォーム／フッターが視界に入ったら .is-parked で退避させる（邪魔しない）。 */
+.sticky{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(10px);
+  border-top:1px solid var(--border);box-shadow:0 -6px 24px rgba(20,16,31,.10);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));
+  display:flex;align-items:center;gap:12px;
+  transition:transform .28s ease,opacity .28s ease;
+}
+.sticky.is-parked{transform:translateY(120%);opacity:0;pointer-events:none}
+.sticky-txt{flex:1;min-width:0;font-size:11.5px;line-height:1.45;color:var(--muted)}
+.sticky-txt strong{display:block;font-size:13px;color:var(--text);font-weight:700}
+.sticky .btn{width:auto;flex:none;font-size:14px;padding:13px 20px}
+@media (min-width:861px){.sticky{display:none}}
+
+/* ── PC（スマホが主役。中央1カラムを保ったまま余白と文字を広げる） ── */
+@media (min-width:861px){
+  body{font-size:16px}
+  .wrap{max-width:920px;padding:0 32px}
+  .section{padding:88px 0}
+  .hero{padding:52px 0 72px}
+  .hero h1{font-size:46px}
+  .hero-sub{font-size:17px;max-width:34em}
+  .h2{font-size:34px}
+  .camp h2{font-size:34px}
+  .final h2{font-size:34px}
+  .hdr img{height:30px}
+  .btn{width:auto;min-width:280px}
+  .hero-actions,.final-actions{display:flex;gap:14px;flex-wrap:wrap}
+  .btn-note{text-align:left}
+  .final .btn-note{text-align:center}
+  .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .hero-media{margin-bottom:0}
+  .pain,.feat,.trust{grid-template-columns:1fr 1fr}
+  .sol{grid-template-columns:1fr 1fr}
+  .flow{grid-template-columns:repeat(3,1fr);gap:32px;align-items:start}
+  .form{max-width:640px;margin:0 auto;padding:32px}
+  .final-actions{justify-content:center}
+  .camp{padding:40px 36px}
+}
+@media (min-width:861px){
+  .hero-actions .btn,.final-actions .btn{min-width:240px}
+}
+
+/* 動きを減らす設定を尊重する */
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .sticky.is-parked{transform:none;display:none}
+}
+</style>
+<!-- PostHog（既存LPと同一プロジェクト。計測基盤は二重に入れない） -->
+<script>
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+" (stub)"},o="capture identify alias set_config".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||(window.posthog=[]));
+posthog.init("phc_CZUuhM26c3BNkvvAx5Cg79Ci77Ux935w4ckfCdhrUXcR", {
+  api_host: "https://us.i.posthog.com",
+  person_profiles: 'identified_only',
+  capture_pageview: true
+});
+</script>
+<!-- Meta Pixel: 未設定（META_PIXEL_ID が空のため読み込みません） -->
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-in">
+    <a href="/"><img src="/images/moyo-wordmark.png" alt="MOYO" width="1408" height="288" decoding="async"></a>
+    <a href="#apply" class="hdr-cta" data-cta="header">3ヶ月無料で試す</a>
+  </div>
+</header>
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="hero-badge">9月30日まで・先着10店舗</p>
+        <h1>施術写真から、<em>ブログを自動作成。</em></h1>
+        <p class="hero-sub">写真を送るだけ。お店の文体に合わせて、AIがブログの下書きを作成します。</p>
+        <div class="hero-actions">
+          <a href="#apply" class="btn btn--primary" data-cta="hero">3ヶ月無料で試す</a>
+          <a href="#campaign" class="btn btn--ghost" data-cta="hero_secondary">キャンペーンを見る</a>
+        </div>
+        <p class="btn-note">お申し込みフォームの送信だけでは料金は発生しません</p>
+      </div>
+      <div class="hero-media">
+        <figure class="imgslot" style="--ratio:4 / 3">
+  <img src="/images/lp/blog/hero.webp" alt="施術後のヘアスタイルをスマートフォンで撮影している様子" width="1200" height="900"
+       decoding="async" fetchpriority="high"
+       onerror="this.closest('.imgslot').classList.add('is-missing');this.remove()">
+  <figcaption class="imgslot-ph" aria-hidden="true">
+    <span class="imgslot-ph-label">画像スロット</span>
+    <span class="imgslot-ph-caption">施術後のヘアスタイルを撮影する場面</span>
+    <span class="imgslot-ph-meta">4 / 3／/images/lp/blog/hero.webp</span>
+  </figcaption>
+</figure>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="campaign">
+  <div class="wrap">
+    <div class="camp">
+      <p class="camp-badge">9月30日まで・先着10店舗</p>
+      <h2>MOYOを3ヶ月無料でお試し</h2>
+      <p class="camp-sub">パイロット店舗として、一緒に使い方を育ててくださる店舗を募集しています。</p>
+      <ul class="camp-terms">
+        <li>2026年9月30日までにお申し込みいただいた店舗が対象です</li>
+        <li>ご利用開始日から3ヶ月間、月額が無料になります</li>
+        <li>通常の無料期間は14日間（スタッフサーベイ単体は2ヶ月）です。パイロット店舗に限り3ヶ月に延長します</li>
+        <li>4ヶ月目から通常料金です（金額は下の「料金」に記載しています）</li>
+        <li>初期費用は0円です</li>
+        <li>最低契約期間はありません。いつでも解約できます</li>
+        <li>パイロット店舗として、月1回程度の簡単なヒアリングにご協力をお願いする場合があります</li>
+      </ul>
+    </div>
+    <div class="billing">
+      <h3>料金が発生するタイミング</h3>
+      <ul>
+        <li>このフォームを送信した時点では、料金は一切発生しません。この時点でクレジットカードの登録も必要ありません。</li>
+        <li>担当者からご連絡し、内容にご納得いただいたうえで利用を開始します。</li>
+        <li>無料期間が終わる2週間前にメールでご案内します。</li>
+        <li>継続のご意思を確認できた場合にのみ、4ヶ月目から有料契約に移行します。ご返信がないまま自動で課金されることはありません。</li>
+        <li>継続されない場合は、費用は一切かかりません。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="section section--tint" id="pain">
+  <div class="wrap">
+    <p class="eyebrow">Problem</p>
+    <h2 class="h2">ブログ、<em>止まっていませんか。</em></h2>
+    <p class="lead">大事なのはわかっているけれど、営業が終わったあとに書く体力が残っていない。</p>
+    <div class="pain">
+      <div class="pain-item"><span class="pain-icon en">01</span><p>「今日こそ書こう」と思ったまま、気づけば1ヶ月更新できていない。</p></div>
+      <div class="pain-item"><span class="pain-icon en">02</span><p>毎回ゼロから文章を考えるのがしんどい。書き出しで止まる。</p></div>
+      <div class="pain-item"><span class="pain-icon en">03</span><p>スタッフによって文章の量も雰囲気もバラバラになる。</p></div>
+      <div class="pain-item"><span class="pain-icon en">04</span><p>書く時間を作ると、その分だけ帰りが遅くなる。</p></div>
+    </div>
+  </div>
+</section>
+<section class="section" id="solution">
+  <div class="wrap">
+    <p class="eyebrow">Solution</p>
+    <h2 class="h2">書くのをやめて、<em>確認する仕事に変える。</em></h2>
+    <p class="lead">写真とキーワードを渡すと、AIが記事の下書きまで進めます。人は最後に確認して整えるだけです。</p>
+    <div class="stack--lg stack">
+      <figure class="imgslot" style="--ratio:16 / 10">
+  <img src="/images/lp/blog/generation-flow.webp" alt="AIがブログ記事の下書きを作成している管理画面" width="1200" height="900"
+       decoding="async" loading="lazy"
+       onerror="this.closest('.imgslot').classList.add('is-missing');this.remove()">
+  <figcaption class="imgslot-ph" aria-hidden="true">
+    <span class="imgslot-ph-label">画像スロット</span>
+    <span class="imgslot-ph-caption">AIが記事の下書きを作成する画面</span>
+    <span class="imgslot-ph-meta">16 / 10／/images/lp/blog/generation-flow.webp</span>
+  </figcaption>
+</figure>
+      <div class="sol">
+        <div class="sol-item"><h3>施術写真から記事案をつくる</h3><p>撮った写真を送り、狙いたいキーワードを添えます。キーワードは「おまかせ」でも進みます。</p></div>
+        <div class="sol-item"><h3>担当スタッフの文体を反映</h3><p>担当スタッフの過去の文章から文体を学習し、その人らしい書き方に寄せて下書きを作ります。</p></div>
+        <div class="sol-item"><h3>LINEでも、パソコンでも</h3><p>スタッフはLINEから。店長はパソコンやタブレットの管理画面から。その場で撮ってそのまま進められます。</p></div>
+        <div class="sol-item"><h3>直しは会話でも、手でも</h3><p>「もう少し短く」のようにAIへ指示して直せます。テキストを自分で書き換えることもできます。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section section--soft" id="flow">
+  <div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2 class="h2">写真を送ってから<em>投稿まで。</em></h2>
+    <p class="lead">最後の投稿は人の手で行います。内容を確認しないまま公開されることはありません。</p>
+    <div class="flow">
+      <div class="flow-step">
+        <span class="flow-num en">1</span>
+        <div class="phone">
+  <div class="phone-frame">
+    <div class="phone-notch" aria-hidden="true"></div>
+    <figure class="imgslot imgslot--phone" style="--ratio:9 / 19.5">
+  <img src="/images/lp/blog/flow-photo.webp" alt="LINEに施術写真を送信しているスマートフォンの画面" width="1200" height="900"
+       decoding="async" loading="lazy"
+       onerror="this.closest('.imgslot').classList.add('is-missing');this.remove()">
+  <figcaption class="imgslot-ph" aria-hidden="true">
+    <span class="imgslot-ph-label">画像スロット</span>
+    <span class="imgslot-ph-caption">写真を送信するスマホ画面</span>
+    <span class="imgslot-ph-meta">9 / 19.5／/images/lp/blog/flow-photo.webp</span>
+  </figcaption>
+</figure>
+  </div>
+  
+</div>
+        <h3>写真を送る</h3>
+        <p>LINEに施術写真を送ります。管理画面からその場で撮影してアップロードすることもできます。</p>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num en">2</span>
+        <div class="phone">
+  <div class="phone-frame">
+    <div class="phone-notch" aria-hidden="true"></div>
+    <figure class="imgslot imgslot--phone" style="--ratio:9 / 19.5">
+  <img src="/images/lp/blog/flow-line-preview.webp" alt="LINE上で生成されたブログの下書きを確認している画面" width="1200" height="900"
+       decoding="async" loading="lazy"
+       onerror="this.closest('.imgslot').classList.add('is-missing');this.remove()">
+  <figcaption class="imgslot-ph" aria-hidden="true">
+    <span class="imgslot-ph-label">画像スロット</span>
+    <span class="imgslot-ph-caption">LINE上の下書きプレビュー</span>
+    <span class="imgslot-ph-meta">9 / 19.5／/images/lp/blog/flow-line-preview.webp</span>
+  </figcaption>
+</figure>
+  </div>
+  
+</div>
+        <h3>下書きを受け取る</h3>
+        <p>AIがタイトルと本文の下書きを作ります。できあがるとLINEまたは管理画面で確認できます。</p>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num en">3</span>
+        <div class="phone">
+  <div class="phone-frame">
+    <div class="phone-notch" aria-hidden="true"></div>
+    <figure class="imgslot imgslot--phone" style="--ratio:9 / 19.5">
+  <img src="/images/lp/blog/flow-copy.webp" alt="完成した記事をコピーしようとしている画面" width="1200" height="900"
+       decoding="async" loading="lazy"
+       onerror="this.closest('.imgslot').classList.add('is-missing');this.remove()">
+  <figcaption class="imgslot-ph" aria-hidden="true">
+    <span class="imgslot-ph-label">画像スロット</span>
+    <span class="imgslot-ph-caption">記事をコピーして投稿する画面</span>
+    <span class="imgslot-ph-meta">9 / 19.5／/images/lp/blog/flow-copy.webp</span>
+  </figcaption>
+</figure>
+  </div>
+  
+</div>
+        <h3>確認して、コピーして投稿</h3>
+        <p>内容を確認し、必要なら直します。仕上がったらコピーして、サロンボードに貼り付けて投稿します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="usecase">
+  <div class="wrap">
+    <p class="eyebrow">Use case</p>
+    <h2 class="h2">こんなふうに<em>使われています。</em></h2>
+    <p class="lead">「書く」から「確認する」に変わると、続けられる分量が変わります。</p>
+    <div class="stack--lg stack">
+      <figure class="imgslot" style="--ratio:3 / 2">
+  <img src="/images/lp/blog/article-preview.webp" alt="完成したサロンブログ記事の表示例" width="1200" height="900"
+       decoding="async" loading="lazy"
+       onerror="this.closest('.imgslot').classList.add('is-missing');this.remove()">
+  <figcaption class="imgslot-ph" aria-hidden="true">
+    <span class="imgslot-ph-label">画像スロット</span>
+    <span class="imgslot-ph-caption">完成したブログ記事</span>
+    <span class="imgslot-ph-meta">3 / 2／/images/lp/blog/article-preview.webp</span>
+  </figcaption>
+</figure>
+      <div class="card">
+        <div class="stack">
+          <p>施術が終わってお客様を見送ったあと、その場で写真を1枚送っておく。</p>
+          <p>手が空いたタイミングで下書きを開き、気になるところだけ直す。</p>
+          <p>店長がパソコンでまとめて確認し、そのままコピーして投稿する。</p>
+          <p>新人スタッフの記事も、文体が整った状態から始められる。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section section--tint" id="features">
+  <div class="wrap">
+    <p class="eyebrow">Features</p>
+    <h2 class="h2">主な機能</h2>
+    <p class="lead">ブログだけでなく、クチコミへの返信案も同じ「集客」に含まれます。</p>
+    <div class="feat">
+      <div class="feat-item"><h3>施術写真からの記事下書き作成</h3><p>写真とキーワードから、タイトルと本文の案を作ります。</p></div>
+      <div class="feat-item"><h3>担当スタッフごとの文体学習</h3><p>過去の文章から文体を学習し、担当者らしい書き方に寄せます。</p></div>
+      <div class="feat-item"><h3>LINEからの操作</h3><p>スタッフはLINEで写真を送り、そのまま下書きを受け取れます。</p></div>
+      <div class="feat-item"><h3>管理画面からの操作</h3><p>パソコン・タブレットから撮影、生成、編集までできます。</p></div>
+      <div class="feat-item"><h3>AIへの修正指示</h3><p>「もう少し短く」のように言葉で指示して書き直せます。</p></div>
+      <div class="feat-item"><h3>クチコミ返信案の作成</h3><p>ブログと同じ「集客」に含まれます。クチコミへの返信案も作成できます。</p></div>
+    </div>
+  </div>
+</section>
+<section class="section" id="trust">
+  <div class="wrap">
+    <p class="eyebrow">Trust</p>
+    <h2 class="h2">公開する前に、<em>必ず人が見ます。</em></h2>
+    <p class="lead">AIが書いたものがそのまま外に出る仕組みにはしていません。</p>
+    <figure class="imgslot" style="--ratio:4 / 3">
+  <img src="/images/lp/blog/comparison.webp" alt="従来の手書き作業とMOYOを使った場合の作業の流れを並べた比較図" width="1200" height="900"
+       decoding="async" loading="lazy"
+       onerror="this.closest('.imgslot').classList.add('is-missing');this.remove()">
+  <figcaption class="imgslot-ph" aria-hidden="true">
+    <span class="imgslot-ph-label">画像スロット</span>
+    <span class="imgslot-ph-caption">作成前と作成後の比較</span>
+    <span class="imgslot-ph-meta">4 / 3／/images/lp/blog/comparison.webp</span>
+  </figcaption>
+</figure>
+    <div class="trust" style="margin-top:18px">
+      <div class="trust-item"><h3>自動では投稿しません</h3><p>MOYOが行うのは下書きの作成までです。サロンボードへの投稿は、内容を確認したうえで、コピーして貼り付けていただきます。</p></div>
+      <div class="trust-item"><h3>内容は自由に直せます</h3><p>AIへ修正を指示することも、テキストを直接書き換えることもできます。納得できるまで直してから使えます。</p></div>
+      <div class="trust-item"><h3>写真は店舗ごとに分けて保管します</h3><p>アップロードされた写真は店舗ごとに分けて保管され、他店舗から見えることはありません。</p></div>
+      <div class="trust-item"><h3>いつでもやめられます</h3><p>最低契約期間はありません。合わなければ解約でき、それ以降の請求は止まります。</p></div>
+    </div>
+  </div>
+</section>
+<section class="section section--tint" id="pricing">
+  <div class="wrap">
+    <p class="eyebrow">Pricing</p>
+    <h2 class="h2">料金とキャンペーン条件</h2>
+    <p class="lead">複雑なプランはありません。使う機能の月額を足すだけです。キャンペーン期間中に無料になるのは<strong>この月額</strong>です。実費は分けて記載しています。</p>
+
+    <div class="price-free">
+      <strong>MOYOを3ヶ月無料でお試し（9月30日まで・先着10店舗）</strong><br>
+      ご利用開始日から3ヶ月間、月額が0円になります。初期費用も0円です。4ヶ月目から下記の通常料金です。
+    </div>
+
+    <div class="price-card">
+      <h3>ブログ・口コミ対応</h3>
+      <p>ブログの下書き作成とクチコミ返信案がこの1つに含まれます。</p>
+      <table class="ptable"><tbody>
+        <tr><th>月額</th><td><span class="amt">¥2,980 /月</span></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="price-card">
+      <h3>ほかの機能を足す場合</h3>
+      <p>使う機能の月額を足すだけです。</p>
+      <table class="ptable"><tbody>
+        <tr><th>ブログ・口コミ対応</th><td><span class="amt">¥2,980 /月</span></td></tr>
+        <tr><th>LINE会員証・クーポン</th><td><span class="amt">¥2,980 /月</span></td></tr>
+        <tr><th>スタッフサーベイ</th><td><span class="amt">¥2,980 /店・月</span></td></tr>
+        <tr><th>AI電話対応</th><td><span class="amt">¥3,500〜 /月</span><span class="note">月の通話件数で決まります</span></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="price-card">
+      <h3>4つすべてを使う場合（セット割）</h3>
+      <p>単品の合計より安くなります。</p>
+      <table class="ptable"><tbody>
+        <tr><th>全部入り（電話 月50件まで）</th><td><span class="amt">¥11,800 /月</span><span class="note">単品合計 ¥13,940 から 15% OFF</span></td></tr>
+        <tr><th>全部入り ビジネス（電話 月200件まで）</th><td><span class="amt">¥19,800 /月</span><span class="note">単品合計 ¥23,740 から 17% OFF</span></td></tr>
+      </tbody></table>
+      <p class="fineprint">サーベイは1店舗分を含みます。お試し（月10件）は全部入りセットの対象外です。</p>
+    </div>
+
+    <div class="price-card">
+      <h3>電話を追加した場合の実費（無料期間中もかかります）</h3>
+      <p>下記は月額とは別の実費です。3ヶ月無料の対象には含まれません。</p>
+      <table class="ptable"><tbody>
+        <tr><th>AI専用電話番号の維持費</th><td><span class="amt">月額 739円</span><span class="note">電話をご利用の場合。為替レートにより変動する場合があります</span></td></tr>
+        <tr><th>転送サービス料</th><td><span class="amt">月額 約500円</span><span class="note">既存の番号から転送する場合。ご契約中の通信事業者へお支払いいただきます</span></td></tr>
+        <tr><th>転送通話料</th><td><span class="amt">通信事業者の料金</span><span class="note">既存の番号から転送する場合。ご契約中の通信事業者へお支払いいただきます</span></td></tr>
+        <tr><th>通話件数の超過分</th><td><span class="amt">1件あたり 100円</span><span class="note">どの段階でも同じ単価です。無料期間中も超過分は実費です</span></td></tr>
+      </tbody></table>
+    </div>
+
+    <p class="fineprint">
+      初期費用は0円です。工事も機材も必要ありません。<br>
+      表示価格はすべて税抜です。別途、消費税が加算されます。<br>
+      最低契約期間はありません。解約のお申し出をいただいた場合、次回請求分以降を停止します。<br>
+      料金の詳細は<a href="/tokushoho.html">特定商取引法に基づく表記</a>をご確認ください。
+    </p>
+  </div>
+</section>
+<section class="section" id="faq">
+  <div class="wrap">
+    <p class="eyebrow">FAQ</p>
+    <h2 class="h2">よくある質問</h2>
+    <div class="faq">
+      <details>
+        <summary>サロンボードへ自動で投稿してくれますか？</summary>
+        <div class="faq-a">いいえ。MOYOが行うのは下書きの作成までです。できあがった記事をご確認いただき、コピーしてサロンボードに貼り付けて投稿していただきます。自動投稿は行っていません。</div>
+      </details>
+      <details>
+        <summary>AIが書いた文章とわかってしまいませんか？</summary>
+        <div class="faq-a">担当スタッフの過去の文章から文体を学習して寄せています。そのうえで、公開前にご自身で読んで直していただく前提の仕組みです。</div>
+      </details>
+      <details>
+        <summary>写真は何枚必要ですか？</summary>
+        <div class="faq-a">1枚から進められます。狙いたいキーワードを添えていただくと精度が上がりますが、「おまかせ」でも下書きは作成されます。</div>
+      </details>
+      <details>
+        <summary>パソコンがなくても使えますか？</summary>
+        <div class="faq-a">はい。スタッフのLINEから写真を送って下書きを受け取るところまで、スマートフォンだけで完結します。</div>
+      </details>
+      <details>
+        <summary>どのくらいで下書きができますか？</summary>
+        <div class="faq-a">送信後しばらくお待ちいただくと、LINEまたは管理画面に下書きが届きます。待っている間に別の作業をしていただけます。</div>
+      </details>
+      <details>
+        <summary>無料期間が終わったら自動的に課金されますか？</summary>
+        <div class="faq-a">いいえ。無料期間が終わる2週間前にメールでご案内し、継続のご意思を確認できた場合にのみ有料契約へ移行します。ご返信がないまま自動で課金されることはありません。</div>
+      </details>
+      <details>
+        <summary>他の機能と一緒に使えますか？</summary>
+        <div class="faq-a">はい。MOYO には AI電話対応・ブログ/口コミ対応・LINE会員証/クーポン・スタッフサーベイの4つがあり、使う機能の月額を足すだけです。4つすべてを使う場合はセット割があります。お申し込みフォームで複数選択できます。</div>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="section section--soft" id="apply" data-cta-park>
+  <div class="wrap">
+    <p class="eyebrow">Apply</p>
+    <h2 class="h2">3ヶ月無料でお試しする</h2>
+    <p class="lead">2026年9月30日までのお申し込みが対象です。送信だけでは料金は発生しません。</p>
+
+    <div class="form" id="form-box">
+      <div class="form-status" id="form-status" role="alert" hidden></div>
+      <form id="apply-form" novalidate data-cta-origin="form">
+        <div class="field">
+          <label for="salonName">サロン名<span class="req">必須</span></label>
+          <input class="input" type="text" id="salonName" name="salonName" autocomplete="organization" required>
+          <span class="err" id="err-salonName" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="contactName">ご担当者名<span class="req">必須</span></label>
+          <input class="input" type="text" id="contactName" name="contactName" autocomplete="name" required>
+          <span class="err" id="err-contactName" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="email">メールアドレス<span class="req">必須</span></label>
+          <input class="input" type="email" id="email" name="email" autocomplete="email" inputmode="email" required>
+          <span class="err" id="err-email" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="phone">電話番号<span class="req">必須</span></label>
+          <input class="input" type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" required>
+          <span class="err" id="err-phone" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="salonCount">店舗数<span class="req">必須</span></label>
+          <select id="salonCount" name="salonCount" class="select" required>
+          <option value="">選択してください</option>
+          <option value="1店舗">1店舗</option>
+          <option value="2〜3店舗">2〜3店舗</option>
+          <option value="4〜9店舗">4〜9店舗</option>
+          <option value="10店舗以上">10店舗以上</option>
+        </select>
+          <span class="err" id="err-salonCount" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="staffCount">スタッフ数<span class="req">必須</span></label>
+          <select id="staffCount" name="staffCount" class="select" required>
+          <option value="">選択してください</option>
+          <option value="1〜3人">1〜3人</option>
+          <option value="4〜9人">4〜9人</option>
+          <option value="10〜29人">10〜29人</option>
+          <option value="30人以上">30人以上</option>
+        </select>
+          <span class="err" id="err-staffCount" aria-live="polite"></span>
+        </div>
+
+        <fieldset>
+          <legend class="fieldset-label">興味のある機能<span class="req">必須</span></legend>
+          <div class="checks">
+        <label class="check">
+          <input type="checkbox" name="features" value="survey" data-label="スタッフサーベイ">
+          <span>スタッフサーベイ</span>
+        </label>
+        <label class="check">
+          <input type="checkbox" name="features" value="marketing" data-label="ブログ・口コミ対応" checked>
+          <span>ブログ・口コミ対応</span>
+        </label>
+        <label class="check">
+          <input type="checkbox" name="features" value="call" data-label="AI電話対応">
+          <span>AI電話対応</span>
+        </label>
+        <label class="check">
+          <input type="checkbox" name="features" value="line" data-label="LINE会員証・クーポン">
+          <span>LINE会員証・クーポン</span>
+        </label>
+          </div>
+          <span class="err" id="err-features" aria-live="polite"></span>
+        </fieldset>
+
+        <div class="field">
+          <label for="message">ご要望・ご質問<span class="opt">任意</span></label>
+          <textarea class="input" id="message" name="message" rows="3"></textarea>
+        </div>
+
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <label class="consent">
+          <input type="checkbox" name="consent" required>
+          <span><a href="/terms.html" target="_blank" rel="noopener">利用規約</a>および<a href="/privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>に同意します<span class="req">必須</span></span>
+        </label>
+        <span class="err" id="err-consent" aria-live="polite"></span>
+
+        <button type="submit" class="btn btn--primary" data-cta="form_submit">3ヶ月無料で試す</button>
+        <p class="btn-note">担当者より2営業日以内にご連絡します。この時点では料金は発生しません。</p>
+      </form>
+    </div>
+  </div>
+</section>
+<section class="final" id="final">
+  <div class="wrap">
+    <h2>書けないまま止まっているブログを、動かす。</h2>
+    <p>9月30日までにお申し込みいただいた先着10店舗を、3ヶ月無料でご案内しています。</p>
+    <div class="final-actions">
+      <a href="#apply" class="btn btn--primary" data-cta="final">3ヶ月無料で試す</a>
+    </div>
+    <p class="btn-note" style="color:rgba(255,255,255,.94)">9月30日まで・先着10店舗／初期費用0円／最低契約期間なし</p>
+  </div>
+</section>
+</main>
+<footer class="ftr" data-cta-park>
+  <div class="wrap">
+    <img src="/images/moyo-wordmark-white.png" alt="MOYO" width="1408" height="288" decoding="async" loading="lazy">
+    <div class="ftr-links">
+      <a href="/privacy.html">プライバシーポリシー</a>
+      <a href="/terms.html">利用規約</a>
+      <a href="/tokushoho.html">特定商取引法に基づく表記</a>
+      <a href="/">MOYO トップ</a>
+      <a href="https://8zero.co.jp" target="_blank" rel="noopener">運営会社</a>
+    </div>
+    <div>© 2026 合同会社8ZERO. All rights reserved.</div>
+  </div>
+</footer>
+<div class="sticky">
+  <div class="sticky-txt"><strong>MOYOを3ヶ月無料でお試し</strong>9月30日まで・先着10店舗</div>
+  <a href="#apply" class="btn btn--primary" data-cta="sticky">3ヶ月無料で試す</a>
+</div>
+<script>window.__MOYO_LP__ = {"lp":"blog","lpTitle":"施術写真から、ブログを自動作成。｜サロンのブログ下書きAI MOYO","campaign":"2026年9月 パイロット募集","contactApi":"https://callmint-cms.vercel.app/api/contact","submitLabel":"3ヶ月無料で試す","events":{"view":"lp_view","ctaClick":"campaign_cta_click","formStart":"form_start","formSubmit":"form_submit","formSuccess":"form_success","formError":"form_error"},"utmKeys":["utm_source","utm_medium","utm_campaign","utm_content","utm_term"]};</script>
+<script>
+(function () {
+  'use strict';
+  var CFG = window.__MOYO_LP__ || {};
+  var EV = CFG.events || {};
+  var STORE_KEY = 'moyo_lp_attr';
+
+  /* ---------- 流入情報（UTM・初回流入URL）を保持する ---------- */
+  // 初回流入を勝ち（first-touch）にする。2回目以降の訪問では上書きしない。
+  function readStored() {
+    try {
+      var raw = window.localStorage.getItem(STORE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function writeStored(v) {
+    try { window.localStorage.setItem(STORE_KEY, JSON.stringify(v)); } catch (e) { /* private mode 等 */ }
+  }
+
+  function currentUtm() {
+    var out = {};
+    var q;
+    try { q = new URLSearchParams(window.location.search); } catch (e) { return out; }
+    (CFG.utmKeys || []).forEach(function (k) {
+      var v = q.get(k);
+      if (v) out[k] = String(v).slice(0, 200);
+    });
+    return out;
+  }
+
+  var attr = (function () {
+    var now = currentUtm();
+    var stored = readStored();
+    // UTM が付いた新しい流入なら、その回を「初回流入」として記録し直す。
+    // UTM 無しの再訪では既存の記録を保つ（広告経由の帰属を消さない）。
+    if (!stored || Object.keys(now).length > 0) {
+      var next = {
+        utm: now,
+        landing_url: window.location.href.slice(0, 500),
+        referrer: (document.referrer || '').slice(0, 300),
+        first_seen: new Date().toISOString()
+      };
+      if (stored && Object.keys(now).length === 0) next = stored;
+      writeStored(next);
+      return next;
+    }
+    return stored;
+  })();
+
+  /** 計測イベントに載せてよい情報だけを組み立てる（PIIは入れない） */
+  function baseProps() {
+    var p = { lp: CFG.lp, lp_title: CFG.lpTitle, landing_url: attr.landing_url };
+    var u = attr.utm || {};
+    Object.keys(u).forEach(function (k) { p[k] = u[k]; });
+    return p;
+  }
+
+  function track(name, props) {
+    if (!name) return;
+    var payload = baseProps();
+    if (props) Object.keys(props).forEach(function (k) { payload[k] = props[k]; });
+    try { if (window.posthog && window.posthog.capture) window.posthog.capture(name, payload); } catch (e) {}
+  }
+
+  // PostHog の全イベントに UTM と LP種別を付ける
+  try {
+    if (window.posthog && window.posthog.register) window.posthog.register(baseProps());
+  } catch (e) {}
+
+  track(EV.view);
+
+  /* ---------- CTA クリック ---------- */
+  // data-cta="hero" のように位置を持たせる。どのCTAが効いたかを比較できるようにする。
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    var el = t && t.closest ? t.closest('[data-cta]') : null;
+    if (!el) return;
+    track(EV.ctaClick, { cta_position: el.getAttribute('data-cta') });
+  }, { passive: true });
+
+  /* ---------- モバイル固定CTA ---------- */
+  // フォームとフッターが見えている間は退避させる（入力の邪魔をしない）。
+  (function () {
+    var bar = document.querySelector('.sticky');
+    if (!bar || !('IntersectionObserver' in window)) return;
+    var zones = [].slice.call(document.querySelectorAll('[data-cta-park]'));
+    if (!zones.length) return;
+    var visible = new Set();
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) visible.add(en.target); else visible.delete(en.target);
+      });
+      bar.classList.toggle('is-parked', visible.size > 0);
+    }, { rootMargin: '0px 0px -10% 0px' });
+    zones.forEach(function (z) { io.observe(z); });
+  })();
+
+  /* ---------- 申込みフォーム ---------- */
+  var form = document.getElementById('apply-form');
+  if (!form) return;
+
+  var statusEl = document.getElementById('form-status');
+  var submitBtn = form.querySelector('[type="submit"]');
+  var sending = false;
+  var started = false;
+
+  form.addEventListener('input', onFirstTouch, true);
+  form.addEventListener('focusin', onFirstTouch);
+  function onFirstTouch() {
+    if (started) return;
+    started = true;
+    track(EV.formStart);
+  }
+
+  function setError(name, msg) {
+    var field = form.querySelector('[name="' + name + '"]');
+    var box = document.getElementById('err-' + name);
+    if (box) box.textContent = msg || '';
+    if (field) {
+      if (msg) field.setAttribute('aria-invalid', 'true');
+      else field.removeAttribute('aria-invalid');
+    }
+    return !msg;
+  }
+
+  function value(name) {
+    var el = form.querySelector('[name="' + name + '"]');
+    return el && typeof el.value === 'string' ? el.value.trim() : '';
+  }
+
+  function checkedFeatures() {
+    return [].slice.call(form.querySelectorAll('input[name="features"]:checked'))
+      .map(function (el) { return { value: el.value, label: el.getAttribute('data-label') || el.value }; });
+  }
+
+  function validate() {
+    var ok = true;
+    ok = setError('salonName', value('salonName') ? '' : 'サロン名を入力してください') && ok;
+    ok = setError('contactName', value('contactName') ? '' : 'ご担当者名を入力してください') && ok;
+
+    var email = value('email');
+    var emailMsg = !email ? 'メールアドレスを入力してください'
+      : (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : 'メールアドレスの形式が正しくありません');
+    ok = setError('email', emailMsg) && ok;
+
+    var phone = value('phone');
+    var digits = phone.replace(/[^0-9]/g, '');
+    var phoneMsg = !phone ? '電話番号を入力してください'
+      : (digits.length >= 10 && digits.length <= 11 ? '' : '電話番号は10桁または11桁で入力してください');
+    ok = setError('phone', phoneMsg) && ok;
+
+    ok = setError('salonCount', value('salonCount') ? '' : '店舗数を選択してください') && ok;
+    ok = setError('staffCount', value('staffCount') ? '' : 'スタッフ数を選択してください') && ok;
+
+    var feats = checkedFeatures();
+    var fbox = document.getElementById('err-features');
+    if (fbox) fbox.textContent = feats.length ? '' : '興味のある機能を1つ以上選択してください';
+    if (!feats.length) ok = false;
+
+    var consent = form.querySelector('[name="consent"]');
+    var cbox = document.getElementById('err-consent');
+    var consentOk = !!(consent && consent.checked);
+    if (cbox) cbox.textContent = consentOk ? '' : '利用規約とプライバシーポリシーへの同意が必要です';
+    if (!consentOk) ok = false;
+
+    return ok;
+  }
+
+  /** 既存の contact_inquiries は列が固定なので、追加項目は message にまとめて残す */
+  function buildMessage(feats) {
+    var u = attr.utm || {};
+    var lines = [
+      '【広告LPからのお申し込み】',
+      'LP: ' + CFG.lpTitle + ' (' + CFG.lp + ')',
+      'キャンペーン: ' + CFG.campaign,
+      '',
+      '店舗数: ' + value('salonCount'),
+      'スタッフ数: ' + value('staffCount'),
+      '希望機能: ' + feats.map(function (f) { return f.label; }).join(' / '),
+      '',
+      'ご要望: ' + (value('message') || '（未記入）'),
+      '',
+      '--- 流入情報 ---',
+      '初回流入URL: ' + (attr.landing_url || ''),
+      'リファラ: ' + (attr.referrer || '（なし）')
+    ];
+    (CFG.utmKeys || []).forEach(function (k) {
+      lines.push(k + ': ' + (u[k] || '（なし）'));
+    });
+    lines.push('CTA位置: ' + (form.getAttribute('data-cta-origin') || '（不明）'));
+    return lines.join('\n');
+  }
+
+  function showStatus(kind, msg) {
+    if (!statusEl) return;
+    statusEl.className = 'form-status form-status--' + kind;
+    statusEl.textContent = msg;
+    statusEl.hidden = false;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (sending) return;            // 二重送信防止（連打）
+
+    if (!validate()) {
+      track(EV.formError, { reason: 'validation' });
+      var bad = form.querySelector('[aria-invalid="true"], .err:not(:empty)');
+      var focusTarget = form.querySelector('[aria-invalid="true"]');
+      if (focusTarget && focusTarget.focus) focusTarget.focus();
+      else if (bad && bad.scrollIntoView) bad.scrollIntoView({ block: 'center' });
+      showStatus('ng', '入力内容をご確認ください。');
+      return;
+    }
+
+    // ハニーポット: 人間は触らない隠しフィールド。埋まっていたら黙って成功扱い。
+    if (value('website')) { renderDone(); return; }
+
+    var feats = checkedFeatures();
+    sending = true;
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '送信中…'; }
+    if (statusEl) statusEl.hidden = true;
+    track(EV.formSubmit, { feature_count: feats.length, features: feats.map(function (f) { return f.value; }) });
+
+    fetch(CFG.contactApi, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        salonName: value('salonName'),
+        contactName: value('contactName'),
+        email: value('email'),
+        phone: value('phone'),
+        message: buildMessage(feats),
+        website: ''
+      })
+    }).then(function (res) {
+      if (!res.ok) {
+        return res.json().catch(function () { return {}; }).then(function (j) {
+          throw new Error(j && j.error ? j.error : '送信に失敗しました');
+        });
+      }
+      track(EV.formSuccess, { feature_count: feats.length, features: feats.map(function (f) { return f.value; }) });
+      // ピクセルへは個人情報を送らない。LP種別だけ。
+      try { if (window.fbq) window.fbq('track', 'Lead', { content_name: CFG.lp }); } catch (e) {}
+      renderDone();
+    }).catch(function (err) {
+      sending = false;
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = CFG.submitLabel; }
+      track(EV.formError, { reason: 'network_or_server' });
+      showStatus('ng', '送信に失敗しました。お手数ですが時間をおいて再度お試しください。' + (err && err.message ? '（' + err.message + '）' : ''));
+    });
+  });
+
+  function renderDone() {
+    var box = document.getElementById('form-box');
+    if (!box) return;
+    box.innerHTML = '<div class="form-done"><h3>お申し込みありがとうございます</h3>'
+      + '<p>担当者より2営業日以内にご連絡いたします。<br>この時点では料金は発生していません。</p></div>';
+    box.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+})();
+</script>
+</body>
+</html>

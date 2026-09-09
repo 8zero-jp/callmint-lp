@@ -92,8 +92,14 @@ def types_in(obj) -> set:
 #   og-image.html            … OG 画像を書き出すための内部テンプレート
 #   google*.html             … Search Console の所有権確認ファイル。
 #                              **1バイトでも変えると確認に失敗する**ので絶対に触らない
+#   lp/**                    … 広告（Instagram等）専用のLP。生成物であり、
+#                              lp-src/ のテンプレートと設定から `npm run build:lp` で作る。
+#                              **ここを直接書き換えると次のビルドで消える**ので触らない。
+#                              検索インデックスにも載せない（noindex）ため監査の対象外。
 def is_page(rel_path: str) -> bool:
     if rel_path == "og-image.html":
+        return False
+    if rel_path.startswith("lp/"):
         return False
     if re.fullmatch(r"google[0-9a-f]+\.html", rel_path):
         return False
