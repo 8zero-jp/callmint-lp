@@ -20,7 +20,7 @@ import { STYLES } from './styles.mjs'
 import { CLIENT_JS } from './client.mjs'
 import { body } from './render.mjs'
 import {
-  DEFAULT_SITE, CONTACT_API, POSTHOG, META_PIXEL_ID, CAMPAIGN, EVENTS, UTM_KEYS,
+  DEFAULT_SITE, CONTACT_API, POSTHOG, META_PIXEL_ID, offer, EVENTS, UTM_KEYS,
 } from './config/common.mjs'
 
 import { IMAGE_BRIEFS, COMMON_BRIEF } from './config/imageBriefs.mjs'
@@ -284,4 +284,4 @@ function main() {
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) main()
 
-export { CAMPAIGN }
+export { offer }

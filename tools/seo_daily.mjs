@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+// @ts-nocheck -- tools/ は型検査の対象外（jsconfig.json の include は lp-src のみ）。
+// このファイルは 日次SEOエージェント のスクリプトで、JSDoc を整備していない。
+// lp-src のテストから import するとここも型検査の対象に入ってしまうため明示的に外す。
 /**
  * 日次 SEO エージェント。
  *

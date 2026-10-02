@@ -10,7 +10,7 @@ import { esc, imageSlot, jsonScript } from '../html.mjs'
 import { renderPage, PAGES, siteUrl, imageSlotsOf, imagesBrief } from '../build.mjs'
 import { IMAGE_BRIEFS } from '../config/imageBriefs.mjs'
 import { lintPage, findClaim } from '../lint.mjs'
-import { PRICING, CAMPAIGN, FORM_FEATURES, EVENTS, UTM_KEYS, CONTACT_API } from '../config/common.mjs'
+import { PRICING, offer, FORM_FEATURES, EVENTS, UTM_KEYS, CONTACT_API } from '../config/common.mjs'
 
 const ROOT = dirname(dirname(dirname(fileURLToPath(import.meta.url))))
 const rendered = new Map(PAGES.map((c) => [c.slug, renderPage(c)]))
@@ -152,11 +152,25 @@ describe('生成された3ページ', () => {
         for (const s of srcs) assert.equal(s, cfg.slug)
       })
 
-      it('キャンペーン条件が載っている', () => {
-        assert.ok(html.includes(CAMPAIGN.badge))
-        assert.ok(html.includes(CAMPAIGN.headline))
-        for (const t of CAMPAIGN.terms) assert.ok(html.includes(esc(t)), `条件が欠けている: ${t}`)
-        for (const t of CAMPAIGN.billing.points) assert.ok(html.includes(esc(t)), `課金条件が欠けている: ${t}`)
+      it('無料お試しの条件が載っている', () => {
+        const o = offer(cfg.trial)
+        assert.ok(html.includes(o.badge))
+        assert.ok(html.includes(esc(o.headline)))
+        for (const t of o.terms) assert.ok(html.includes(esc(t)), `条件が欠けている: ${t}`)
+        for (const t of o.billing.points) assert.ok(html.includes(esc(t)), `課金条件が欠けている: ${t}`)
+      })
+
+      // 2026-09-30 で終了したキャンペーンの文言が復活していないこと。
+      // 終わった特典を出し続けるのは景表法上まずいので、機械で止める。
+      it('期限切れキャンペーンの文言が残っていない', () => {
+        for (const w of ['9月30日', '先着10店舗', '3ヶ月無料', '3ヶ月間', 'パイロット']) {
+          assert.ok(!html.includes(w), `期限切れの文言が残っている: ${w}`)
+        }
+      })
+
+      it('無料期間はページごとに正しい（サーベイ単体だけ2ヶ月）', () => {
+        assert.equal(cfg.trial, cfg.slug === 'survey' ? '2ヶ月' : '14日間')
+        assert.ok(html.includes(`まずは${cfg.trial}、無料でお試しください`))
       })
 
       it('lint に通る', () => {
