@@ -40,6 +40,8 @@ SITE = site_url()
 TITLE_MAX = 35
 DESC_MIN, DESC_MAX = 70, 130
 MIN_INTERNAL_LINKS = 3
+# 生成AIの言語リーク検出用（キリル文字・ギリシャ文字）。日本語記事には出現しないはず
+SCRIPT_LEAK_RE = re.compile(r"[\u0400-\u04FF\u0370-\u03FF]")
 
 findings: list[dict] = []
 
@@ -125,6 +127,12 @@ def main() -> int:
         html = open(p, encoding="utf-8").read()
         head = html.split("</head>", 1)[0]
         body = html.split("</head>", 1)[1] if "</head>" in html else ""
+
+        # --- 言語リーク（生成時にキリル/ギリシャ文字が混入する事故を検出）---
+        leaked = sorted(set(SCRIPT_LEAK_RE.findall(visible_text(html))))
+        if leaked:
+            add("error", u, "script-leak",
+                "本文に日本語以外の文字（キリル/ギリシャ）が混入: " + " ".join(leaked))
 
         # --- head の基本 ---
         title = re.search(r"<title>(.*?)</title>", head, re.S)
