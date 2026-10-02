@@ -177,11 +177,24 @@ async function expandArticle(gap, ctx) {
   const file = pageFile(gap.url);
   const html = fs.readFileSync(file, "utf-8");
   const bodyStart = html.indexOf('<article class="article-body">');
-  const ctaStart = html.indexOf('<div class="cta-box">', bodyStart);
-  if (bodyStart < 0 || ctaStart < 0) throw new Error(`本文の差し込み位置が見つからない: ${gap.url}`);
+  const bodyEnd = html.indexOf("</article>", bodyStart);
+  if (bodyStart < 0 || bodyEnd < 0) throw new Error(`本文の差し込み位置が見つからない: ${gap.url}`);
+
+  // 記事の途中にもデモ電話の cta-box が入っている記事があるので、差し込み位置は
+  // **最後の** cta-box。indexOf だと途中の cta-box に当たり、追記が既存セクションの
+  // 前に割り込んだうえ、下の採番も途中で打ち切られて id が衝突した（2026-09-14〜26 の連続失敗）。
+  const lastCta = html.lastIndexOf('<div class="cta-box">', bodyEnd);
+  const ctaStart = lastCta > bodyStart ? lastCta : bodyEnd;
+
+  // 採番は記事全体を見る。差し込み位置より後ろにあるセクションを見落とすと重複する。
+  // 文書順の最後ではなく最大値を採る。
+  const article = html.slice(bodyStart, bodyEnd);
+  const lastSection = Math.max(
+    0,
+    ...[...article.matchAll(/id="section(\d+)"/g)].map((m) => +m[1]),
+  );
 
   const currentBody = html.slice(bodyStart, ctaStart);
-  const lastSection = [...currentBody.matchAll(/id="section(\d+)"/g)].map((m) => +m[1]).pop() ?? 0;
   const need = gap.detail.match(/目標 (\d+)字/);
   const target = need ? +need[1] : 6000;
   const now = visibleChars(currentBody);
@@ -214,11 +227,13 @@ ${currentBody.replace(/\s+/g, " ").slice(0, 12000)}
   // ID はモデルの申告を使わない。「続き番号から」と指示しても既存の番号を
   // 再利用してくることがあり、実際に section5〜7 が重複した（2026-08-31）。
   // 重複した id はアンカーが誤爆し、目次も二重になる。採番はここで確定させる。
+  const linkReport = [];
   const numbered = out.sections.map((sec, i) => ({
     ...sec,
     id: `section${lastSection + 1 + i}`,
-    html: closeDanglingParagraphs(sec.html),
+    html: fixInternalLinks(closeDanglingParagraphs(sec.html), linkReport),
   }));
+  for (const r of linkReport) console.log(`  リンク修正: ${r}`);
 
   const blocks = numbered.map(
     (s) => `\n    <h2 id="${s.id}">${escapeText(s.heading)}</h2>\n${indent(s.html)}\n`
@@ -304,9 +319,12 @@ ${ctx.gscHint}
 
   const a = await claude({ model: MODEL_WRITE, system: BRAND, user, tool: CREATE_TOOL, maxTokens: 20000 });
 
+  const linkReport = [];
   a.sections = a.sections.map((sec, i) => ({
-    ...sec, id: `section${i + 1}`, html: closeDanglingParagraphs(sec.html),
+    ...sec, id: `section${i + 1}`,
+    html: fixInternalLinks(closeDanglingParagraphs(sec.html), linkReport),
   }));
+  for (const r of linkReport) console.log(`  リンク修正: ${r}`);
 
   const bodyHtml =
     a.lead + "\n" +
@@ -501,6 +519,56 @@ ${list}`,
  * ブラウザは表示を繕うが、HTML としては壊れていて、あとから本文を機械処理する
  * ときに崩れる。ブロック要素が始まる直前とフラグメント末尾で閉じる。
  */
+// ----------------------------------------- 生成物の内部リンクを実在するURLに寄せる
+// モデルは実在しない導線（/trial, /pricing など）を作りたがる。2026-09-26 は /trial の
+// broken-link で監査に落ち、丸一日ぶんの生成を捨てた。実在するURLへ寄せ、寄せ先が
+// 無いものはリンクを外して文章だけ残す。判定は tools/seo_audit.py の broken-link と
+// 同じ規則（フラグメントを落とし、末尾 / なら index.html を見る）。
+const LINK_ALIASES = {
+  "/trial": "/#contact",
+  "/free-trial": "/#contact",
+  "/contact": "/#contact",
+  "/signup": "/#contact",
+  "/apply": "/#contact",
+  "/demo": "/#contact",
+  "/pricing": "/#pricing",
+  "/price": "/#pricing",
+  "/plan": "/#pricing",
+  "/plans": "/#pricing",
+  "/features": "/#features",
+  "/faq": "/#faq",
+  "/blog": "/blog/",
+  "/privacy": "/privacy.html",
+  "/terms": "/terms.html",
+  "/tokushoho": "/tokushoho.html",
+};
+
+function internalTargetExists(href) {
+  const p0 = href.split("#")[0];
+  if (!p0) return true;                      // 同一ページ内のアンカー
+  if (!p0.startsWith("/")) return true;      // 相対リンクは生成物では使わせていない
+  const target = p0.endsWith("/")
+    ? path.join(ROOT, p0.slice(1), "index.html")
+    : path.join(ROOT, p0.slice(1));
+  return fs.existsSync(target);
+}
+
+function fixInternalLinks(html, report) {
+  return html.replace(
+    /<a\b([^>]*?)href="(\/[^"]*)"([^>]*?)>([\s\S]*?)<\/a>/g,
+    (whole, pre, href, post, text) => {
+      if (internalTargetExists(href)) return whole;
+      const alias = LINK_ALIASES[href.split("#")[0].replace(/\/$/, "")];
+      if (alias && internalTargetExists(alias)) {
+        report.push(`${href} → ${alias}`);
+        return `<a${pre}href="${alias}"${post}>${text}</a>`;
+      }
+      report.push(`${href} → リンクを外した`);
+      return text;
+    },
+  );
+}
+
 function closeDanglingParagraphs(html) {
   const BLOCK = /<(?:p|h[1-6]|ul|ol|table|div|blockquote|pre)[\s>]/i;
   let out = "";
@@ -563,6 +631,30 @@ function addFaq(html, faq) {
   return html.replace("<style>", block + "<style>");
 }
 
+// ------------------------------------------------- Search Console の中身を人が読める形に
+// ログとPR本文の両方で使う。順位は低いほど良いので昇順。
+function searchPerformanceLines(gsc) {
+  if (!gsc) return [];
+  const fmt = (r) =>
+    `${r.position.toFixed(1)}位 ${r.query}（表示${r.impressions} / クリック${r.clicks}）`;
+  const lines = [];
+  const top = [...gsc.rows].sort((a, b) => a.position - b.position).slice(0, 10);
+  if (top.length) {
+    lines.push("順位上位:");
+    for (const r of top) lines.push(`  - ${fmt(r)}`);
+  }
+  if (gsc.striking.length) {
+    lines.push("あと一押し(11〜30位・表示20回以上):");
+    for (const r of gsc.striking.slice(0, 10)) lines.push(`  - ${fmt(r)}`);
+  }
+  const totals = gsc.rows.reduce(
+    (acc, r) => ({ imp: acc.imp + r.impressions, clk: acc.clk + r.clicks }),
+    { imp: 0, clk: 0 },
+  );
+  lines.push(`直近28日の合計: 表示${totals.imp} / クリック${totals.clk}`);
+  return lines;
+}
+
 // ---------------------------------------------------------------- 優先度づけ
 function prioritize(gaps, gsc, log) {
   const recent = new Set(
@@ -599,8 +691,13 @@ async function main() {
   let gsc = null;
   try {
     gsc = await fetchSearchPerformance();
-    if (!gsc) console.log("  未設定（GSC_SERVICE_ACCOUNT_JSON / GSC_SITE_URL）。サイト側の欠陥のみで判断する");
-    else console.log(`  ${gsc.rows.length}クエリ / あと一押し(11〜30位) ${gsc.striking.length}件`);
+    if (!gsc) {
+      console.log("  未設定（GSC_SERVICE_ACCOUNT_JSON / GSC_SITE_URL）。サイト側の欠陥のみで判断する");
+    } else {
+      console.log(`  ${gsc.rows.length}クエリ / あと一押し(11〜30位) ${gsc.striking.length}件`);
+      // 件数だけだと「SEOがどうなっているか」がログから分からない。実際の順位を出す。
+      for (const line of searchPerformanceLines(gsc)) console.log(`  ${line}`);
+    }
   } catch (e) {
     console.log("  取得失敗（無視して続行）:", e.message);
   }
@@ -683,7 +780,14 @@ function finish(log, work, a, gsc) {
     : "本日はコンテンツのギャップなし。機械的な技術SEO修正のみ。";
   fs.writeFileSync(path.join(ROOT, "seo", ".pr-body.md"),
     `${summary}\n\n---\n監査結果: error ${a.errors.length}件 / warn ${a.warnings.length}件\n` +
-    (gsc ? "" : "\n> Search Console が未接続のため、順位ではなくサイト側の欠陥だけで対象を選んでいます。\n"));
+    (gsc
+      ? `\n### Search Console（直近28日）\n\n\`\`\`\n${searchPerformanceLines(gsc).join("\n")}\n\`\`\`\n`
+      : "\n> Search Console が未接続のため、順位ではなくサイト側の欠陥だけで対象を選んでいます。\n"));
 }
 
-main().catch((e) => { console.error("\n失敗:", e.message); process.exit(1); });
+// テストから import できるように、直接実行のときだけ走らせる。
+export { fixInternalLinks, internalTargetExists, closeDanglingParagraphs, LINK_ALIASES, searchPerformanceLines };
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((e) => { console.error("\n失敗:", e.message); process.exit(1); });
+}
