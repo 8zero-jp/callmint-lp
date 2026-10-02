@@ -95,7 +95,9 @@ jobs:
           {
             echo "seo: 日次更新 $DATE"
             echo
-            head -c 900 seo/.pr-body.md
+            # head -c はバイト数で切るので日本語の途中で切れ、git が
+            # 「commit message did not conform to UTF-8」を出していた。文字数で切る。
+            python3 -c "import sys; print(open(sys.argv[1], encoding='utf-8').read()[:400], end='')" seo/.pr-body.md
           } > /tmp/commit-msg.txt
 
           git add -A
