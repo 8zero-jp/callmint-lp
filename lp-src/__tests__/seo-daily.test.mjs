@@ -34,6 +34,7 @@ describe('internalTargetExists', () => {
 
 describe('fixInternalLinks', () => {
   it('寄せ先があるものは実在するURLに置き換える', () => {
+    /** @type {string[]} */
     const report = []
     const out = fixInternalLinks('<p><a href="/trial" class="x">無料で試す</a></p>', report)
     assert.equal(out, '<p><a href="/#contact" class="x">無料で試す</a></p>')
@@ -41,6 +42,7 @@ describe('fixInternalLinks', () => {
   })
 
   it('寄せ先が無いものはリンクを外して文章を残す', () => {
+    /** @type {string[]} */
     const report = []
     const out = fixInternalLinks('<p><a href="/nowhere/">この機能</a>が使えます</p>', report)
     assert.equal(out, '<p>この機能が使えます</p>')
@@ -48,6 +50,7 @@ describe('fixInternalLinks', () => {
   })
 
   it('実在するリンクと外部リンクには触らない', () => {
+    /** @type {string[]} */
     const report = []
     const src = '<a href="/blog/">ブログ</a><a href="https://example.com/">外</a>'
       + '<a href="tel:05017936450">電話</a><a href="#section2">目次</a>'
@@ -56,6 +59,7 @@ describe('fixInternalLinks', () => {
   })
 
   it('/#contact のようなトップのアンカーを壊さない', () => {
+    /** @type {string[]} */
     const report = []
     const src = '<a href="/#contact" class="cta-box-btn">申し込む</a>'
     assert.equal(fixInternalLinks(src, report), src)
@@ -78,7 +82,7 @@ describe('セクションの採番（記事途中に cta-box がある記事）'
 
   it('採番は記事全体の最大値から続ける', () => {
     const article = html.slice(bodyStart, bodyEnd)
-    const ids = [...article.matchAll(/id="section(\d+)"/g)].map((m) => +m[1])
+    const ids = [...article.matchAll(/id="section(\d+)"/g)].map((m) => Number(m[1]))
     const next = Math.max(0, ...ids) + 1
     assert.equal(next, Math.max(...ids) + 1)
     assert.ok(!ids.includes(next), `section${next} は既存と衝突しないこと`)
@@ -99,8 +103,8 @@ describe('searchPerformanceLines', () => {
   it('順位の良い順に並べ、合計も出す', () => {
     const lines = searchPerformanceLines(gsc)
     assert.equal(lines[0], '順位上位:')
-    assert.match(lines[1], /^ {2}- 4\.2位 サロン AI電話（表示12 \/ クリック3）$/)
-    assert.match(lines[2], /22\.6位 美容室 電話 自動化/)
+    assert.match(String(lines[1]), /^ {2}- 4\.2位 サロン AI電話（表示12 \/ クリック3）$/)
+    assert.match(String(lines[2]), /22\.6位 美容室 電話 自動化/)
     assert.ok(lines.includes('あと一押し(11〜30位・表示20回以上):'))
     assert.equal(lines.at(-1), '直近28日の合計: 表示56 / クリック4')
   })

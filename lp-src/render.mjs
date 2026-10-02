@@ -8,7 +8,7 @@
  */
 import { esc, join, imageSlot, phoneMock } from './html.mjs'
 import {
-  CAMPAIGN, PRICING, FORM_FEATURES, SALON_COUNT_OPTIONS, STAFF_COUNT_OPTIONS,
+  offer, PRICING, FORM_FEATURES, SALON_COUNT_OPTIONS, STAFF_COUNT_OPTIONS,
   FOOTER_LINKS, COMPANY,
 } from './config/common.mjs'
 
@@ -27,12 +27,12 @@ export function heroSection(c) {
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <p class="hero-badge">${esc(CAMPAIGN.badge)}</p>
+        <p class="hero-badge">${esc(offer(c.trial).badge)}</p>
         <h1>${c.hero.title}</h1>
         <p class="hero-sub">${esc(c.hero.sub)}</p>
         <div class="hero-actions">
           ${cta({ href: '#apply', label: c.ctaLabel, cta: 'hero' })}
-          ${cta({ href: '#campaign', label: 'キャンペーンを見る', cta: 'hero_secondary', primary: false })}
+          ${cta({ href: '#campaign', label: '無料お試しの条件を見る', cta: 'hero_secondary', primary: false })}
         </div>
         <p class="btn-note">お申し込みフォームの送信だけでは料金は発生しません</p>
       </div>
@@ -45,21 +45,28 @@ export function heroSection(c) {
 }
 
 /* ── 2. 9月限定キャンペーン ───────────────────── */
-export function campaignSection() {
+/**
+ * 無料お試しの条件。
+ * id と関数名は `campaign` のまま。PostHog のイベント（campaign_cta_click）と
+ * e2e / ユニットテストがこの id を見ているので、キャンペーンが終わっても変えない。
+ * @param {any} c
+ */
+export function campaignSection(c) {
+  const o = offer(c.trial)
   return `<section class="section" id="campaign">
   <div class="wrap">
     <div class="camp">
-      <p class="camp-badge">${esc(CAMPAIGN.badge)}</p>
-      <h2>${esc(CAMPAIGN.headline)}</h2>
-      <p class="camp-sub">パイロット店舗として、一緒に使い方を育ててくださる店舗を募集しています。</p>
+      <p class="camp-badge">${esc(o.badge)}</p>
+      <h2>${esc(o.headline)}</h2>
+      <p class="camp-sub">実際の着信やご予約で試していただいたうえで、続けるかどうかを決めてください。</p>
       <ul class="camp-terms">
-        ${CAMPAIGN.terms.map((t) => `<li>${esc(t)}</li>`).join('\n        ')}
+        ${o.terms.map((t) => `<li>${esc(t)}</li>`).join('\n        ')}
       </ul>
     </div>
     <div class="billing">
-      <h3>${esc(CAMPAIGN.billing.title)}</h3>
+      <h3>${esc(o.billing.title)}</h3>
       <ul>
-        ${CAMPAIGN.billing.points.map((t) => `<li>${esc(t)}</li>`).join('\n        ')}
+        ${o.billing.points.map((t) => `<li>${esc(t)}</li>`).join('\n        ')}
       </ul>
     </div>
   </div>
@@ -230,12 +237,12 @@ export function pricingSection(c) {
   return `<section class="section section--tint" id="pricing">
   <div class="wrap">
     <p class="eyebrow">Pricing</p>
-    <h2 class="h2">料金とキャンペーン条件</h2>
-    <p class="lead">${esc(PRICING.note)}キャンペーン期間中に無料になるのは<strong>この月額</strong>です。実費は分けて記載しています。</p>
+    <h2 class="h2">料金</h2>
+    <p class="lead">${esc(PRICING.note)}無料期間中にかからないのは<strong>この月額</strong>です。実費は分けて記載しています。</p>
 
     <div class="price-free">
-      <strong>${esc(CAMPAIGN.headline)}（${esc(CAMPAIGN.badge)}）</strong><br>
-      ご利用開始日から3ヶ月間、月額が0円になります。初期費用も0円です。4ヶ月目から下記の通常料金です。
+      <strong>${esc(offer(c.trial).headline)}（${esc(offer(c.trial).badge)}）</strong><br>
+      無料期間中は月額が0円です。初期費用も0円です。無料期間の終了後は下記の通常料金です。
     </div>
 
     ${ownPrice()}
@@ -261,7 +268,7 @@ export function pricingSection(c) {
 
     <div class="price-card">
       <h3>${esc(costHeading)}</h3>
-      <p>下記は月額とは別の実費です。3ヶ月無料の対象には含まれません。</p>
+      <p>下記は月額とは別の実費です。無料期間中も対象には含まれません。</p>
       <table class="ptable"><tbody>
         ${PRICING.callActualCosts.map((t) => row(t.label, t.price, t.note)).join('\n        ')}
       </tbody></table>
@@ -314,8 +321,8 @@ export function formSection(c) {
   return `<section class="section section--soft" id="apply" data-cta-park>
   <div class="wrap">
     <p class="eyebrow">Apply</p>
-    <h2 class="h2">3ヶ月無料でお試しする</h2>
-    <p class="lead">${esc(CAMPAIGN.deadlineText)}のお申し込みが対象です。送信だけでは料金は発生しません。</p>
+    <h2 class="h2">${esc(c.trial)}無料でお試しする</h2>
+    <p class="lead">送信だけでは料金は発生しません。クレジットカードの登録も必要ありません。</p>
 
     <div class="form" id="form-box">
       <div class="form-status" id="form-status" role="alert" hidden></div>
@@ -390,7 +397,7 @@ export function finalSection(c) {
     <div class="final-actions">
       ${cta({ href: '#apply', label: c.ctaLabel, cta: 'final' })}
     </div>
-    <p class="btn-note" style="color:rgba(255,255,255,.94)">${esc(CAMPAIGN.badge)}／初期費用0円／最低契約期間なし</p>
+    <p class="btn-note" style="color:rgba(255,255,255,.94)">${esc(c.trial)}無料／${esc(offer(c.trial).badge)}</p>
   </div>
 </section>`
 }
@@ -424,7 +431,7 @@ export function footer() {
 /** @param {any} c */
 export function stickyCta(c) {
   return `<div class="sticky">
-  <div class="sticky-txt"><strong>${esc(CAMPAIGN.headline)}</strong>${esc(CAMPAIGN.badge)}</div>
+  <div class="sticky-txt"><strong>${esc(c.trial)}無料でお試し</strong>${esc(offer(c.trial).badge)}</div>
   <a href="#apply" class="btn btn--primary" data-cta="sticky">${esc(c.ctaLabel)}</a>
 </div>`
 }
@@ -436,7 +443,7 @@ export function body(c) {
     header(c),
     '<main>',
     heroSection(c),
-    campaignSection(),
+    campaignSection(c),
     painSection(c),
     solutionSection(c),
     flowSection(c),
