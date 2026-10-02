@@ -9,7 +9,7 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { fixInternalLinks, internalTargetExists } from '../../tools/seo_daily.mjs'
+import { fixInternalLinks, internalTargetExists, searchPerformanceLines } from '../../tools/seo_daily.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 
@@ -82,5 +82,30 @@ describe('セクションの採番（記事途中に cta-box がある記事）'
     const next = Math.max(0, ...ids) + 1
     assert.equal(next, Math.max(...ids) + 1)
     assert.ok(!ids.includes(next), `section${next} は既存と衝突しないこと`)
+  })
+})
+
+describe('searchPerformanceLines', () => {
+  const gsc = {
+    rows: [
+      { query: '美容室 電話 自動化', page: '/blog/a/', clicks: 1, impressions: 44, ctr: 0.02, position: 22.6 },
+      { query: 'サロン AI電話', page: '/', clicks: 3, impressions: 12, ctr: 0.25, position: 4.2 },
+    ],
+    striking: [
+      { query: '美容室 電話 自動化', page: '/blog/a/', clicks: 1, impressions: 44, ctr: 0.02, position: 22.6 },
+    ],
+  }
+
+  it('順位の良い順に並べ、合計も出す', () => {
+    const lines = searchPerformanceLines(gsc)
+    assert.equal(lines[0], '順位上位:')
+    assert.match(lines[1], /^ {2}- 4\.2位 サロン AI電話（表示12 \/ クリック3）$/)
+    assert.match(lines[2], /22\.6位 美容室 電話 自動化/)
+    assert.ok(lines.includes('あと一押し(11〜30位・表示20回以上):'))
+    assert.equal(lines.at(-1), '直近28日の合計: 表示56 / クリック4')
+  })
+
+  it('未接続なら何も出さない', () => {
+    assert.deepEqual(searchPerformanceLines(null), [])
   })
 })

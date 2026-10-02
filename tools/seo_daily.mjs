@@ -631,6 +631,30 @@ function addFaq(html, faq) {
   return html.replace("<style>", block + "<style>");
 }
 
+// ------------------------------------------------- Search Console の中身を人が読める形に
+// ログとPR本文の両方で使う。順位は低いほど良いので昇順。
+function searchPerformanceLines(gsc) {
+  if (!gsc) return [];
+  const fmt = (r) =>
+    `${r.position.toFixed(1)}位 ${r.query}（表示${r.impressions} / クリック${r.clicks}）`;
+  const lines = [];
+  const top = [...gsc.rows].sort((a, b) => a.position - b.position).slice(0, 10);
+  if (top.length) {
+    lines.push("順位上位:");
+    for (const r of top) lines.push(`  - ${fmt(r)}`);
+  }
+  if (gsc.striking.length) {
+    lines.push("あと一押し(11〜30位・表示20回以上):");
+    for (const r of gsc.striking.slice(0, 10)) lines.push(`  - ${fmt(r)}`);
+  }
+  const totals = gsc.rows.reduce(
+    (acc, r) => ({ imp: acc.imp + r.impressions, clk: acc.clk + r.clicks }),
+    { imp: 0, clk: 0 },
+  );
+  lines.push(`直近28日の合計: 表示${totals.imp} / クリック${totals.clk}`);
+  return lines;
+}
+
 // ---------------------------------------------------------------- 優先度づけ
 function prioritize(gaps, gsc, log) {
   const recent = new Set(
@@ -667,8 +691,13 @@ async function main() {
   let gsc = null;
   try {
     gsc = await fetchSearchPerformance();
-    if (!gsc) console.log("  未設定（GSC_SERVICE_ACCOUNT_JSON / GSC_SITE_URL）。サイト側の欠陥のみで判断する");
-    else console.log(`  ${gsc.rows.length}クエリ / あと一押し(11〜30位) ${gsc.striking.length}件`);
+    if (!gsc) {
+      console.log("  未設定（GSC_SERVICE_ACCOUNT_JSON / GSC_SITE_URL）。サイト側の欠陥のみで判断する");
+    } else {
+      console.log(`  ${gsc.rows.length}クエリ / あと一押し(11〜30位) ${gsc.striking.length}件`);
+      // 件数だけだと「SEOがどうなっているか」がログから分からない。実際の順位を出す。
+      for (const line of searchPerformanceLines(gsc)) console.log(`  ${line}`);
+    }
   } catch (e) {
     console.log("  取得失敗（無視して続行）:", e.message);
   }
@@ -751,11 +780,13 @@ function finish(log, work, a, gsc) {
     : "本日はコンテンツのギャップなし。機械的な技術SEO修正のみ。";
   fs.writeFileSync(path.join(ROOT, "seo", ".pr-body.md"),
     `${summary}\n\n---\n監査結果: error ${a.errors.length}件 / warn ${a.warnings.length}件\n` +
-    (gsc ? "" : "\n> Search Console が未接続のため、順位ではなくサイト側の欠陥だけで対象を選んでいます。\n"));
+    (gsc
+      ? `\n### Search Console（直近28日）\n\n\`\`\`\n${searchPerformanceLines(gsc).join("\n")}\n\`\`\`\n`
+      : "\n> Search Console が未接続のため、順位ではなくサイト側の欠陥だけで対象を選んでいます。\n"));
 }
 
 // テストから import できるように、直接実行のときだけ走らせる。
-export { fixInternalLinks, internalTargetExists, closeDanglingParagraphs, LINK_ALIASES };
+export { fixInternalLinks, internalTargetExists, closeDanglingParagraphs, LINK_ALIASES, searchPerformanceLines };
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   main().catch((e) => { console.error("\n失敗:", e.message); process.exit(1); });
