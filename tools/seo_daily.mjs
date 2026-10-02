@@ -34,6 +34,8 @@ const MODEL_WRITE = process.env.SEO_MODEL_WRITE || "claude-sonnet-5";   // 本�
 const MODEL_LIGHT = "claude-haiku-4-5-20251001";                       // タイトル短縮などの軽作業
 
 const API_KEY = process.env.ANTHROPIC_API_KEY;
+// 組織レベルのキーを使う場合だけ必要（ワークスペース発行のキーなら空でよい）
+const WORKSPACE_ID = process.env.ANTHROPIC_WORKSPACE_ID || "";
 
 // ---------------------------------------------------------------- 小道具
 const sh = (cmd, args) =>
@@ -52,6 +54,21 @@ const visibleChars = (html) =>
 
 const today = () => new Date().toISOString().slice(0, 10);
 
+// 認証まわりのエラーは原因と直し方が1対1で決まるので、ログに出す。
+// 本文に生のキーは出さない（API はエコーしないが、念のため触らない）。
+function apiKeyHint(status, body) {
+  if (status === 401) {
+    return `${body}\n  → ANTHROPIC_API_KEY が無効。https://console.anthropic.com/settings/keys で` +
+      `発行し直し、GitHub の Actions secret を更新する`;
+  }
+  if (status === 400 && body.includes("anthropic-workspace-id")) {
+    return `${body}\n  → キーが組織レベル（ワークスペース未指定）。どちらかで直る:` +
+      `\n     (a) ワークスペースを選んでキーを発行し直す（推奨・secret ひとつで済む）` +
+      `\n     (b) secret に ANTHROPIC_WORKSPACE_ID を追加する（コンソールのワークスペース設定の wrkspc_... ）`;
+  }
+  return body;
+}
+
 async function claude({ model, system, user, tool, maxTokens = 16000 }) {
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -59,6 +76,10 @@ async function claude({ model, system, user, tool, maxTokens = 16000 }) {
       "x-api-key": API_KEY,
       "anthropic-version": "2023-06-01",
       "content-type": "application/json",
+      // 組織レベル（ワークスペース未指定）のキーは、どのワークスペースで使うかを
+      // ヘッダーで渡さないと 400 になる。ワークスペース発行のキーなら不要。
+      // 2026-10-02 はこれで落ちた。どちらのキーでも動くようにしておく。
+      ...(WORKSPACE_ID ? { "anthropic-workspace-id": WORKSPACE_ID } : {}),
     },
     body: JSON.stringify({
       model, max_tokens: maxTokens, system,
@@ -66,7 +87,7 @@ async function claude({ model, system, user, tool, maxTokens = 16000 }) {
       messages: [{ role: "user", content: user }],
     }),
   });
-  if (!res.ok) throw new Error(`Anthropic API ${res.status}: ${await res.text()}`);
+  if (!res.ok) throw new Error(`Anthropic API ${res.status}: ${apiKeyHint(res.status, await res.text())}`);
   const data = await res.json();
   const use = data.content?.find((c) => c.type === "tool_use");
   if (!use?.input) throw new Error("tool_use が返らなかった: " + JSON.stringify(data).slice(0, 500));
